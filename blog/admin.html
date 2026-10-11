@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Blog editor · BotNexus</title>
+  <link rel="icon" href="/blog/assets/botnexus-logo.jpg">
+  <link rel="stylesheet" href="/blog/styles.css">
+<script src="/config.js"></script>
+</head>
+<body class="admin-page">
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="/blog/" aria-label="Back to BotNexus updates">
+        <span class="brand-mark"><img src="/blog/assets/botnexus-logo.jpg" alt=""></span>
+        <span>BotNexus <small class="brand-suffix">/ editor</small></span>
+      </a>
+
+      <nav class="top-nav" aria-label="Editor navigation">
+        <a href="/blog/" class="nav-link">
+          View updates <span aria-hidden="true">↗</span>
+        </a>
+
+        <a href="/" class="nav-link">
+          Main website <span aria-hidden="true">↗</span>
+        </a>
+
+        <a href="/dashboard" class="button button-small button-dark">
+          Dashboard <span aria-hidden="true">↗</span>
+        </a>
+
+        <button
+          class="theme-toggle"
+          type="button"
+          data-theme-toggle
+          aria-label="Switch to dark mode"
+        >
+          <span class="theme-icon" aria-hidden="true">☾</span>
+          <span data-theme-label>Dark mode</span>
+        </button>
+      </nav>
+    </header>
+
+    <main class="admin-layout">
+
+      <section class="admin-intro">
+        <p class="section-kicker">Publishing desk</p>
+
+        <h1>
+          Keep your community<br>
+          <em>in the loop.</em>
+        </h1>
+
+        <p>
+          Create an update, publish an incident, or revise an existing post.
+          Changes are saved to the server’s small JSON store.
+        </p>
+      </section>
+
+      <div class="setup-notice" data-setup-notice hidden>
+        <strong>Editor setup needed.</strong>
+
+        <span>
+          Set <code>BLOG_ADMIN_TOKEN</code> in the server environment,
+          then use that value below. Never put the token in frontend code.
+        </span>
+      </div>
+
+      <section class="editor-toolbar">
+        <div>
+          <p class="section-kicker">Your posts</p>
+          <h2>Manage updates</h2>
+        </div>
+
+        <button
+          class="button button-primary"
+          type="button"
+          data-new-post
+        >
+          + New post
+        </button>
+      </section>
+
+      <div class="admin-columns">
+
+        <aside class="post-list-panel">
+
+          <label class="field-label" for="admin-token">
+            Admin token
+          </label>
+
+          <div class="token-row">
+            <input
+              id="admin-token"
+              type="password"
+              autocomplete="off"
+              placeholder="BLOG_ADMIN_TOKEN"
+              data-admin-token
+            >
+
+            <button
+              class="button button-small button-outline"
+              type="button"
+              data-load-posts
+            >
+              Load
+            </button>
+          </div>
+
+          <p class="field-help">
+            Held only in this browser session. It is sent as a request header.
+          </p>
+
+          <div
+            class="admin-post-list"
+            data-admin-post-list
+          >
+            <div class="list-placeholder">
+              Enter your token to load posts.
+            </div>
+          </div>
+
+        </aside>
+
+        <section
+          class="editor-panel"
+          aria-labelledby="editor-heading"
+        >
+
+          <div class="editor-panel-heading">
+
+            <div>
+              <p class="section-kicker">Compose</p>
+
+              <h2
+                id="editor-heading"
+                data-editor-heading
+              >
+                New post
+              </h2>
+            </div>
+
+            <span
+              class="save-state"
+              data-save-state
+            >
+              Not saved
+            </span>
+
+          </div>
+
+          <form
+            class="post-form"
+            data-post-form
+          >
+
+            <input
+              type="hidden"
+              data-field="id"
+            >
+
+            <div class="form-row form-row-split">
+
+              <label class="field">
+                <span class="field-label">
+                  Title
+                </span>
+
+                <input
+                  required
+                  maxlength="140"
+                  data-field="title"
+                  placeholder="A clear, useful headline"
+                >
+              </label>
+
+              <label class="field">
+                <span class="field-label">
+                  Slug
+                </span>
+
+                <input
+                  maxlength="80"
+                  data-field="slug"
+                  placeholder="generated-from-title"
+                >
+              </label>
+
+            </div>
+
+            <div class="form-row form-row-split">
+
+              <label class="field">
+                <span class="field-label">
+                  Type
+                </span>
+
+                <select data-field="type">
+                  <option value="update">
+                    Product update
+                  </option>
+
+                  <option value="incident">
+                    Incident
+                  </option>
+
+                  <option value="maintenance">
+                    Maintenance
+                  </option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span class="field-label">
+                  Status
+                </span>
+
+                <select data-field="status">
+                  <option value="operational">
+                    Operational
+                  </option>
+
+                  <option value="investigating">
+                    Investigating
+                  </option>
+
+                  <option value="monitoring">
+                    Monitoring
+                  </option>
+
+                  <option value="resolved">
+                    Resolved
+                  </option>
+                </select>
+              </label>
+
+            </div>
+
+            <label class="field">
+
+              <span class="field-label">
+                Short summary
+                <span
+                  class="field-count"
+                  data-excerpt-count
+                >
+                  0 / 280
+                </span>
+              </span>
+
+              <textarea
+                required
+                maxlength="280"
+                rows="3"
+                data-field="excerpt"
+                placeholder="The one sentence people should see first."
+              ></textarea>
+
+            </label>
+
+            <label class="field">
+
+              <span class="field-label">
+                Full update
+                <span class="field-help-inline">
+                  Plain text with blank lines between paragraphs
+                </span>
+              </span>
+
+              <textarea
+                required
+                maxlength="20000"
+                rows="12"
+                data-field="content"
+                placeholder="Share what changed, what users need to know, and what happens next."
+              ></textarea>
+
+            </label>
+
+            <label class="checkbox-field">
+
+              <input
+                type="checkbox"
+                checked
+                data-field="published"
+              >
+
+              <span>
+                <strong>Publish this post</strong>
+
+                <small>
+                  Published posts appear immediately on the public update log.
+                </small>
+              </span>
+
+            </label>
+
+            <div class="form-actions">
+
+              <button
+                class="button button-primary"
+                type="submit"
+              >
+                Save post
+              </button>
+
+              <button
+                class="button button-danger"
+                type="button"
+                data-delete-post
+                hidden
+              >
+                Delete
+              </button>
+
+              <span
+                class="form-message"
+                data-form-message
+                role="status"
+              ></span>
+
+            </div>
+
+          </form>
+
+        </section>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script src="/blog/admin.js"></script>
+</body>
+</html>

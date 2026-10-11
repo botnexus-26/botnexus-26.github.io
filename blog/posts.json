@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "posts": [
+    {
+      "id": "3c20d6eb-9b67-4713-a8b0-2301f1c55453",
+      "createdAt": "2026-09-02T10:04:13.840Z",
+      "title": "Update.",
+      "slug": "verification-update",
+      "type": "update",
+      "status": "operational",
+      "excerpt": "Verification update",
+      "content": "BotNexus Update Log\nSeptember 2, 2026\nDashboard and Verification session synchronization\nDashboard and Verification now use one shared session cookie.\nExpired or stale session cookies are cleared automatically on either page.\nLogout clears the dashboard session and temporary OAuth cookies.\nLogout synchronizes across open Dashboard and Verification tabs.\nVerification can no longer continue displaying a signed-in Discord profile after the shared session has ended.\nRoblox account links remain persistent after Discord logout by design.\nRoblox accounts must still be removed separately with the Unlink Account action.",
+      "published": true,
+      "publishedAt": "2026-09-02T10:04:13.839Z",
+      "updatedAt": "2026-09-02T10:04:13.839Z"
+    }
+  ]
+}

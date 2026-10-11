@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BotNexus product updates, maintenance notices, and incident reports.">
+  <title>Updates · BotNexus</title>
+  <link rel="icon" href="/blog/assets/botnexus-logo.jpg">
+  <link rel="stylesheet" href="/blog/styles.css">
+<script src="/config.js"></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="BotNexus main website">
+        <span class="brand-mark"><img src="/blog/assets/botnexus-logo.jpg" alt=""></span>
+        <span>BotNexus</span>
+      </a>
+      <nav class="top-nav" aria-label="Primary navigation">
+        <a href="/" class="nav-link">Main website <span aria-hidden="true">↗</span></a>
+        <a href="/dashboard" class="button button-small button-dark">Dashboard <span aria-hidden="true">↗</span></a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode">
+          <span class="theme-icon" aria-hidden="true">☾</span>
+          <span data-theme-label>Dark mode</span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow"><span class="pulse-dot"></span> Service updates</div>
+        <h1>What’s happening<br><em>at BotNexus.</em></h1>
+        <p class="hero-copy">Product news, maintenance notes, and incident updates — written to be useful at a glance.</p>
+        <div class="hero-meta">
+          <span class="live-status"><span class="status-dot"></span> All systems operational</span>
+          <span class="meta-separator">·</span>
+          <span>Updated whenever it matters</span>
+        </div>
+      </section>
+
+      <section class="updates-section" aria-labelledby="updates-heading">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">The latest</p>
+            <h2 id="updates-heading">Updates &amp; incidents</h2>
+          </div>
+          <div class="filters" role="group" aria-label="Filter updates">
+            <button class="filter-button is-active" data-filter="all" type="button">All</button>
+            <button class="filter-button" data-filter="update" type="button">Updates</button>
+            <a href="https://botnexus-status.xnetsite.xyz/" target="_blank" rel="noopener noreferrer" class="filter-button">Incidents</a>
+            <a href="https://botnexus-status.xnetsite.xyz/" target="_blank" rel="noopener noreferrer" class="filter-button">Maintenance</a>
+          </div>
+        </div>
+
+        <div class="featured-post" data-featured-post>
+          <div class="loading-skeleton skeleton-featured"></div>
+        </div>
+        <div class="post-grid" data-post-grid aria-live="polite">
+          <div class="loading-skeleton skeleton-card"></div>
+          <div class="loading-skeleton skeleton-card"></div>
+        </div>
+        <div class="empty-state" data-empty-state hidden>
+          <span class="empty-icon">⌁</span>
+          <h3>No posts in this view</h3>
+          <p>Try another filter, or check back when there’s something new to share.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <span class="brand-mark brand-mark-small"><img src="/blog/assets/botnexus-logo.jpg" alt=""></span>
+        <span>BotNexus</span>
+      </div>
+      <span>Clear updates for connected communities.</span>
+      <div class="footer-links">
+        <a href="/">Website</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/blog/admin.html">Editor</a>
+      </div>
+    </footer>
+  </div>
+  <script src="/blog/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+:root {
+    --bg: #0a0b10;
+    --bg-alt: #0e1017;
+    --surface: #12141c;
+    --surface-2: #171a24;
+    --border: #21242e;
+    --text: #edeff5;
+    --muted: #8d93a6;
+    --accent: #5b8cff;
+    --signal: #29e7cd;
+    --danger: #ff6b7a;
+}
+
+body.light {
+    --bg: #f4f6fb;
+    --bg-alt: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #eef1f8;
+    --border: #d9dee8;
+    --text: #111827;
+    --muted: #555;
+    --accent: #4f6dff;
+    --signal: #1aa889;
+    --danger: #dc3545;
+}

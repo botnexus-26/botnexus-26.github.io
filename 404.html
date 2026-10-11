@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — BotNexus</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/favicon.png">
+<script>
+  // Old bot/dashboard URLs (login callbacks, verification, dashboard sub-pages) live on the proxy now.
+  (function () {
+    var p = location.pathname;
+    // /help-center/<page> has no file of its own: load the Help Center app and keep the URL.
+    if (/^\/help-cent(er|re)\/[^/]+\/?$/.test(p) && !/\.[a-z0-9]+$/i.test(p)) {
+      p = p.replace('help-centre', 'help-center');
+      fetch('/help-center/').then(function (r) { return r.text(); }).then(function (t) {
+        history.replaceState(null, '', p); document.open(); document.write(t); document.close();
+      });
+      return;
+    }
+    if (/^\/(dashboard|auth|verification|api|commands|status|why)(\/|$)/.test(p)) {
+      location.replace("https://botnexusbot.bonto.run" + p + location.search + location.hash);
+    }
+  })();
+</script>
+<style>
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#0b0d12;color:#e8eaf0;text-align:center;padding:24px}
+  h1{font-size:64px;margin:0 0 8px} p{color:#a4abbb;margin:0 0 24px}
+  a{display:inline-block;margin:4px;padding:10px 18px;border-radius:10px;background:#1b2130;color:#e8eaf0;text-decoration:none;border:1px solid #2a3350}
+  a:hover{background:#232b40}
+</style>
+</head>
+<body>
+<main>
+  <h1>404</h1>
+  <p>That page doesn’t exist.</p>
+  <a href="/">Home</a><a href="/docs">Docs</a><a href="/help-center">Help Center</a><a href="/dashboard">Dashboard</a>
+</main>
+</body>
+</html>

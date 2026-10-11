@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting Started — BotNexus Docs</title>
+<meta name="description" content="Invite BotNexus and configure your first module.">
+<link rel="icon" type="image/png" href="/docs/assets/favicon.png">
+<link rel="stylesheet" href="/docs/assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <button class="topbar-menu-btn" id="menu-toggle" aria-label="Toggle navigation"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+  <a class="topbar-logo" href="/docs">
+    <span class="mark"><img src="/docs/assets/logo-icon.png" alt="BotNexus logo" width="28" height="28"></span>
+    <span class="logo-text">BotNexus</span>
+  </a>
+  <div class="topbar-search" id="topbar-search">
+    <svg class="icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="search-input" type="text" placeholder="Search..." autocomplete="off">
+    <span class="kbd">⌘K</span>
+    <button class="search-close-btn" id="search-close-btn" aria-label="Close search">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="search-results" id="search-results"></div>
+  </div>
+  <button class="search-mobile-btn" id="search-mobile-btn" aria-label="Open search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+  <nav class="topbar-links">
+    <a href="https://botnexus-26.github.io">Website</a>
+    <a href="https://discord.gg/SRYAbrUVVS">Support</a>
+    <a href="https://botnexus-26.github.io/dashboard">Dashboard</a>
+    <a href="https://botnexus-26.github.io/terms">Terms</a>
+  </nav>
+  <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.9" y1="4.9" x2="6.3" y2="6.3"/><line x1="17.7" y1="17.7" x2="19.1" y2="19.1"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.9" y1="19.1" x2="6.3" y2="17.7"/><line x1="17.7" y1="6.3" x2="19.1" y2="4.9"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+  </button>
+  <a class="btn-invite" href="https://discord.com/oauth2/authorize?client_id=1522289525378908244&permissions=8&integration_type=0&scope=applications.commands+bot"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M20.3 4.7A18.4 18.4 0 0 0 15.6 3c-.2.4-.5 1-.7 1.4a17 17 0 0 0-5.8 0A11 11 0 0 0 8.4 3a18.3 18.3 0 0 0-4.7 1.7C1 9.3.3 13.8.6 18.3a18.6 18.6 0 0 0 5.6 2.8c.5-.6.9-1.3 1.2-2a12 12 0 0 1-1.9-.9l.5-.4a13.2 13.2 0 0 0 11.2 0l.5.4c-.6.4-1.2.6-1.9.9.3.7.7 1.4 1.2 2a18.5 18.5 0 0 0 5.6-2.8c.4-5.2-1-9.6-3.3-13.6zM9 15.7c-1.1 0-2-1-2-2.3 0-1.2.9-2.3 2-2.3s2 1 2 2.3c0 1.3-.9 2.3-2 2.3zm6 0c-1.1 0-2-1-2-2.3 0-1.2.9-2.3 2-2.3s2 1 2 2.3c0 1.3-.9 2.3-2 2.3z"/></svg> Add to Discord</a>
+</header>
+
+<div class="docs-layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-mobile-only">
+      <a class="btn-invite sidebar-invite" href="https://discord.com/oauth2/authorize?client_id=1522289525378908244&permissions=8&integration_type=0&scope=applications.commands+bot"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M20.3 4.7A18.4 18.4 0 0 0 15.6 3c-.2.4-.5 1-.7 1.4a17 17 0 0 0-5.8 0A11 11 0 0 0 8.4 3a18.3 18.3 0 0 0-4.7 1.7C1 9.3.3 13.8.6 18.3a18.6 18.6 0 0 0 5.6 2.8c.5-.6.9-1.3 1.2-2a12 12 0 0 1-1.9-.9l.5-.4a13.2 13.2 0 0 0 11.2 0l.5.4c-.6.4-1.2.6-1.9.9.3.7.7 1.4 1.2 2a18.5 18.5 0 0 0 5.6-2.8c.4-5.2-1-9.6-3.3-13.6zM9 15.7c-1.1 0-2-1-2-2.3 0-1.2.9-2.3 2-2.3s2 1 2 2.3c0 1.3-.9 2.3-2 2.3zm6 0c-1.1 0-2-1-2-2.3 0-1.2.9-2.3 2-2.3s2 1 2 2.3c0 1.3-.9 2.3-2 2.3z"/></svg> Add to Discord</a>
+      <div class="sidebar-topbar-links">
+        <a href="https://botnexus-26.github.io">Website</a>
+        <a href="https://discord.gg/SRYAbrUVVS">Support</a>
+        <a href="https://botnexus-26.github.io/dashboard">Dashboard</a>
+        <a href="https://botnexus-26.github.io/terms">Terms</a>
+      </div>
+    </div>
+    <div class="sidebar-group"><div class="sidebar-group-title">Overview</div>
+<a class="sidebar-link" href="/docs">Introduction</a>
+<a class="sidebar-link active" href="/docs/getting-started">Getting Started</a>
+</div>
+<div class="sidebar-group"><div class="sidebar-group-title">Setup</div>
+<a class="sidebar-link" href="/docs/configuration">Configuration</a>
+<a class="sidebar-link" href="/docs/permissions">Permissions</a>
+<a class="sidebar-link" href="/docs/erlc-integration">ER:LC Integration</a>
+<a class="sidebar-link" href="/docs/commands">Commands</a>
+<a class="sidebar-link" href="/docs/custom-setup">Custom Bot Setup</a>
+</div>
+<div class="sidebar-group"><div class="sidebar-group-title">Features</div>
+<a class="sidebar-link" href="/docs/welcomer">Welcomer</a>
+<a class="sidebar-link" href="/docs/levelling">Levelling</a>
+<a class="sidebar-link" href="/docs/advanced-security">Advanced Security</a>
+<a class="sidebar-link" href="/docs/sessions">Sessions</a>
+</div>
+  </nav>
+
+  <main class="content">
+    <div class="content-inner">
+      <div class="breadcrumb">Overview<span class="sep">/</span>Getting Started</div>
+      
+<h1 class="page-title">Getting Started</h1>
+<p class="page-desc">Everything you need to invite BotNexus and configure your first module.</p>
+
+<div class="callout tip">
+  <span class="callout-icon">✓</span>
+  <p>You'll need the <strong>Manage Server</strong> permission (or a role added via
+  <code class="inline">/serversettings</code>) to complete setup.</p>
+</div>
+
+<h2 id="before-you-start">Before you start</h2>
+<p>Make sure you can invite bots to your server and that BotNexus will land above any roles it needs to manage —
+mute roles, level roles, and verified roles all need BotNexus positioned correctly in your role list.</p>
+
+<h2 id="step-by-step-setup">Step-by-step setup</h2>
+<ol class="steps">
+  <li class="step">
+    <h4>Invite BotNexus</h4>
+    <p>Use the <strong>Add to Discord</strong> button at the top of this page and select your server.</p>
+  </li>
+  <li class="step">
+    <h4>Set manager roles</h4>
+    <p>Run <code class="inline">/serversettings</code> and add the roles that should be able to open
+    <code class="inline">/botconfig</code>, in addition to Administrators.</p>
+  </li>
+  <li class="step">
+    <h4>Open the config panel</h4>
+    <p>Run <code class="inline">/botconfig</code> in any channel BotNexus can see, and pick a module from the
+    dropdown at the bottom of the embed.</p>
+  </li>
+  <li class="step">
+    <h4>Configure your core modules</h4>
+    <p>Most servers start with Welcomer, Moderation, and Advanced Security, then add Levelling, Sessions, or
+    Economy afterward.</p>
+  </li>
+  <li class="step">
+    <h4>Save and verify</h4>
+    <p>Click <strong>Save</strong> on each flow, then trigger the module (post a message, join the server, etc.)
+    to confirm it behaves as expected.</p>
+  </li>
+</ol>
+
+<h2 id="next-steps">Next steps</h2>
+<p>Head to <a class="inline-link" href="/docs/configuration">Configuration</a> for a closer look at how the panel
+is laid out, or jump straight to <a class="inline-link" href="/docs/commands">Commands</a> for the full command
+reference.</p>
+
+      <div class="pager">
+        <a class="prev" href="/docs"><span class="pager-label">Previous</span>Introduction</a>
+        <a class="next" href="/docs/configuration"><span class="pager-label">Next</span>Configuration</a>
+      </div>
+    </div>
+  </main>
+
+  <aside class="toc">
+  <div class="toc-title">On this page</div>
+  <ul class="toc-list">
+    <li><a href="#before-you-start">Before you start</a></li>
+<li><a href="#step-by-step-setup">Step-by-step setup</a></li>
+<li><a href="#next-steps">Next steps</a></li>
+  </ul>
+</aside>
+</div>
+
+<script src="/docs/assets/search-index.js"></script>
+<script src="/docs/assets/script.js"></script>
+</body>
+</html>

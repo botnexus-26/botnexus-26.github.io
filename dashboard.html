@@ -1,66 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-state="checking">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BotNexus Dashboard</title>
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#0b0d12">
+<meta name="theme-color" content="#0a0d14">
 <link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#0b0d12;--panel:#121722;--line:rgba(205,219,244,.14);--text:#e8eaf0;--muted:#9ca8bb;
-        --blue:#7ba5ff;--green:#56e2c2;--yellow:#f5c25b;--red:#ff6b7a}
+  :root{
+    --bg:#0a0d14; --panel:rgba(17,23,34,.72); --raised:rgba(27,36,52,.8);
+    --line:rgba(205,219,244,.11); --line-strong:rgba(205,219,244,.2);
+    --text:#eff4fb; --muted:#9ca8bb; --faint:#68758a;
+    --blue:#7ba5ff; --mint:#56e2c2; --amber:#f5c25b; --red:#ff6b7a;
+    --bg-rgb:123,165,255; --tone-rgb:245,194,91;
+    --display:'Manrope',system-ui,sans-serif; --body:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  }
+  html[data-state=up]{--bg-rgb:86,226,194;--tone-rgb:86,226,194}
+  html[data-state=down]{--bg-rgb:255,107,122;--tone-rgb:255,107,122}
   *{box-sizing:border-box}
-  body{margin:0;min-height:100vh;display:flex;justify-content:center;padding:24px 16px;
-       font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
-  main{width:100%;max-width:560px;display:flex;flex-direction:column;gap:16px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px}
-  h1{margin:0 0 4px;font-size:1.5rem}
-  p{margin:0;color:var(--muted)}
-  a{color:var(--blue)}
-  .hero{text-align:center;padding:28px 20px}
-  .dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--yellow);margin-right:8px;vertical-align:middle}
-  .up .dot{background:var(--green)} .down .dot{background:var(--red)}
-  .btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
-  .btn{appearance:none;border:1px solid var(--line);background:#1a2130;color:var(--text);padding:10px 16px;
-       border-radius:999px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none}
-  .btn.primary{background:var(--blue);border-color:var(--blue);color:#0b0d12}
-  .btn:hover{filter:brightness(1.12)}
-  .row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
-  .row:first-of-type{border-top:0}
-  .tag{font-size:.85rem;font-weight:600;padding:2px 10px;border-radius:999px;border:1px solid var(--line)}
-  .ok{color:var(--green)} .warn{color:var(--yellow)} .bad{color:var(--red)}
-  h2{margin:0 0 8px;font-size:1.05rem}
-  .inc{padding:10px 0;border-top:1px solid var(--line)}
-  .inc:first-of-type{border-top:0}
-  .small{font-size:.85rem}
+  html{color-scheme:dark;background:var(--bg)}
+  body{margin:0;min-height:100vh;color:var(--text);font:400 16px/1.6 var(--body);-webkit-font-smoothing:antialiased;
+       background:radial-gradient(760px 420px at 50% -8%,rgba(var(--bg-rgb),.14),transparent 70%),var(--bg);transition:background .6s}
+  #bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+       background:radial-gradient(ellipse at 50% 45%,transparent 35%,rgba(10,13,20,.78) 100%)}
+  main{position:relative;z-index:1;width:100%;max-width:600px;margin:0 auto;padding:32px 16px 48px;display:flex;flex-direction:column;gap:14px}
+  a{color:var(--blue);text-underline-offset:3px}
+  p{margin:0}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
   [hidden]{display:none!important}
-  #game{text-align:center}
-  canvas{width:100%;max-width:320px;aspect-ratio:1;background:#0d1119;border:1px solid var(--line);border-radius:12px;touch-action:none}
-  .pad{display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(2,48px);gap:6px;justify-content:center;margin-top:12px}
-  .pad .btn{padding:0}
+
+  .top{display:flex;align-items:center;gap:10px;padding:0 4px 10px;font:800 1.05rem/1 var(--display);letter-spacing:-.03em}
+  .mark{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,var(--blue),var(--mint));position:relative;box-shadow:0 6px 20px rgba(123,165,255,.25)}
+  .mark::after{content:"";position:absolute;inset:8px;border:2px solid rgba(10,13,20,.8);border-radius:3px;transform:rotate(45deg)}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;
+        backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%)}
+  .hero{border-radius:24px;padding:26px;border-color:var(--line-strong);box-shadow:0 24px 70px rgba(0,0,0,.35),0 0 60px rgba(var(--bg-rgb),.08)}
+  .head{display:flex;gap:16px;align-items:center}
+  h1{margin:0;font:800 1.65rem/1.15 var(--display);letter-spacing:-.035em}
+  h2{margin:0;font:700 1.02rem/1.3 var(--display);letter-spacing:-.02em}
+  .muted{color:var(--muted)} .small{font-size:.875rem}
+  .hero .lead{margin-top:18px;color:var(--muted);max-width:46ch}
+
+  .beacon{position:relative;flex:none;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;
+          background:rgba(var(--tone-rgb),.12);border:1px solid rgba(var(--tone-rgb),.38);transition:background .4s,border-color .4s}
+  .beacon::before{content:"";width:12px;height:12px;border-radius:50%;background:rgb(var(--tone-rgb));box-shadow:0 0 14px rgba(var(--tone-rgb),.8)}
+  .beacon::after{content:"";position:absolute;inset:-1px;border-radius:15px;border:1px solid rgba(var(--tone-rgb),.6);animation:ping 2.2s ease-out infinite}
+  @keyframes ping{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(1.5)}}
+
+  .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .btn{appearance:none;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-strong);background:var(--raised);color:var(--text);
+       padding:10px 18px;border-radius:12px;font:600 .93rem/1.2 var(--body);cursor:pointer;text-decoration:none;
+       transition:transform .15s,border-color .15s,background .15s}
+  .btn:hover{transform:translateY(-1px);border-color:rgba(var(--bg-rgb),.55)}
+  .btn:active{transform:none}
+  .btn.primary{background:var(--blue);border-color:var(--blue);color:#0a0d14}
+  .btn.primary:hover{background:#93b6ff}
+
+  .bar{height:3px;margin-top:22px;border-radius:3px;background:var(--line);overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--mint));transition:width 1s linear}
+  #nextCheck{margin-top:8px}
+
+  .section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+  .row:first-of-type{border-top:0}
+  .pill{display:inline-flex;align-items:center;gap:7px;font-size:.82rem;font-weight:600;padding:3px 11px 3px 9px;border-radius:999px;
+        color:var(--c,var(--muted));background:color-mix(in srgb,var(--c,var(--muted)) 12%,transparent);border:1px solid color-mix(in srgb,var(--c,var(--muted)) 30%,transparent)}
+  .pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+  .ok{--c:var(--mint)} .warn{--c:var(--amber)} .bad{--c:var(--red)}
+  .inc{padding:12px 0;border-top:1px solid var(--line)}
+  .notices{margin-top:14px}
+  .notices h2{margin-bottom:2px}
+  .foot{margin-top:6px;padding-top:14px;border-top:1px solid var(--line)}
+
+  #game{text-align:center;animation:rise .28s ease-out}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  #game .section-head{justify-content:center;flex-direction:column;gap:2px;margin-bottom:12px}
+  canvas#cv{width:100%;max-width:320px;aspect-ratio:1;background:rgba(8,11,17,.85);border:1px solid var(--line-strong);border-radius:14px;touch-action:none;display:block;margin:0 auto}
+  .scores{margin-top:10px;display:flex;justify-content:center;gap:18px}
+  .scores b{color:var(--text)}
+  .pad{display:grid;grid-template-columns:repeat(3,54px);grid-template-rows:repeat(2,44px);gap:6px;justify-content:center;margin-top:12px}
+  .pad .btn{padding:0;justify-content:center;font-size:.8rem}
   .pad .u{grid-column:2}.pad .l{grid-column:1;grid-row:2}.pad .d{grid-column:2;grid-row:2}.pad .r{grid-column:3;grid-row:2}
+  #game .btns{justify-content:center}
+
+  @media (max-width:480px){h1{font-size:1.4rem}.hero{padding:20px}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+<canvas id="bg" aria-hidden="true"></canvas>
 <main>
+  <div class="top"><span class="mark"></span>BotNexus</div>
 
-  <section id="hero" class="card hero">
-    <h1><span class="dot"></span><span id="heroTitle">Checking the dashboard…</span></h1>
-    <p id="heroText">Hang tight, this only takes a moment.</p>
+  <section id="hero" class="card hero" aria-live="polite">
+    <div class="head">
+      <span class="beacon"></span>
+      <h1 id="heroTitle">Checking the dashboard…</h1>
+    </div>
+    <p id="heroText" class="lead">This only takes a moment.</p>
     <div class="btns">
       <a id="openBtn" class="btn primary" href="#" hidden>Open dashboard</a>
       <button id="retryBtn" class="btn" type="button" hidden>Check again</button>
-      <button id="snakeBtn" class="btn" type="button" hidden>🐍 Play Snake while you wait</button>
+      <button id="snakeBtn" class="btn" type="button" hidden>Play Snake while you wait</button>
     </div>
-    <p id="nextCheck" class="small" style="margin-top:12px" hidden></p>
+    <div id="barWrap" class="bar" hidden><i id="bar"></i></div>
+    <p id="nextCheck" class="small muted" hidden></p>
   </section>
 
   <section id="game" class="card" hidden>
-    <h2>Snake</h2>
-    <p class="small" style="margin-bottom:10px">Arrow keys / WASD, swipe, or the on-screen pad. Space pauses.</p>
+    <div class="section-head"><h2>Snake</h2><p class="small muted">Arrow keys or WASD, swipe, or use the pad. Space pauses.</p></div>
     <canvas id="cv" width="320" height="320" aria-label="Snake game"></canvas>
-    <p class="small" style="margin-top:8px">Score <b id="score">0</b> · Best <b id="best">0</b></p>
+    <div class="scores small muted"><span>Score <b id="score">0</b></span><span>Best <b id="best">0</b></span></div>
     <div class="pad" aria-label="Controls">
       <button class="btn u" type="button" data-d="up" aria-label="Up">▲</button>
       <button class="btn l" type="button" data-d="left" aria-label="Left">◀</button>
@@ -71,13 +127,92 @@
   </section>
 
   <section class="card">
-    <h2>Live status <span id="overall" class="tag" hidden></span></h2>
-    <div id="components"><p class="small">Loading status…</p></div>
-    <div id="incidents"></div>
-    <p class="small" style="margin-top:12px"><a href="https://botnexus.instatus.com/" target="_blank" rel="noopener">View the full status page →</a></p>
+    <div class="section-head"><h2>System status</h2><span id="overall" class="pill" hidden></span></div>
+    <div id="components"><p class="small muted">Loading status…</p></div>
+    <div id="incidents" class="notices"></div>
+    <p class="small foot"><a href="https://botnexus.instatus.com/" target="_blank" rel="noopener">Open the full status page</a></p>
   </section>
-
 </main>
+
+<script>
+/* ---------- Reactive geometric background ---------- */
+(() => {
+  "use strict";
+  const cv = document.getElementById("bg"), ctx = cv.getContext("2d");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const S = 84, R = 190;
+  let W, H, cols, rows, pts = [], tris = [];
+  const m = { x: -1e4, y: -1e4, tx: -1e4, ty: -1e4, last: -1e9 };
+  let col = [123, 165, 255];
+
+  function build() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const rh = S * 0.866;
+    cols = Math.ceil(W / S) + 3; rows = Math.ceil(H / rh) + 3;
+    pts = []; tris = [];
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      const j = () => (Math.random() - .5) * S * .22;
+      pts.push({ bx: (c - 1) * S + (r % 2 ? S / 2 : 0) + j(), by: (r - 1) * rh + j(), ph: Math.random() * 6.28, x: 0, y: 0 });
+    }
+    const id = (r, c) => r * cols + c;
+    for (let r = 0; r < rows - 1; r++) for (let c = 0; c < cols - 2; c++) {
+      if (r % 2 === 0) { tris.push([id(r, c), id(r, c + 1), id(r + 1, c)], [id(r, c + 1), id(r + 1, c), id(r + 1, c + 1)]); }
+      else { tris.push([id(r, c), id(r, c + 1), id(r + 1, c + 1)], [id(r, c), id(r + 1, c), id(r + 1, c + 1)]); }
+    }
+    frame(performance.now(), true);
+  }
+
+  function readColor() {
+    const v = getComputedStyle(document.documentElement).getPropertyValue("--bg-rgb").split(",").map(Number);
+    if (v.length === 3 && !v.some(isNaN)) for (let i = 0; i < 3; i++) col[i] += (v[i] - col[i]) * .04;
+  }
+
+  function frame(t, still) {
+    if (!still) {
+      readColor();
+      if (t - m.last > 3000) { // idle: a soft light wanders so touch devices still feel alive
+        m.tx = W * (.5 + .34 * Math.sin(t * .00021)); m.ty = H * (.5 + .3 * Math.sin(t * .00033 + 1.3));
+      }
+      m.x += (m.tx - m.x) * .09; m.y += (m.ty - m.y) * .09;
+    }
+    const mx = still ? -1e4 : m.x, my = still ? -1e4 : m.y;
+    for (const p of pts) {
+      let x = p.bx, y = p.by;
+      if (!still && !reduce) { x += Math.sin(t * .0004 + p.ph) * 4; y += Math.cos(t * .00035 + p.ph) * 4; }
+      const dx = x - mx, dy = y - my, d = Math.hypot(dx, dy);
+      if (d < R && d > 0) { const f = (1 - d / R) ** 2 * 34; x += dx / d * f; y += dy / d * f; }
+      p.x = x; p.y = y;
+    }
+    ctx.clearRect(0, 0, W, H);
+    const rgb = col.map(Math.round).join(",");
+    ctx.lineWidth = 1; ctx.lineJoin = "round";
+    for (const [a, b, c] of tris) {
+      const A = pts[a], B = pts[b], C = pts[c];
+      const cx = (A.x + B.x + C.x) / 3, cy = (A.y + B.y + C.y) / 3;
+      const k = Math.max(0, 1 - Math.hypot(cx - mx, cy - my) / R);
+      ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.lineTo(C.x, C.y); ctx.closePath();
+      if (k > 0) { ctx.fillStyle = `rgba(${rgb},${(.13 * k * k).toFixed(3)})`; ctx.fill(); }
+      ctx.strokeStyle = `rgba(${rgb},${(.07 + .4 * k * k).toFixed(3)})`; ctx.stroke();
+    }
+    if (!still) {
+      for (const p of pts) {
+        const k = 1 - Math.hypot(p.x - mx, p.y - my) / (R * .75);
+        if (k > 0) { ctx.fillStyle = `rgba(${rgb},${(.9 * k).toFixed(2)})`; ctx.beginPath(); ctx.arc(p.x, p.y, 1.2 + 1.8 * k, 0, 6.283); ctx.fill(); }
+      }
+    }
+  }
+
+  function loop(t) { frame(t); requestAnimationFrame(loop); }
+  const move = e => { m.tx = e.clientX; m.ty = e.clientY; m.last = performance.now(); };
+  addEventListener("pointermove", move, { passive: true });
+  addEventListener("pointerdown", move, { passive: true });
+  let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(build, 150); });
+  build();
+  if (!reduce) requestAnimationFrame(loop);
+})();
+</script>
 
 <script>
 (() => {
@@ -90,13 +225,13 @@
   const AUTO_REDIRECT = !/[?&]stay\b/.test(location.search); // add ?stay to disable redirect
 
   const $ = id => document.getElementById(id);
-  const hero = $("hero"), heroTitle = $("heroTitle"), heroText = $("heroText");
-  const openBtn = $("openBtn"), retryBtn = $("retryBtn"), snakeBtn = $("snakeBtn"), nextCheck = $("nextCheck");
+  const root = document.documentElement;
+  const heroTitle = $("heroTitle"), heroText = $("heroText");
+  const openBtn = $("openBtn"), retryBtn = $("retryBtn"), snakeBtn = $("snakeBtn");
+  const nextCheck = $("nextCheck"), barWrap = $("barWrap"), bar = $("bar");
   openBtn.href = DASHBOARD;
 
-  // ---- Dashboard availability check ----
-  // no-cors: the request resolves if the server answers at all and rejects on
-  // network/DNS/timeout failure, which works from a static page without CORS headers.
+  // no-cors: resolves if the server answers at all, rejects on network/DNS/timeout failure.
   async function dashboardUp() {
     const c = new AbortController(), t = setTimeout(() => c.abort(), 7000);
     try { await fetch(DASHBOARD, { mode: "no-cors", cache: "no-store", signal: c.signal }); return true; }
@@ -107,29 +242,29 @@
   let timer = null, countdown = 0, checking = false;
   async function check() {
     if (checking) return; checking = true;
-    clearInterval(timer); nextCheck.hidden = true; retryBtn.hidden = true;
-    hero.className = "card hero"; heroTitle.textContent = "Checking the dashboard…";
-    heroText.textContent = "Hang tight, this only takes a moment.";
+    clearInterval(timer); nextCheck.hidden = true; barWrap.hidden = true; retryBtn.hidden = true;
+    root.dataset.state = "checking"; heroTitle.textContent = "Checking the dashboard…";
+    heroText.textContent = "This only takes a moment.";
     const up = await dashboardUp();
     checking = false;
     if (up) {
-      hero.className = "card hero up"; heroTitle.textContent = "Dashboard is online";
-      openBtn.hidden = false; snakeBtn.hidden = true; retryBtn.hidden = true;
-      if (AUTO_REDIRECT) {
-        heroText.textContent = "Taking you there now…";
-        setTimeout(() => location.replace(DASHBOARD), REDIRECT_DELAY_MS);
-      } else heroText.textContent = "Auto-redirect is off.";
+      root.dataset.state = "up"; heroTitle.textContent = "Dashboard is online";
+      openBtn.hidden = false; snakeBtn.hidden = true;
+      if (AUTO_REDIRECT) { heroText.textContent = "Taking you there now…"; setTimeout(() => location.replace(DASHBOARD), REDIRECT_DELAY_MS); }
+      else heroText.textContent = "Auto-redirect is off.";
     } else {
-      hero.className = "card hero down"; heroTitle.textContent = "Bot offline";
+      root.dataset.state = "down"; heroTitle.textContent = "Bot offline";
       heroText.textContent = "The dashboard can’t be reached right now. We’ll keep checking and send you through as soon as it’s back.";
       openBtn.hidden = true; retryBtn.hidden = false; snakeBtn.hidden = false;
-      countdown = RETRY_SECONDS; nextCheck.hidden = false; tick();
-      timer = setInterval(tick, 1000);
+      countdown = RETRY_SECONDS; nextCheck.hidden = false; barWrap.hidden = false;
+      bar.style.transition = "none"; bar.style.width = "0%"; void bar.offsetWidth; bar.style.transition = "";
+      tick(); timer = setInterval(tick, 1000);
       loadStatus();
     }
   }
   function tick() {
     nextCheck.textContent = "Checking again in " + countdown + "s";
+    bar.style.width = ((RETRY_SECONDS - countdown) / RETRY_SECONDS * 100) + "%";
     if (countdown-- <= 0) check();
   }
   retryBtn.addEventListener("click", check);
@@ -137,16 +272,13 @@
   // ---- Status page data (Instatus public JSON) ----
   const LABELS = {
     OPERATIONAL: ["Operational", "ok"], UP: ["Operational", "ok"],
-    UNDERMAINTENANCE: ["Maintenance", "warn"],
-    DEGRADEDPERFORMANCE: ["Degraded", "warn"], HASISSUES: ["Has issues", "warn"],
-    PARTIALOUTAGE: ["Partial outage", "bad"], MINOROUTAGE: ["Minor outage", "warn"],
-    MAJOROUTAGE: ["Major outage", "bad"]
+    UNDERMAINTENANCE: ["Maintenance", "warn"], DEGRADEDPERFORMANCE: ["Degraded", "warn"], HASISSUES: ["Has issues", "warn"],
+    PARTIALOUTAGE: ["Partial outage", "bad"], MINOROUTAGE: ["Minor outage", "warn"], MAJOROUTAGE: ["Major outage", "bad"]
   };
   const label = s => LABELS[String(s || "").toUpperCase().replace(/[\s_-]/g, "")] || [s || "Unknown", "warn"];
   const getJSON = async path => {
     const c = new AbortController(), t = setTimeout(() => c.abort(), 8000);
-    try { const r = await fetch(STATUS + path, { signal: c.signal, cache: "no-store" });
-          if (!r.ok) throw 0; return await r.json(); }
+    try { const r = await fetch(STATUS + path, { signal: c.signal, cache: "no-store" }); if (!r.ok) throw 0; return await r.json(); }
     finally { clearTimeout(t); }
   };
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
@@ -155,54 +287,39 @@
     const [sum, comp] = await Promise.allSettled([getJSON("/summary.json"), getJSON("/v2/components.json")]);
     const box = $("components"), inc = $("incidents");
     box.textContent = ""; inc.textContent = "";
-
     if (sum.status === "fulfilled" && sum.value.page) {
       const [txt, cls] = label(sum.value.page.status);
-      const o = $("overall"); o.textContent = txt; o.className = "tag " + cls; o.hidden = false;
+      const o = $("overall"); o.textContent = txt; o.className = "pill " + cls; o.hidden = false;
     }
     if (comp.status === "fulfilled" && Array.isArray(comp.value.components) && comp.value.components.length) {
       comp.value.components.forEach(c => {
         const [txt, cls] = label(c.status);
-        const row = el("div", "row"); row.append(el("span", "", c.name), el("span", "tag " + cls, txt)); box.append(row);
+        const row = el("div", "row"); row.append(el("span", "", c.name), el("span", "pill " + cls, txt)); box.append(row);
       });
-    } else {
-      box.append(el("p", "small", "Couldn’t load live component data. Check the status page below for the latest."));
-    }
+    } else box.append(el("p", "small muted", "Live component data isn’t available right now. The full status page has the latest."));
     if (sum.status === "fulfilled") {
       const list = [...(sum.value.activeIncidents || []), ...(sum.value.activeMaintenances || [])];
       if (list.length) inc.append(el("h2", "", "Active notices"));
       list.forEach(i => {
-        const d = el("div", "inc"); const a = el("a", "", i.name || "Notice");
+        const d = el("div", "inc"), a = el("a", "", i.name || "Notice");
         a.href = i.url || STATUS; a.target = "_blank"; a.rel = "noopener";
-        d.append(a, el("p", "small", [i.status, i.impact].filter(Boolean).join(" · ")));
+        d.append(a, el("p", "small muted", [i.status, i.impact].filter(Boolean).join(" · ")));
         inc.append(d);
       });
     }
   }
-  loadStatus();
-  setInterval(loadStatus, 60000);
+  loadStatus(); setInterval(loadStatus, 60000);
 
   // ---- Snake ----
   const cv = $("cv"), ctx = cv.getContext("2d"), N = 16, S = cv.width / N;
-  let snake, dir, next, food, score, loop = null, paused = false, over = false;
-  let best = 0;
+  let snake, dir, next, food, score, loop = null, paused = false, over = false, best = 0;
   try { best = +localStorage.getItem("snakeBest") || 0; } catch (_) {}
   $("best").textContent = best;
-
   const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
-  function reset() {
-    snake = [[8, 8], [7, 8], [6, 8]]; dir = next = DIRS.right; score = 0; over = false; paused = false;
-    $("score").textContent = 0; placeFood(); draw();
-  }
-  function placeFood() {
-    do { food = [Math.floor(Math.random() * N), Math.floor(Math.random() * N)]; }
-    while (snake.some(s => s[0] === food[0] && s[1] === food[1]));
-  }
-  function turn(name) {
-    const d = DIRS[name]; if (!d) return;
-    if (d[0] === -dir[0] && d[1] === -dir[1]) return; // no reversing
-    next = d;
-  }
+
+  function reset() { snake = [[8, 8], [7, 8], [6, 8]]; dir = next = DIRS.right; score = 0; over = false; paused = false; $("score").textContent = 0; placeFood(); draw(); }
+  function placeFood() { do { food = [Math.floor(Math.random() * N), Math.floor(Math.random() * N)]; } while (snake.some(s => s[0] === food[0] && s[1] === food[1])); }
+  function turn(n) { const d = DIRS[n]; if (d && !(d[0] === -dir[0] && d[1] === -dir[1])) next = d; }
   function step() {
     if (paused || over) return;
     dir = next;
@@ -216,38 +333,30 @@
     } else snake.pop();
     draw();
   }
-  function end() {
-    over = true; clearInterval(loop); loop = null; draw();
-    $("startBtn").textContent = "Play again";
-  }
+  function end() { over = true; clearInterval(loop); loop = null; draw(); $("startBtn").textContent = "Play again"; }
   function draw() {
-    ctx.fillStyle = "#0d1119"; ctx.fillRect(0, 0, cv.width, cv.height);
-    ctx.fillStyle = "#ff6b7a"; ctx.fillRect(food[0] * S + 3, food[1] * S + 3, S - 6, S - 6);
-    snake.forEach((s, i) => { ctx.fillStyle = i ? "#56e2c2" : "#7ba5ff"; ctx.fillRect(s[0] * S + 1, s[1] * S + 1, S - 2, S - 2); });
+    ctx.fillStyle = "#080b11"; ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.strokeStyle = "rgba(205,219,244,.04)"; ctx.lineWidth = 1;
+    for (let i = 1; i < N; i++) { ctx.beginPath(); ctx.moveTo(i * S, 0); ctx.lineTo(i * S, cv.height); ctx.moveTo(0, i * S); ctx.lineTo(cv.width, i * S); ctx.stroke(); }
+    ctx.fillStyle = "#ff6b7a"; ctx.beginPath(); ctx.arc(food[0] * S + S / 2, food[1] * S + S / 2, S / 2 - 3, 0, 6.283); ctx.fill();
+    snake.forEach((s, i) => { ctx.fillStyle = i ? "#56e2c2" : "#7ba5ff"; ctx.beginPath(); ctx.roundRect(s[0] * S + 1, s[1] * S + 1, S - 2, S - 2, 5); ctx.fill(); });
     if (over || paused || !loop) {
-      ctx.fillStyle = "rgba(11,13,18,.7)"; ctx.fillRect(0, 0, cv.width, cv.height);
-      ctx.fillStyle = "#e8eaf0"; ctx.font = "600 20px system-ui,sans-serif"; ctx.textAlign = "center";
-      ctx.fillText(over ? "Game over · " + score : paused ? "Paused" : "Press Start", cv.width / 2, cv.height / 2);
+      ctx.fillStyle = "rgba(8,11,17,.72)"; ctx.fillRect(0, 0, cv.width, cv.height);
+      ctx.fillStyle = "#eff4fb"; ctx.font = "700 20px Manrope,system-ui,sans-serif"; ctx.textAlign = "center";
+      ctx.fillText(over ? "Game over · " + score : paused ? "Paused" : "Press Start", cv.width / 2, cv.height / 2 + 7);
     }
   }
-  function start() {
-    if (over || !snake) reset();
-    clearInterval(loop); paused = false; loop = setInterval(step, 120);
-    $("startBtn").textContent = "Restart"; draw();
-  }
-  function togglePause() { if (!loop) return; paused = !paused; draw(); }
+  function start() { if (over || !snake) reset(); clearInterval(loop); paused = false; loop = setInterval(step, 120); $("startBtn").textContent = "Restart"; draw(); }
+  function togglePause() { if (loop) { paused = !paused; draw(); } }
 
   snakeBtn.addEventListener("click", () => {
     const g = $("game"); g.hidden = !g.hidden;
-    snakeBtn.textContent = g.hidden ? "🐍 Play Snake while you wait" : "Hide Snake";
-    if (!g.hidden) { g.scrollIntoView({ behavior: "smooth", block: "center" }); }
-    else { clearInterval(loop); loop = null; }
+    snakeBtn.textContent = g.hidden ? "Play Snake while you wait" : "Hide Snake";
+    if (!g.hidden) g.scrollIntoView({ behavior: "smooth", block: "center" }); else { clearInterval(loop); loop = null; draw(); }
   });
   $("startBtn").addEventListener("click", () => { reset(); start(); });
   document.querySelectorAll(".pad .btn").forEach(b => b.addEventListener("click", () => turn(b.dataset.d)));
-
-  const KEYS = { ArrowUp: "up", w: "up", W: "up", ArrowDown: "down", s: "down", S: "down",
-                 ArrowLeft: "left", a: "left", A: "left", ArrowRight: "right", d: "right", D: "right" };
+  const KEYS = { ArrowUp: "up", w: "up", W: "up", ArrowDown: "down", s: "down", S: "down", ArrowLeft: "left", a: "left", A: "left", ArrowRight: "right", d: "right", D: "right" };
   document.addEventListener("keydown", e => {
     if ($("game").hidden) return;
     if (KEYS[e.key]) { e.preventDefault(); turn(KEYS[e.key]); }
@@ -262,7 +371,6 @@
     turn(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? "right" : "left") : (dy > 0 ? "down" : "up"));
   });
   reset();
-
   check();
 })();
 </script>

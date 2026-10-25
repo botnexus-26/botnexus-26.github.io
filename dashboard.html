@@ -5,18 +5,266 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BotNexus Dashboard</title>
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b0d12">
 <link rel="icon" type="image/png" href="/favicon.png">
-<link rel="canonical" href="https://botnexusbot.bonto.run/">
-<meta http-equiv="refresh" content="0; url=https://botnexusbot.bonto.run/">
-<script>location.replace("https://botnexusbot.bonto.run/");</script>
 <style>
-  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
-       font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#0b0d12;color:#e8eaf0;text-align:center;padding:24px}
-  a{color:#8ab4ff}
+  :root{--bg:#0b0d12;--panel:#121722;--line:rgba(205,219,244,.14);--text:#e8eaf0;--muted:#9ca8bb;
+        --blue:#7ba5ff;--green:#56e2c2;--yellow:#f5c25b;--red:#ff6b7a}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:flex;justify-content:center;padding:24px 16px;
+       font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+  main{width:100%;max-width:560px;display:flex;flex-direction:column;gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px}
+  h1{margin:0 0 4px;font-size:1.5rem}
+  p{margin:0;color:var(--muted)}
+  a{color:var(--blue)}
+  .hero{text-align:center;padding:28px 20px}
+  .dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--yellow);margin-right:8px;vertical-align:middle}
+  .up .dot{background:var(--green)} .down .dot{background:var(--red)}
+  .btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
+  .btn{appearance:none;border:1px solid var(--line);background:#1a2130;color:var(--text);padding:10px 16px;
+       border-radius:999px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none}
+  .btn.primary{background:var(--blue);border-color:var(--blue);color:#0b0d12}
+  .btn:hover{filter:brightness(1.12)}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+  .row:first-of-type{border-top:0}
+  .tag{font-size:.85rem;font-weight:600;padding:2px 10px;border-radius:999px;border:1px solid var(--line)}
+  .ok{color:var(--green)} .warn{color:var(--yellow)} .bad{color:var(--red)}
+  h2{margin:0 0 8px;font-size:1.05rem}
+  .inc{padding:10px 0;border-top:1px solid var(--line)}
+  .inc:first-of-type{border-top:0}
+  .small{font-size:.85rem}
+  [hidden]{display:none!important}
+  #game{text-align:center}
+  canvas{width:100%;max-width:320px;aspect-ratio:1;background:#0d1119;border:1px solid var(--line);border-radius:12px;touch-action:none}
+  .pad{display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(2,48px);gap:6px;justify-content:center;margin-top:12px}
+  .pad .btn{padding:0}
+  .pad .u{grid-column:2}.pad .l{grid-column:1;grid-row:2}.pad .d{grid-column:2;grid-row:2}.pad .r{grid-column:3;grid-row:2}
 </style>
 </head>
 <body>
-<p>Taking you to the BotNexus dashboard…<br><br>
-If nothing happens, <a href="https://botnexusbot.bonto.run/">click here</a>.</p>
+<main>
+
+  <section id="hero" class="card hero">
+    <h1><span class="dot"></span><span id="heroTitle">Checking the dashboard…</span></h1>
+    <p id="heroText">Hang tight, this only takes a moment.</p>
+    <div class="btns">
+      <a id="openBtn" class="btn primary" href="#" hidden>Open dashboard</a>
+      <button id="retryBtn" class="btn" type="button" hidden>Check again</button>
+      <button id="snakeBtn" class="btn" type="button" hidden>🐍 Play Snake while you wait</button>
+    </div>
+    <p id="nextCheck" class="small" style="margin-top:12px" hidden></p>
+  </section>
+
+  <section id="game" class="card" hidden>
+    <h2>Snake</h2>
+    <p class="small" style="margin-bottom:10px">Arrow keys / WASD, swipe, or the on-screen pad. Space pauses.</p>
+    <canvas id="cv" width="320" height="320" aria-label="Snake game"></canvas>
+    <p class="small" style="margin-top:8px">Score <b id="score">0</b> · Best <b id="best">0</b></p>
+    <div class="pad" aria-label="Controls">
+      <button class="btn u" type="button" data-d="up" aria-label="Up">▲</button>
+      <button class="btn l" type="button" data-d="left" aria-label="Left">◀</button>
+      <button class="btn d" type="button" data-d="down" aria-label="Down">▼</button>
+      <button class="btn r" type="button" data-d="right" aria-label="Right">▶</button>
+    </div>
+    <div class="btns"><button id="startBtn" class="btn primary" type="button">Start</button></div>
+  </section>
+
+  <section class="card">
+    <h2>Live status <span id="overall" class="tag" hidden></span></h2>
+    <div id="components"><p class="small">Loading status…</p></div>
+    <div id="incidents"></div>
+    <p class="small" style="margin-top:12px"><a href="https://botnexus.instatus.com/" target="_blank" rel="noopener">View the full status page →</a></p>
+  </section>
+
+</main>
+
+<script>
+(() => {
+  "use strict";
+  // ---- Config (edit these) ----
+  const DASHBOARD = "https://botnexus.apps.bot-hosting.cloud/dashboard";
+  const STATUS    = "https://botnexus.instatus.com";
+  const RETRY_SECONDS = 20;       // re-check interval while offline
+  const REDIRECT_DELAY_MS = 1500; // delay before auto-redirect when online
+  const AUTO_REDIRECT = !/[?&]stay\b/.test(location.search); // add ?stay to disable redirect
+
+  const $ = id => document.getElementById(id);
+  const hero = $("hero"), heroTitle = $("heroTitle"), heroText = $("heroText");
+  const openBtn = $("openBtn"), retryBtn = $("retryBtn"), snakeBtn = $("snakeBtn"), nextCheck = $("nextCheck");
+  openBtn.href = DASHBOARD;
+
+  // ---- Dashboard availability check ----
+  // no-cors: the request resolves if the server answers at all and rejects on
+  // network/DNS/timeout failure, which works from a static page without CORS headers.
+  async function dashboardUp() {
+    const c = new AbortController(), t = setTimeout(() => c.abort(), 7000);
+    try { await fetch(DASHBOARD, { mode: "no-cors", cache: "no-store", signal: c.signal }); return true; }
+    catch (_) { return false; }
+    finally { clearTimeout(t); }
+  }
+
+  let timer = null, countdown = 0, checking = false;
+  async function check() {
+    if (checking) return; checking = true;
+    clearInterval(timer); nextCheck.hidden = true; retryBtn.hidden = true;
+    hero.className = "card hero"; heroTitle.textContent = "Checking the dashboard…";
+    heroText.textContent = "Hang tight, this only takes a moment.";
+    const up = await dashboardUp();
+    checking = false;
+    if (up) {
+      hero.className = "card hero up"; heroTitle.textContent = "Dashboard is online";
+      openBtn.hidden = false; snakeBtn.hidden = true; retryBtn.hidden = true;
+      if (AUTO_REDIRECT) {
+        heroText.textContent = "Taking you there now…";
+        setTimeout(() => location.replace(DASHBOARD), REDIRECT_DELAY_MS);
+      } else heroText.textContent = "Auto-redirect is off.";
+    } else {
+      hero.className = "card hero down"; heroTitle.textContent = "Bot offline";
+      heroText.textContent = "The dashboard can’t be reached right now. We’ll keep checking and send you through as soon as it’s back.";
+      openBtn.hidden = true; retryBtn.hidden = false; snakeBtn.hidden = false;
+      countdown = RETRY_SECONDS; nextCheck.hidden = false; tick();
+      timer = setInterval(tick, 1000);
+      loadStatus();
+    }
+  }
+  function tick() {
+    nextCheck.textContent = "Checking again in " + countdown + "s";
+    if (countdown-- <= 0) check();
+  }
+  retryBtn.addEventListener("click", check);
+
+  // ---- Status page data (Instatus public JSON) ----
+  const LABELS = {
+    OPERATIONAL: ["Operational", "ok"], UP: ["Operational", "ok"],
+    UNDERMAINTENANCE: ["Maintenance", "warn"],
+    DEGRADEDPERFORMANCE: ["Degraded", "warn"], HASISSUES: ["Has issues", "warn"],
+    PARTIALOUTAGE: ["Partial outage", "bad"], MINOROUTAGE: ["Minor outage", "warn"],
+    MAJOROUTAGE: ["Major outage", "bad"]
+  };
+  const label = s => LABELS[String(s || "").toUpperCase().replace(/[\s_-]/g, "")] || [s || "Unknown", "warn"];
+  const getJSON = async path => {
+    const c = new AbortController(), t = setTimeout(() => c.abort(), 8000);
+    try { const r = await fetch(STATUS + path, { signal: c.signal, cache: "no-store" });
+          if (!r.ok) throw 0; return await r.json(); }
+    finally { clearTimeout(t); }
+  };
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+  async function loadStatus() {
+    const [sum, comp] = await Promise.allSettled([getJSON("/summary.json"), getJSON("/v2/components.json")]);
+    const box = $("components"), inc = $("incidents");
+    box.textContent = ""; inc.textContent = "";
+
+    if (sum.status === "fulfilled" && sum.value.page) {
+      const [txt, cls] = label(sum.value.page.status);
+      const o = $("overall"); o.textContent = txt; o.className = "tag " + cls; o.hidden = false;
+    }
+    if (comp.status === "fulfilled" && Array.isArray(comp.value.components) && comp.value.components.length) {
+      comp.value.components.forEach(c => {
+        const [txt, cls] = label(c.status);
+        const row = el("div", "row"); row.append(el("span", "", c.name), el("span", "tag " + cls, txt)); box.append(row);
+      });
+    } else {
+      box.append(el("p", "small", "Couldn’t load live component data. Check the status page below for the latest."));
+    }
+    if (sum.status === "fulfilled") {
+      const list = [...(sum.value.activeIncidents || []), ...(sum.value.activeMaintenances || [])];
+      if (list.length) inc.append(el("h2", "", "Active notices"));
+      list.forEach(i => {
+        const d = el("div", "inc"); const a = el("a", "", i.name || "Notice");
+        a.href = i.url || STATUS; a.target = "_blank"; a.rel = "noopener";
+        d.append(a, el("p", "small", [i.status, i.impact].filter(Boolean).join(" · ")));
+        inc.append(d);
+      });
+    }
+  }
+  loadStatus();
+  setInterval(loadStatus, 60000);
+
+  // ---- Snake ----
+  const cv = $("cv"), ctx = cv.getContext("2d"), N = 16, S = cv.width / N;
+  let snake, dir, next, food, score, loop = null, paused = false, over = false;
+  let best = 0;
+  try { best = +localStorage.getItem("snakeBest") || 0; } catch (_) {}
+  $("best").textContent = best;
+
+  const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
+  function reset() {
+    snake = [[8, 8], [7, 8], [6, 8]]; dir = next = DIRS.right; score = 0; over = false; paused = false;
+    $("score").textContent = 0; placeFood(); draw();
+  }
+  function placeFood() {
+    do { food = [Math.floor(Math.random() * N), Math.floor(Math.random() * N)]; }
+    while (snake.some(s => s[0] === food[0] && s[1] === food[1]));
+  }
+  function turn(name) {
+    const d = DIRS[name]; if (!d) return;
+    if (d[0] === -dir[0] && d[1] === -dir[1]) return; // no reversing
+    next = d;
+  }
+  function step() {
+    if (paused || over) return;
+    dir = next;
+    const h = [snake[0][0] + dir[0], snake[0][1] + dir[1]];
+    if (h[0] < 0 || h[1] < 0 || h[0] >= N || h[1] >= N || snake.some(s => s[0] === h[0] && s[1] === h[1])) return end();
+    snake.unshift(h);
+    if (h[0] === food[0] && h[1] === food[1]) {
+      score++; $("score").textContent = score;
+      if (score > best) { best = score; $("best").textContent = best; try { localStorage.setItem("snakeBest", best); } catch (_) {} }
+      placeFood();
+    } else snake.pop();
+    draw();
+  }
+  function end() {
+    over = true; clearInterval(loop); loop = null; draw();
+    $("startBtn").textContent = "Play again";
+  }
+  function draw() {
+    ctx.fillStyle = "#0d1119"; ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = "#ff6b7a"; ctx.fillRect(food[0] * S + 3, food[1] * S + 3, S - 6, S - 6);
+    snake.forEach((s, i) => { ctx.fillStyle = i ? "#56e2c2" : "#7ba5ff"; ctx.fillRect(s[0] * S + 1, s[1] * S + 1, S - 2, S - 2); });
+    if (over || paused || !loop) {
+      ctx.fillStyle = "rgba(11,13,18,.7)"; ctx.fillRect(0, 0, cv.width, cv.height);
+      ctx.fillStyle = "#e8eaf0"; ctx.font = "600 20px system-ui,sans-serif"; ctx.textAlign = "center";
+      ctx.fillText(over ? "Game over · " + score : paused ? "Paused" : "Press Start", cv.width / 2, cv.height / 2);
+    }
+  }
+  function start() {
+    if (over || !snake) reset();
+    clearInterval(loop); paused = false; loop = setInterval(step, 120);
+    $("startBtn").textContent = "Restart"; draw();
+  }
+  function togglePause() { if (!loop) return; paused = !paused; draw(); }
+
+  snakeBtn.addEventListener("click", () => {
+    const g = $("game"); g.hidden = !g.hidden;
+    snakeBtn.textContent = g.hidden ? "🐍 Play Snake while you wait" : "Hide Snake";
+    if (!g.hidden) { g.scrollIntoView({ behavior: "smooth", block: "center" }); }
+    else { clearInterval(loop); loop = null; }
+  });
+  $("startBtn").addEventListener("click", () => { reset(); start(); });
+  document.querySelectorAll(".pad .btn").forEach(b => b.addEventListener("click", () => turn(b.dataset.d)));
+
+  const KEYS = { ArrowUp: "up", w: "up", W: "up", ArrowDown: "down", s: "down", S: "down",
+                 ArrowLeft: "left", a: "left", A: "left", ArrowRight: "right", d: "right", D: "right" };
+  document.addEventListener("keydown", e => {
+    if ($("game").hidden) return;
+    if (KEYS[e.key]) { e.preventDefault(); turn(KEYS[e.key]); }
+    else if (e.key === " " && e.target === document.body) { e.preventDefault(); togglePause(); }
+  });
+  let t0 = null;
+  cv.addEventListener("touchstart", e => { t0 = [e.touches[0].clientX, e.touches[0].clientY]; }, { passive: true });
+  cv.addEventListener("touchend", e => {
+    if (!t0) return;
+    const dx = e.changedTouches[0].clientX - t0[0], dy = e.changedTouches[0].clientY - t0[1]; t0 = null;
+    if (Math.max(Math.abs(dx), Math.abs(dy)) < 20) return;
+    turn(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? "right" : "left") : (dy > 0 ? "down" : "up"));
+  });
+  reset();
+
+  check();
+})();
+</script>
 </body>
 </html>

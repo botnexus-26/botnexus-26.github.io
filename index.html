@@ -6,6 +6,7 @@
 <title>BotNexus – Moderation, security and ER:LC tools for Discord</title>
 <meta name="description" content="BotNexus is a free Discord bot with 21 modules: moderation, tickets, leveling, ER:LC sessions and a tunable security suite.">
 <meta name="theme-color" content="#070b14">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://cdn.discordapp.com; media-src 'self'; connect-src 'self' https: http://195.123.189.186:2728; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <link rel="icon" href="bn-mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -25,29 +26,11 @@ code{font:500 .86em var(--m);background:var(--acs);color:var(--ac);padding:1px 6
 .grid i{position:absolute;width:44px;height:44px;background:var(--ac);opacity:0;animation:bl 7s ease-in-out infinite}
 @keyframes bl{0%,100%{opacity:0}45%,55%{opacity:.16}}
 /* island */
-.isl{position:fixed;top:max(10px,env(safe-area-inset-top));left:50%;translate:-50% 0;z-index:50;width:min(100vw - 20px,300px);background:var(--glass);border:1px solid var(--ln2);border-radius:24px;backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);box-shadow:0 12px 40px rgba(0,0,0,.28);overflow:hidden;transition:width .55s var(--e)}
-.isl.open{width:min(100vw - 20px,460px)}.isl.game{width:min(100vw - 20px,520px)}
-.top{display:flex;align-items:center;gap:8px;height:44px;padding:0 6px 0 11px}
-.brand{display:flex;align-items:center;gap:7px;font-weight:600;font-size:.9rem;letter-spacing:-.01em}
-.brand img{width:24px;height:24px;display:block}
 .sp{flex:1}
 .dot{width:9px;height:9px;border-radius:50%;background:var(--mu);flex:none;box-shadow:0 0 0 0 currentColor}
 .dot.ok{background:var(--ok);animation:pu 2.4s infinite;color:rgba(53,211,154,.5)}.dot.warn{background:var(--warn)}.dot.bad{background:var(--bad)}
 @keyframes pu{70%{box-shadow:0 0 0 6px transparent}}
-.clk{font:500 .78rem var(--m);font-variant-numeric:tabular-nums;border:1px solid var(--ln);background:var(--sf2);border-radius:999px;padding:4px 10px;cursor:pointer;min-width:74px;text-align:center}
-.clk:hover{border-color:var(--ac)}
-.mb{width:32px;height:32px;border-radius:50%;border:1px solid var(--ln);background:var(--sf2);cursor:pointer;display:grid;place-items:center;flex:none}
-.mb span{grid-area:1/1;width:13px;height:1.5px;background:currentColor;transition:transform .4s var(--e)}
-.mb span:first-child{translate:0 -3px}.mb span:last-child{translate:0 3px}
-.open .mb span:first-child{translate:0;transform:rotate(45deg)}.open .mb span:last-child{translate:0;transform:rotate(-45deg)}
-.panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--e)}.open .panel{grid-template-rows:1fr}
-.panel>div{min-height:0;overflow:hidden}.in{padding:6px 12px 12px;border-top:1px solid var(--ln)}
-.links{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:8px 0}
-.links a{padding:6px 8px;border-radius:8px;font-size:.84rem;color:var(--mu);transition:background .2s,color .2s}.links a:hover{background:var(--acs);color:var(--tx)}
 .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.stl{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--mu);padding:6px 8px;margin-bottom:6px;border-radius:8px;background:var(--sf2)}
-.gm{display:none}.game .gm{display:block}.game .menu{display:none}
-.gh{display:flex;align-items:center;gap:8px;margin:8px 0 6px;font-size:.82rem}.gh b{font-weight:600}.gh span{color:var(--mu);font-family:var(--m);font-size:.74rem}
 canvas{display:block;width:100%;aspect-ratio:2/1;border-radius:10px;border:1px solid var(--ln);background:var(--sf);touch-action:none;cursor:pointer}
 /* buttons */
 .b{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--ln2);background:var(--sf2);font-weight:500;font-size:.86rem;cursor:pointer;transition:border-color .2s,background .2s,transform .2s}
@@ -88,24 +71,16 @@ summary::-webkit-details-marker{display:none}summary::after{content:"+";color:va
 details p{margin:0 0 14px;color:var(--mu);font-size:.88rem;max-width:64ch}details a{color:var(--ac)}
 footer{border-top:1px solid var(--ln);padding:24px 0 32px;font-size:.82rem;color:var(--mu)}
 footer .w{display:flex;justify-content:space-between;gap:14px 24px;flex-wrap:wrap;align-items:center}footer nav{display:flex;gap:16px;flex-wrap:wrap}footer a:hover{color:var(--tx)}
-@media(max-width:820px){.hg,.sec{grid-template-columns:1fr}.cells,.steps{grid-template-columns:1fr 1fr}.links{grid-template-columns:repeat(3,1fr)}header.h{padding-top:92px}}
-@media(max-width:520px){.cells,.sec .cells,.steps{grid-template-columns:1fr}.links{grid-template-columns:repeat(2,1fr)}.q{width:100%}}
+@media(max-width:820px){.hg,.sec{grid-template-columns:1fr}.cells,.steps{grid-template-columns:1fr 1fr}header.h{padding-top:92px}}
+@media(max-width:520px){.cells,.sec .cells,.steps{grid-template-columns:1fr}.q{width:100%}}
 @media(prefers-reduced-motion:reduce){*,*::after{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
-.games{margin-top:8px;padding-top:8px;border-top:1px solid var(--ln)}.lb{font-size:.78rem;color:var(--mu);margin-right:2px}
-.in{max-height:calc(100dvh - 76px);overflow-y:auto;overscroll-behavior:contain}
 button,a{-webkit-tap-highlight-color:transparent}
-@media(hover:none),(max-width:520px){.b.s,.b{height:40px;padding:0 13px}.links a{padding:11px 8px;font-size:.92rem}.mb{width:38px;height:38px}.top{height:50px}.clk{padding:7px 10px}.stl{padding:10px}.games .b{flex:1 1 30%;justify-content:center}}
 @media(max-width:520px){header.h{padding:84px 0 36px}h1{max-width:none}.hg{gap:28px}.hg .row .b{flex:1 1 auto;justify-content:center}.facts{width:100%}.facts li{flex:1 1 auto;text-align:center;padding:7px 10px;font-size:.78rem}
 section{padding:32px 0}#chips{flex-wrap:nowrap;overflow-x:auto;width:calc(100% + 16px);margin-right:-16px;padding-right:16px;scrollbar-width:none}#chips::-webkit-scrollbar{display:none}.chip{flex:none;height:36px;padding:0 13px}
 .q{height:40px;font-size:16px;flex:1}.cells>div{padding:13px 14px}.steps{gap:14px}summary{padding:15px 0}footer nav{gap:12px 18px}}
-.srch{display:flex;align-items:center;gap:6px;margin:8px 0}.srch input{flex:1;min-width:0;height:36px;border-radius:8px;border:1px solid var(--ln2);background:var(--sf);padding:0 10px;font-size:.86rem}.srch input:focus{border-color:var(--ac);outline:0}
-#sc{font:.7rem var(--m);color:var(--mu);white-space:nowrap}.b.s.ic{width:34px;padding:0;justify-content:center;flex:none}
 mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;border-radius:3px;padding:0 1px}mark.hl.cur{background:var(--ac);color:var(--acf)}
-.acr{margin-top:8px;gap:8px}.sw{width:24px;height:24px;border-radius:50%;border:2px solid transparent;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);cursor:pointer;padding:0}.sw.on{border-color:var(--tx)}
 #acc{width:28px;height:28px;padding:0;border:1px solid var(--ln2);border-radius:50%;background:none;cursor:pointer;-webkit-appearance:none;appearance:none}#acc::-webkit-color-swatch-wrapper{padding:0}#acc::-webkit-color-swatch{border:0;border-radius:50%}#acc::-moz-color-swatch{border:0;border-radius:50%}
-#sw{gap:7px;flex-wrap:wrap}
 .opts{display:grid;gap:8px}.opts a{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:11px 14px;border:1px solid var(--ln);border-radius:10px;background:var(--sf);transition:border-color .2s}.opts a:hover{border-color:var(--ac)}.opts b{font-weight:600;font-size:.9rem}.opts span{color:var(--mu);font-size:.8rem;text-align:right}
-@media(hover:none),(max-width:520px){.sw{width:30px;height:30px}#acc{width:34px;height:34px}.srch input{height:40px;font-size:16px}.b.s.ic{width:40px}}
 /* live bot stats */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:10px;overflow:hidden;margin-top:36px}
 .stats>div{background:var(--sf);padding:14px 16px;min-width:0}
@@ -115,15 +90,82 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
 .stats.stale b{opacity:.55}
 @media(max-width:820px){.stats{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.stats{margin-top:28px}.stats b{font-size:1.3rem}}
-/* server check */
-.gck{margin:8px 0}.gck .srch{margin:0}.gck .lb{display:block;margin:0 0 4px}
-#gres{display:grid;gap:6px;margin-top:6px}#gres:empty{display:none}
-.gi{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:var(--sf2);border:1px solid var(--ln);min-width:0}
-.gi img,.gi .ph{width:30px;height:30px;border-radius:50%;flex:none;object-fit:cover;background:var(--acs);display:grid;place-items:center;font-weight:600;font-size:.85rem;color:var(--ac)}
-.gi>div{flex:1;min-width:0}.gi b{display:block;font-weight:600;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* ===== dynamic island (iPhone style) ===== */
+.isl{--sp:cubic-bezier(.32,1.28,.46,1);--tx:#fff;--mu:rgba(235,235,245,.6);--sf:#1c1c1e;--sf2:#2c2c2e;--ln:rgba(255,255,255,.09);--ln2:rgba(255,255,255,.16);color:#fff;position:fixed;top:max(11px,env(safe-area-inset-top));left:50%;translate:-50% 0;z-index:50;width:min(100vw - 24px,252px);background:#000;border-radius:22px;box-shadow:0 0 0 .5px rgba(255,255,255,.12),0 16px 44px rgba(0,0,0,.38);overflow:hidden;transition:width .65s var(--sp),border-radius .5s var(--e),top .5s var(--e),box-shadow .5s}
+.isl.open{width:min(100vw - 24px,392px);border-radius:38px}.isl.game{width:min(100vw - 24px,440px)}
+.top{display:flex;align-items:center;gap:8px;height:37px;padding:0 5px 0 12px;transition:height .5s var(--e),padding .5s var(--e)}
+.open .top{height:52px;padding:0 9px 0 18px}
+.brand{display:flex;align-items:center;gap:7px;font-weight:600;font-size:.86rem;letter-spacing:-.01em}
+.brand img{width:20px;height:20px;display:block;transition:width .5s var(--e),height .5s var(--e)}.open .brand img{width:26px;height:26px}
+.clk{font:500 .74rem var(--m);font-variant-numeric:tabular-nums;border:0;background:none;color:var(--mu);cursor:pointer;padding:4px 2px;min-width:0}.clk:hover{color:#fff}
+.mb{width:27px;height:27px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;display:grid;place-items:center;flex:none;transition:width .4s var(--e),height .4s var(--e),background .2s}.mb:hover{background:rgba(255,255,255,.2)}.open .mb{width:32px;height:32px}
+.mb span{grid-area:1/1;width:12px;height:1.6px;border-radius:1px;background:currentColor;transition:transform .45s var(--e)}
+.mb span:first-child{translate:0 -2.5px}.mb span:last-child{translate:0 2.5px}
+.open .mb span:first-child{translate:0;transform:rotate(45deg)}.open .mb span:last-child{translate:0;transform:rotate(-45deg)}
+.panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s var(--e)}.open .panel{grid-template-rows:1fr}
+.panel>div{min-height:0;overflow:hidden}
+.in{padding:0 16px 16px;min-height:0;max-height:calc(100dvh - 96px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;visibility:hidden;opacity:0;transform:scale(.92);transform-origin:50% 0;filter:blur(10px);transition:opacity .25s,transform .5s var(--sp),filter .35s,visibility 0s .55s,min-height .6s var(--e),max-height .6s var(--e),padding .5s var(--e)}
+.in::-webkit-scrollbar{display:none}
+.open .in{visibility:visible;opacity:1;transform:none;filter:none;transition:opacity .3s .07s,transform .55s var(--sp) .07s,filter .4s .07s,visibility 0s,min-height .6s var(--e),max-height .6s var(--e),padding .5s var(--e)}
+.seg{display:flex;background:var(--sf);border-radius:11px;padding:2px;margin:0 0 14px}
+.seg button{flex:1;height:30px;border:0;border-radius:9px;background:none;color:var(--mu);font-size:.8rem;font-weight:500;cursor:pointer;transition:background .25s,color .25s}
+.seg button.on{background:#48484a;color:#fff}
+.stl{display:flex;align-items:center;gap:9px;font-size:.8rem;color:#fff;padding:10px 14px;margin-bottom:14px;border-radius:14px;background:var(--sf)}
+.stl::after{content:"›";margin-left:auto;color:var(--mu);font-size:1.2rem;line-height:1}
+.links{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 6px;padding:2px 0 14px}
+.links a{display:grid;justify-items:center;gap:6px;font-size:.7rem;color:var(--mu);transition:color .2s}
+.links a:hover{color:#fff}
+.links i{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;color:var(--g,#fff);background:linear-gradient(160deg,color-mix(in srgb,var(--c) 80%,#fff),var(--c));box-shadow:inset 0 0 0 .5px rgba(255,255,255,.18);transition:transform .3s var(--sp)}
+.links a:hover i{transform:scale(1.07)}.links a:active i{transform:scale(.94)}
+.links svg,.fld svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.acts .b{height:44px;border-radius:22px;justify-content:center;font-size:.9rem}
+.lb{display:block;font:500 .66rem var(--m);text-transform:uppercase;letter-spacing:.09em;color:var(--mu);margin:0 4px 6px}
+.fld{display:flex;align-items:center;gap:8px;min-height:40px;padding:0 5px 0 12px;border-radius:13px;background:var(--sf);margin-bottom:8px;transition:box-shadow .2s}
+.fld:focus-within{box-shadow:0 0 0 2px var(--ac)}.fld>svg{width:16px;height:16px;color:var(--mu);flex:none}
+.fld input{flex:1;min-width:0;height:38px;border:0;background:none;outline:0;font-size:.9rem;color:#fff;-webkit-appearance:none;appearance:none}
+.fld input::placeholder{color:var(--mu)}.fld input::-webkit-search-cancel-button{display:none}
+#sc{font:.68rem var(--m);color:var(--mu);white-space:nowrap}
+.b.s.ic{width:30px;padding:0;justify-content:center;flex:none;border-radius:50%;border:0;background:var(--sf2)}
+.gck{margin-top:2px}
+#gres{background:var(--sf);border-radius:14px;overflow:hidden}#gres:empty{display:none}
+.gi{display:flex;align-items:center;gap:11px;padding:10px 12px;min-width:0}
+.gi img,.gi .ph{width:34px;height:34px;border-radius:50%;flex:none;object-fit:cover;background:var(--acs);display:grid;place-items:center;font-weight:600;font-size:.9rem;color:var(--ac)}
+.gi>div{flex:1;min-width:0}.gi b{display:block;font-weight:600;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .gi small{display:block;color:var(--mu);font:400 .68rem var(--m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gn{font-size:.82rem;color:var(--mu);padding:6px 2px}.gn a{color:var(--ac);font-weight:500}
-@media(hover:none),(max-width:520px){#gid{height:40px;font-size:16px}}
+.gn{font-size:.82rem;color:var(--mu);padding:12px 14px}.gn a{color:var(--ac);font-weight:500}
+.grp{background:var(--sf);border-radius:14px;padding:2px 14px;margin-bottom:10px}
+.rw{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 10px;padding:11px 0;font-size:.86rem}.rw+.rw{border-top:1px solid var(--ln)}
+.rw .lb{margin:0}#sw{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sw{width:24px;height:24px;border-radius:50%;border:2px solid transparent;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);cursor:pointer;padding:0}.sw.on{border-color:#fff}
+.games{display:flex;gap:6px;flex-wrap:wrap;width:100%}.games .b{flex:1 1 28%;justify-content:center;border-radius:999px}
+.gm{display:none}.game .gm{display:block}.game .menu{display:none}
+.gh{display:flex;align-items:center;gap:10px;margin:2px 0 10px;font-size:.84rem}.gh b{font-weight:600}.gh span{color:var(--mu);font-family:var(--m);font-size:.72rem}
+.isl canvas{border:0;border-radius:18px}
+.isl .b{background:var(--sf2);border-color:transparent;color:#fff}.isl .b.p{background:var(--ac);color:var(--acf)}.isl .b:hover{filter:brightness(1.15)}
+@media(hover:none),(max-width:520px){.b.s,.b{height:40px;padding:0 13px}.b.s.ic{width:34px;height:34px;padding:0}.seg button{height:34px}.fld input{font-size:16px}.sw{width:30px;height:30px}#acc{width:34px;height:34px}.acts .b{height:46px}}
+@media(max-width:380px){.links i{width:48px;height:48px}}
+/* ===== pin / full screen / live tiles ===== */
+.tb{display:none;width:32px;height:32px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;place-items:center;cursor:pointer;flex:none;transition:background .2s,transform .25s var(--sp)}
+.tb svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tb:hover{background:rgba(255,255,255,.22)}.tb:active{transform:scale(.9)}.open .tb{display:grid}
+.tb.on{background:var(--ac);color:var(--acf)}.tb.on svg{transform:rotate(-45deg)}
+.fs .co{display:none}.full .fs .ex{display:none}.full .fs .co{display:block}
+.ls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.ls>div{background:var(--sf);border-radius:14px;padding:10px 12px;min-width:0}
+.ls b{display:block;font:600 1.12rem/1.3 var(--f);font-variant-numeric:tabular-nums;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ls span{font:500 .6rem var(--m);text-transform:uppercase;letter-spacing:.09em;color:var(--mu)}
+.lb em{font-style:normal;float:right;color:var(--ok);letter-spacing:.04em}.lb em.off{color:var(--bad)}
+.isl.full,.isl.full.game{top:0;width:100%;border-radius:0;box-shadow:none}
+.full .top{height:calc(58px + env(safe-area-inset-top,0px));padding:env(safe-area-inset-top,0px) clamp(14px,3vw,32px) 0}
+.full .in{--fh:calc(58px + env(safe-area-inset-top,0px));min-height:calc(100dvh - var(--fh));max-height:calc(100dvh - var(--fh));padding:10px clamp(14px,4vw,48px) calc(36px + env(safe-area-inset-bottom,0px))}
+.full .menu{max-width:660px;margin:0 auto}
+.full .links{gap:22px 8px}.full .links i{width:64px;height:64px;border-radius:18px}.full .links svg{width:30px;height:30px}.full .links a{font-size:.8rem}
+.full .ls b{font-size:clamp(.8rem,4.4vw,1.35rem)}.full .fld{min-height:48px}.full .fld input{font-size:1rem}.full .acts .b{height:50px;font-size:1rem}
+.full .gm{max-width:780px;margin:0 auto}
+@media(min-width:860px){.full .menu{max-width:1060px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}.full .seg{display:none}.full .pane[hidden]{display:block}}
+.isl.game .menu{display:none!important}
+@media(max-width:360px){.open .brand span{display:none}}
 </style>
 </head>
 <body>
@@ -132,32 +174,44 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
 
 <div class="isl" id="isl">
   <div class="top">
-    <a class="brand" href="#top" aria-label="BotNexus home"><img src="bn-mark.png" alt="">BotNexus</a>
+    <a class="brand" href="#top" aria-label="BotNexus home"><img src="bn-mark.png" alt=""><span>BotNexus</span></a>
     <span class="sp"></span>
     <span class="dot" id="sdot" title="Checking status…"></span>
     <button class="clk" id="clk" title="Click to switch 12/24-hour" aria-label="Local time">--:--:--</button>
+    <button class="tb" id="pin" aria-pressed="false" aria-label="Keep open" title="Keep open"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6l-1 5 3 3v1.5H7V12l3-3z"/><path d="M12 13.5V20"/></svg></button>
+    <button class="tb fs" id="fs" aria-pressed="false" aria-label="Full screen" title="Full screen"><svg class="ex" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg><svg class="co" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10h-6V4M4 14h6v6M14 10l7-7M10 14l-7 7"/></svg></button>
     <button class="mb" id="mb" aria-expanded="false" aria-controls="pn" aria-label="Menu"><span></span><span></span></button>
   </div>
   <div class="panel" id="pn"><div><div class="in">
     <div class="menu">
-      <div class="srch"><input id="sq" type="search" placeholder="Search this page" aria-label="Search this page" autocomplete="off" enterkeyhint="search"><span id="sc" aria-live="polite"></span><button class="b s ic" id="sp" aria-label="Previous match">↑</button><button class="b s ic" id="sn" aria-label="Next match">↓</button></div>
-      <div class="gck"><span class="lb">Is BotNexus in your server?</span>
-        <div class="srch"><input id="gid" type="search" placeholder="Server ID or name" aria-label="Check a server by ID or name" autocomplete="off" inputmode="search" enterkeyhint="search"><button class="b s" id="gb">Check</button></div>
-        <div id="gres" aria-live="polite"></div></div>
-      <div class="links">
-        <a href="#modules">Modules</a><a href="#security">Security</a><a href="#start">Setup</a><a href="#faq">FAQ</a>
-        <a href="https://botnexus-26.github.io/docs">Docs</a><a href="https://botnexus-26.github.io/help-center">Help</a><a href="https://botnexus.instatus.com/">Status</a><a href="https://botnexus.apps.bot-hosting.cloud/store">Store</a>
+      <div class="seg" role="tablist"><button class="on" data-t="home" role="tab">Home</button><button data-t="more" role="tab">More</button></div>
+      <div class="pane" data-p="home">
+        <a class="stl" href="https://botnexus.instatus.com/"><span class="dot" id="sdot2"></span><span id="stxt">Checking status…</span></a>
+        <div class="ls"><div><b id="i_g">–</b><span>Servers</span></div><div><b id="i_u">–</b><span>Users</span></div><div><b id="i_t">–</b><span>Uptime</span></div></div>
+        <div class="links">
+          <a href="#modules" style="--c:#0a84ff"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg></i>Modules</a>
+          <a href="#security" style="--c:#30d158"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.2-2.9 7.6-7 9.5-4.1-1.9-7-5.3-7-9.5V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg></i>Security</a>
+          <a href="#start" style="--c:#ff9f0a"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/></svg></i>Setup</a>
+          <a href="#faq" style="--c:#bf5af2"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.6a2.5 2.5 0 114 2c-.9.6-1.6 1.1-1.6 2.2"/><path d="M12 16.9v.01"/></svg></i>FAQ</a>
+          <a href="https://botnexus-26.github.io/docs" style="--c:#5ac8fa"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5A1.5 1.5 0 016.5 4H19v14H6.5A1.5 1.5 0 005 19.5z"/><path d="M5 19.5A1.5 1.5 0 006.5 21H19v-3"/></svg></i>Docs</a>
+          <a href="https://botnexus-26.github.io/help-center" style="--c:#ff375f"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.6"/><path d="M6 6l3.4 3.4M18 6l-3.4 3.4M6 18l3.4-3.4M18 18l-3.4-3.4"/></svg></i>Help</a>
+          <a href="https://botnexus.instatus.com/" style="--c:#64d2a0"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2.5-6 4 12 2.5-6H21"/></svg></i>Status</a>
+          <a href="https://botnexus.apps.bot-hosting.cloud/store" style="--c:#ffd60a;--g:#1c1c1e"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V7a3 3 0 016 0v1"/></svg></i>Store</a>
+        </div>
+        <div class="acts"><a class="b p" href="https://discord.com/oauth2/authorize?client_id=1522289525378908244&permissions=8&integration_type=0&scope=applications.commands+bot">Add to Discord</a><a class="b" href="https://botnexus.apps.bot-hosting.cloud/dashboard">Dashboard</a></div>
+        <div class="gck"><span class="lb">Server check<em id="gapi">checking…</em></span>
+          <div class="fld"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="gid" type="search" placeholder="Server ID or server link" aria-label="Check whether BotNexus is in a server by ID" autocomplete="off" inputmode="numeric" enterkeyhint="search"><button class="b s" id="gb">Check</button></div>
+          <div id="gres" aria-live="polite"></div></div>
       </div>
-      <a class="stl" href="https://botnexus.instatus.com/"><span class="dot" id="sdot2"></span><span id="stxt">Checking status…</span></a>
-      <div class="row">
-        <a class="b p s" href="https://discord.com/oauth2/authorize?client_id=1522289525378908244&permissions=8&integration_type=0&scope=applications.commands+bot">Add to Discord</a>
-        <a class="b s" href="https://botnexus.apps.bot-hosting.cloud/dashboard">Dashboard</a>
-        <a class="b s" href="https://botnexus.apps.bot-hosting.cloud/store">Store</a>
-        <button class="b s" id="th" aria-label="Toggle light or dark theme">Theme</button>
-      </div>
-      <div class="row acr"><span class="lb">Accent</span><span class="row" id="sw"></span></div>
-      <div class="row games"><span class="lb">Play</span>
-        <button class="b s" data-g="flap">Flap</button><button class="b s" data-g="catch">Catch</button><button class="b s" data-g="dodge">Dodge</button><button class="b s" data-g="snake">Snake</button><button class="b s" data-g="bugs">Bugs</button>
+      <div class="pane" data-p="more" hidden>
+        <div class="fld"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="sq" type="search" placeholder="Search this page" aria-label="Search this page" autocomplete="off" enterkeyhint="search"><span id="sc" aria-live="polite"></span><button class="b s ic" id="sp" aria-label="Previous match">↑</button><button class="b s ic" id="sn" aria-label="Next match">↓</button></div>
+        <div class="grp">
+          <div class="rw"><span>Appearance</span><button class="b s" id="th" aria-label="Toggle light or dark theme">Light / Dark</button></div>
+          <div class="rw"><span>Accent</span><span id="sw"></span></div>
+        </div>
+        <div class="grp"><div class="rw"><span class="lb">Mini games</span><div class="games">
+          <button class="b s" data-g="flap">Flap</button><button class="b s" data-g="catch">Catch</button><button class="b s" data-g="dodge">Dodge</button><button class="b s" data-g="snake">Snake</button><button class="b s" data-g="bugs">Bugs</button>
+        </div></div></div>
       </div>
     </div>
     <div class="gm">
@@ -271,15 +325,25 @@ $("#th").onclick=()=>{const l=document.documentElement.classList.toggle("light")
 
 /* ---------- island ---------- */
 const isl=$("#isl"),mb=$("#mb");
-function open(v){isl.classList.toggle("open",v);mb.setAttribute("aria-expanded",v);if(!v&&isl.classList.contains("game"))endGame()}
-mb.onclick=()=>open(!isl.classList.contains("open"));
+let pinned=store.get("bn_pin")==="1",full=false;
+function open(v){if(!v&&(pinned||full))return;isl.classList.toggle("open",v);mb.setAttribute("aria-expanded",v);if(!v&&isl.classList.contains("game"))endGame()}
+const pinB=$("#pin"),fsB=$("#fs");
+function setPin(v){pinned=v;store.set("bn_pin",v?"1":"0");pinB.classList.toggle("on",v);pinB.setAttribute("aria-pressed",v);pinB.title=v?"Unpin":"Keep open";if(v)open(true)}
+function setFull(v){full=v;isl.classList.toggle("full",v);fsB.setAttribute("aria-pressed",v);fsB.title=v?"Exit full screen":"Full screen";document.documentElement.style.overflow=v?"hidden":"";if(v)open(true)}
+function closeAll(){if(full)setFull(false);setPin(false);open(false)}
+mb.onclick=()=>isl.classList.contains("open")?closeAll():open(true);
+pinB.onclick=()=>setPin(!pinned);fsB.onclick=()=>setFull(!full);
+pinB.classList.toggle("on",pinned);pinB.setAttribute("aria-pressed",pinned);
+function tab(t){document.querySelectorAll(".seg button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));document.querySelectorAll(".pane").forEach(p=>p.hidden=p.dataset.p!==t)}
+document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>tab(b.dataset.t));
 const hover=matchMedia("(hover:hover)").matches;let auto=0;
 if(hover){isl.onpointerenter=()=>{auto=0;open(true)};isl.onpointerleave=()=>{if(!isl.classList.contains("game")&&!["sq","acc","gid"].includes(document.activeElement.id))open(false)}}
 addEventListener("pointerdown",e=>{if(!isl.contains(e.target)&&isl.classList.contains("open"))open(false)});
-isl.addEventListener("click",e=>{if(e.target.closest(".links a"))open(false)});
-addEventListener("keydown",e=>{if(e.key==="Escape"&&isl.classList.contains("open"))open(false)});
+isl.addEventListener("click",e=>{if(e.target.closest(".links a")){if(full)setFull(false);open(false)}});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&isl.classList.contains("open")){if(full)setFull(false);else closeAll()}});
 addEventListener("scroll",()=>{if(auto&&scrollY>30){auto=0;open(false)}},{passive:true});
-if(hover&&innerWidth>820){setTimeout(()=>{auto=1;open(true)},500);setTimeout(()=>{if(auto){auto=0;open(false)}},3400)}
+if(pinned)open(true);
+if(hover&&innerWidth>820&&!pinned){setTimeout(()=>{auto=1;open(true)},500);setTimeout(()=>{if(auto){auto=0;open(false)}},3400)}
 
 /* ---------- live status (Instatus public JSON) ---------- */
 const norm=s=>String(s||"").toUpperCase().replace(/[^A-Z]/g,"");
@@ -303,71 +367,86 @@ async function status(){
  }}
 status();setInterval(status,60000);
 
-/* ---------- live bot stats (static-hosting safe) ---------- */
-/* Tries the API directly first. If the browser blocks it (an https page can't call plain http,
-   and the API needs CORS headers), it falls back through public CORS relays automatically. */
-const API="http://195.123.189.186:2728";
-const RELAYS=[u=>u,
- u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u),
- u=>"https://corsproxy.io/?url="+encodeURIComponent(u),
- u=>"https://api.codetabs.com/v1/proxy?quest="+encodeURIComponent(u)];
-let rl=0,SD=null,SAT=0,online=false;
-async function jt(u,ms){const c=new AbortController(),t=setTimeout(()=>c.abort(),ms);try{const r=await fetch(u,{cache:"no-store",signal:c.signal});if(!r.ok)throw 0;return await r.json()}finally{clearTimeout(t)}}
-async function pull(path,ok){
- const order=[rl,...RELAYS.keys()].filter((v,i,a)=>a.indexOf(v)===i);
- for(const i of order){try{const d=await jt(RELAYS[i](API+path),7000);if(ok(d)){rl=i;return d}}catch(e){}}
+/* ---------- bot API: stats + server check ---------- */
+/* Put your HTTPS API address first in BASES. Whichever entry answers is remembered.
+   Public CORS relays are used ONLY for the read-only stats numbers, never for server lookups.
+   Set USE_RELAYS_FOR_STATS to false once your API has HTTPS + CORS. */
+const BASES=["https://botnexus.apps.bot-hosting.cloud","http://195.123.189.186:2728"];
+const USE_RELAYS_FOR_STATS=true;
+const RELAYS=[u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u),u=>"https://corsproxy.io/?url="+encodeURIComponent(u)];
+let hit=0,pc=0,SD=null,SAT=0,online=false;
+const API_FAIL=[];let warned=false;
+async function jt(u,ms){const c=new AbortController(),t=setTimeout(()=>c.abort(),ms);try{const r=await fetch(u,{cache:"no-store",credentials:"omit",referrerPolicy:"no-referrer",signal:c.signal});if(!r.ok&&r.status!==404)throw 0;const d=await r.json();if(!r.ok&&!(d&&d.found===false))throw 0;return d}finally{clearTimeout(t)}}
+async function pull(path,ok,relay){
+ const urls=BASES.map(b=>b+path);
+ if(relay&&USE_RELAYS_FOR_STATS)RELAYS.forEach(r=>urls.push(r(BASES[BASES.length-1]+path)));
+ const order=[hit,...urls.keys()].filter((v,i,a)=>v<urls.length&&a.indexOf(v)===i);
+ for(const i of order){try{const d=await jt(urls[i],7000);if(ok(d)){hit=i;return d}}catch(e){API_FAIL.push(urls[i])}}
  return null}
-const nf=n=>n==null?"–":Number(n).toLocaleString();
+const nf=n=>n==null?"–":Number(n).toLocaleString(),num=v=>Number.isFinite(+v)&&v!==null&&v!==""?+v:null;
+function durS(s){s=Math.max(0,Math.floor(s));const d=s/86400|0,h=s%86400/3600|0,m=s%3600/60|0;return d?d+"d "+h+"h":h?h+"h "+m+"m":m+"m "+s%60+"s"}
 function dur(s){s=Math.max(0,Math.floor(s));const d=s/86400|0,h=s%86400/3600|0,m=s%3600/60|0;return(d?d+"d ":"")+(d||h?h+"h ":"")+m+"m "+s%60+"s"}
 function paintStats(){
- const d=SD,box=$("#stats");
- if(!d){box.classList.add("stale");return}
+ const d=SD,box=$("#stats");if(!d){box.classList.add("stale");return}
  $("#s_g").textContent=nf(d.guilds);$("#s_u").textContent=nf(d.users);
  $("#s_t").textContent=d.uptimeSeconds==null?"–":dur(d.uptimeSeconds+(online?(Date.now()-SAT)/1000:0));
- const up=online&&d.ready!==false;
  $("#s_d").className="dot "+(online?(d.ready===false?"warn":"ok"):"bad");
  $("#s_s").textContent=online?(d.ready===false?"Starting":"Online"):"Offline";
  $("#s_n").textContent=online?"updated "+new Date(SAT).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):(SAT?"last seen "+new Date(SAT).toLocaleString([],{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"no data");
+ $("#i_g").textContent=nf(d.guilds);$("#i_u").textContent=nf(d.users);$("#i_t").textContent=d.uptimeSeconds==null?"–":durS(d.uptimeSeconds+(online?(Date.now()-SAT)/1000:0));
+ const ga=$("#gapi");ga.textContent=online?"API online":"API offline";ga.className=online?"":"off";
  box.classList.toggle("stale",!online)}
 async function stats(){
- let d=await pull("/api/stats",x=>x&&typeof x.guilds==="number");
- if(!d){const g=await pull("/api/guilds",x=>Array.isArray(x)||(x&&Array.isArray(x.guilds)));
-  if(g){const a=Array.isArray(g)?g:g.guilds;d={guilds:a.length,users:a.reduce((n,x)=>n+(+x.memberCount||+x.members||+x.users||0),0)||(SD&&SD.users)||null,uptimeSeconds:SD&&SD.uptimeSeconds,ready:true}}}
- if(d){SD=d;SAT=Date.now();online=true;try{store.set("bn_stats",JSON.stringify({d,at:SAT}))}catch(e){}}
- else{online=false;if(!SD){$("#s_s").textContent="Offline";$("#s_d").className="dot bad";$("#s_n").textContent="can’t reach the bot API"}}
+ if(hit>=BASES.length&&++pc%5===0)hit=0; /* periodically retry the direct API */
+ let x=await pull("/api/stats",v=>v&&typeof v==="object"&&Number.isFinite(+v.guilds),true),d=null;
+ if(x)d={guilds:num(x.guilds),users:num(x.users),uptimeSeconds:num(x.uptimeSeconds),ready:x.ready!==false};
+ else{const g=await pull("/api/guilds",Array.isArray);if(g)d={guilds:g.length,users:SD&&SD.users,uptimeSeconds:SD&&SD.uptimeSeconds,ready:true}}
+ if(d){SD=d;SAT=Date.now();online=true;store.set("bn_stats",JSON.stringify({d,at:SAT}))}
+ else{online=false;if(!warned){warned=true;console.warn("[BotNexus] Could not reach the bot API. Tried:",[...new Set(API_FAIL)],"An HTTPS site needs an HTTPS API with CORS enabled. See bot-api-snippet.js.")}
+  $("#gapi").textContent="API offline";$("#gapi").className="off";if(!SD){$("#s_s").textContent="Offline";$("#s_d").className="dot bad";$("#s_n").textContent="can’t reach the bot API"}}
  paintStats()}
-try{const c=JSON.parse(store.get("bn_stats")||"null");if(c&&c.d){SD=c.d;SAT=c.at;paintStats()}}catch(e){}
+try{const c=JSON.parse(store.get("bn_stats")||"null");if(c&&c.d&&c.at){SD={guilds:num(c.d.guilds),users:num(c.d.users),uptimeSeconds:num(c.d.uptimeSeconds),ready:c.d.ready!==false};SAT=+c.at||0;paintStats()}}catch(e){}
 stats();setInterval(stats,30000);setInterval(()=>{if(online)paintStats()},1000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)stats()});
 
-/* ---------- server check (by ID or name) ---------- */
+/* ---------- server check (single ID lookup) ---------- */
 const INV="https://discord.com/oauth2/authorize?client_id=1522289525378908244&permissions=8&integration_type=0&scope=applications.commands+bot";
-const gi=$("#gid"),gr=$("#gres");let GL=null,GAT=0,gdt;
-async function guilds(){if(GL&&Date.now()-GAT<60000)return GL;const d=await pull("/api/guilds",x=>Array.isArray(x));if(d){GL=d;GAT=Date.now()}return GL}
+const gi=$("#gid"),gr=$("#gres"),GC=new Map(),ID_RE=/^\d{17,20}$/,CDN=/^https:\/\/cdn\.discordapp\.com\//;
+const idOf=v=>{const m=String(v).match(/\d{17,20}/);return m?m[0]:""};
+let GL=null,GAT=0,gdt,glast=0,lastq="";
+async function findGuild(id){
+ const c=GC.get(id);if(c&&Date.now()-c.t<60000)return c.r;
+ let r;
+ /* preferred: /api/guilds/:id answers for one server only, so the full list never leaves your bot */
+ const one=await pull("/api/guilds/"+id,x=>x&&typeof x==="object"&&(typeof x.found==="boolean"||String(x.id)===id));
+ if(one)r={ok:true,g:one.found===false?null:{id,name:one.name,icon:one.icon}};
+ else{ /* fallback for the old list endpoint */
+  if(!GL||Date.now()-GAT>60000){const l=await pull("/api/guilds",Array.isArray);if(l){GL=l;GAT=Date.now()}}
+  r=GL?{ok:true,g:GL.find(x=>String(x&&x.id)===id)||null}:{ok:false}}
+ if(r.ok)GC.set(id,{r,t:Date.now()});return r}
 function gRow(g){const r=document.createElement("div");r.className="gi";let i;
- if(g.icon){i=document.createElement("img");i.src=g.icon;i.alt="";i.loading="lazy";i.referrerPolicy="no-referrer"}
- else{i=document.createElement("span");i.className="ph";i.textContent=(g.name||"?").trim().charAt(0).toUpperCase()||"?"}
+ if(typeof g.icon==="string"&&CDN.test(g.icon)){i=document.createElement("img");i.src=g.icon;i.alt="";i.loading="lazy";i.referrerPolicy="no-referrer"}
+ else{i=document.createElement("span");i.className="ph";i.textContent=String(g.name||"?").trim().charAt(0).toUpperCase()||"?"}
  const t=document.createElement("div"),n=document.createElement("b"),s=document.createElement("small"),d=document.createElement("span");
- n.textContent=g.name||"Unnamed server";s.textContent=g.id+" · BotNexus is here";d.className="dot ok";t.append(n,s);r.append(i,t,d);return r}
+ n.textContent=String(g.name||"Unnamed server").slice(0,100);s.textContent=g.id+" · BotNexus is here";d.className="dot ok";t.append(n,s);r.append(i,t,d);return r}
 function gNote(m,link){const p=document.createElement("div");p.className="gn";p.textContent=m;if(link){const a=document.createElement("a");a.href=INV;a.textContent="Add it";p.append(a)}return p}
 async function gcheck(){
- const q=gi.value.trim();gr.textContent="";if(!q)return;
+ const raw=gi.value.trim();if(!raw){gr.textContent="";return}const q=idOf(raw);
+ if(q===lastq&&Date.now()-glast<600)return;lastq=q;glast=Date.now();gr.textContent="";
+ if(!ID_RE.test(q)){gr.append(gNote("Paste a server ID or link. In Discord, right-click the server and choose Copy Server ID."));return}
  gr.append(gNote("Checking…"));
- const l=await guilds();if(gi.value.trim()!==q)return;gr.textContent="";
- if(!l){gr.append(gNote("Can’t reach the bot right now. Try again in a moment."));return}
- const byId=/^\d{15,22}$/.test(q),ql=q.toLowerCase();
- const m=l.filter(g=>byId?String(g.id)===q:(g.name||"").toLowerCase().includes(ql)).slice(0,4);
- if(m.length)m.forEach(g=>gr.append(gRow(g)));
- else gr.append(gNote(byId?"BotNexus isn’t in that server yet. ":"No server matches that. ",true))}
-gi.addEventListener("input",()=>{clearTimeout(gdt);gdt=setTimeout(gcheck,300)});
-gi.addEventListener("focus",()=>{guilds()});
+ const r=await findGuild(q);if(idOf(gi.value)!==q)return;gr.textContent="";
+ if(!r.ok)gr.append(gNote("Can’t reach the bot’s API right now. Try again in a moment."));
+ else if(r.g)gr.append(gRow(r.g));
+ else gr.append(gNote("BotNexus isn’t in that server yet. ",true))}
+gi.addEventListener("input",()=>{clearTimeout(gdt);const v=gi.value.trim();if(!v){gr.textContent="";return}if(idOf(v))gdt=setTimeout(gcheck,400)});
 gi.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(gdt);gcheck()}else if(e.key==="Escape"){gi.value="";gr.textContent=""}});
 $("#gb").onclick=()=>{clearTimeout(gdt);gcheck()};
 
 /* ---------- mini games (logo as the player) ---------- */
 const cv=$("#cv"),cx=cv.getContext("2d"),lv_=$("#lv"),spr=new Image();let W=480,H=240,ps=null;spr.src="bn-mark.png";
 let C={},cur,name,g,st="ready",raf,keys={};
-function ink(){const s=getComputedStyle(document.documentElement);C={tx:s.getPropertyValue("--tx").trim(),ac:s.getPropertyValue("--ac").trim(),ln:s.getPropertyValue("--ln2").trim(),bad:s.getPropertyValue("--bad").trim(),mu:s.getPropertyValue("--mu").trim()}}
+function ink(){const s=getComputedStyle(document.getElementById("isl"));C={tx:s.getPropertyValue("--tx").trim(),ac:s.getPropertyValue("--ac").trim(),ln:s.getPropertyValue("--ln2").trim(),bad:s.getPropertyValue("--bad").trim(),mu:s.getPropertyValue("--mu").trim()}}
 function logo(x,y,s,r){const v=lv_.readyState>=2&&lv_.videoWidth;cx.save();cx.translate(x,y);cx.rotate(r||0);if(v)cx.drawImage(lv_,-s/2,-s/2,s,s);else if(spr.complete)cx.drawImage(spr,-s/2,-s/2,s,s);cx.restore()}
 const rn=(a,b)=>a+Math.random()*(b-a),px=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)/r.width*W,(e.clientY-r.top)/r.height*H]};
 const sq=(x,y,s,c,r)=>{cx.save();cx.translate(x,y);cx.rotate(r||0);cx.fillStyle=c;cx.fillRect(-s,-s,s*2,s*2);cx.restore()};
@@ -447,7 +526,7 @@ function hlGo(d,first){if(!marks.length)return;if(marks[mi])marks[mi].classList.
 sqi.addEventListener("input",()=>{clearTimeout(dt);dt=setTimeout(()=>hl(sqi.value.trim(),true),140)});
 sqi.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(dt);if(sqi.value.trim()!==hlq)hl(sqi.value.trim(),true);else hlGo(e.shiftKey?-1:1);if(!hover){sqi.blur();open(false)}}else if(e.key==="Escape"){sqi.value="";hl("")}});
 $("#sn").onclick=()=>hlGo(1);$("#sp").onclick=()=>hlGo(-1);
-addEventListener("keydown",e=>{const typing=/^(INPUT|TEXTAREA)$/.test(e.target.nodeName);if((e.key==="/"&&!typing)||((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k")){e.preventDefault();open(true);setTimeout(()=>sqi.focus(),60)}});
+addEventListener("keydown",e=>{const typing=/^(INPUT|TEXTAREA)$/.test(e.target.nodeName);if((e.key==="/"&&!typing)||((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k")){e.preventDefault();tab("more");open(true);setTimeout(()=>sqi.focus(),60)}});
 </script>
 </body>
 </html>

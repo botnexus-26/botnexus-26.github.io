@@ -11,8 +11,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>try{var t=localStorage.getItem("bn_theme");if(t?t==="light":matchMedia("(prefers-color-scheme:light)").matches)document.documentElement.classList.add("light")}catch(e){}</script>
 <style>
-:root{color-scheme:dark;--bg:#070b14;--sf:#0c1322;--sf2:#111b30;--ln:rgba(140,170,255,.12);--ln2:rgba(140,170,255,.22);--tx:#e8eefc;--mu:#8d9bb8;--ac:#3b82ff;--acs:rgba(59,130,255,.14);--ok:#35d39a;--warn:#f2b441;--bad:#ff5d5d;--glass:rgba(10,16,30,.82);--e:cubic-bezier(.22,1,.36,1);--f:"Onest",system-ui,sans-serif;--m:"JetBrains Mono",ui-monospace,monospace}
-:root.light{color-scheme:light;--bg:#f4f7fc;--sf:#fff;--sf2:#eef2fa;--ln:rgba(20,40,90,.11);--ln2:rgba(20,40,90,.2);--tx:#0e1a33;--mu:#556280;--ac:#1259d6;--acs:rgba(18,89,214,.1);--ok:#0b8f64;--warn:#a86b00;--bad:#c62828;--glass:rgba(255,255,255,.88)}
+:root{color-scheme:dark;--bg:#070b14;--sf:#0c1322;--sf2:#111b30;--ln:rgba(140,170,255,.12);--ln2:rgba(140,170,255,.22);--tx:#e8eefc;--mu:#8d9bb8;--ac:#3b82ff;--acs:color-mix(in srgb,var(--ac) 14%,transparent);--acf:#fff;--ok:#35d39a;--warn:#f2b441;--bad:#ff5d5d;--glass:rgba(10,16,30,.82);--e:cubic-bezier(.22,1,.36,1);--f:"Onest",system-ui,sans-serif;--m:"JetBrains Mono",ui-monospace,monospace}
+:root.light{color-scheme:light;--bg:#f4f7fc;--sf:#fff;--sf2:#eef2fa;--ln:rgba(20,40,90,.11);--ln2:rgba(20,40,90,.2);--tx:#0e1a33;--mu:#556280;--ac:#1259d6;--acs:color-mix(in srgb,var(--ac) 10%,transparent);--ok:#0b8f64;--warn:#a86b00;--bad:#c62828;--glass:rgba(255,255,255,.88)}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:76px}
 body{margin:0;position:relative;overflow-x:hidden;background:var(--bg);color:var(--tx);font:400 15px/1.6 var(--f);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}button,input{font:inherit;color:inherit}
@@ -21,7 +21,7 @@ code{font:500 .86em var(--m);background:var(--acs);color:var(--ac);padding:1px 6
 .w{width:min(1040px,100% - 32px);margin-inline:auto}
 /* grid backdrop */
 .grid{position:absolute;inset:0 0 auto;height:620px;z-index:-1;pointer-events:none;overflow:hidden;--g:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);background:var(--g);background-size:44px 44px;-webkit-mask-image:linear-gradient(#000 35%,transparent);mask-image:linear-gradient(#000 35%,transparent)}
-.grid::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(59,130,255,.7) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,255,.7) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(190px at var(--mx,70%) var(--my,160px),#000,transparent);mask-image:radial-gradient(190px at var(--mx,70%) var(--my,160px),#000,transparent)}
+.grid::after{content:"";position:absolute;inset:0;background:linear-gradient(color-mix(in srgb,var(--ac) 70%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--ac) 70%,transparent) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(190px at var(--mx,70%) var(--my,160px),#000,transparent);mask-image:radial-gradient(190px at var(--mx,70%) var(--my,160px),#000,transparent)}
 .grid i{position:absolute;width:44px;height:44px;background:var(--ac);opacity:0;animation:bl 7s ease-in-out infinite}
 @keyframes bl{0%,100%{opacity:0}45%,55%{opacity:.16}}
 /* island */
@@ -52,7 +52,7 @@ canvas{display:block;width:100%;aspect-ratio:2/1;border-radius:10px;border:1px s
 /* buttons */
 .b{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--ln2);background:var(--sf2);font-weight:500;font-size:.86rem;cursor:pointer;transition:border-color .2s,background .2s,transform .2s}
 .b:hover{border-color:var(--ac)}.b:active{transform:scale(.97)}
-.b.p{background:var(--ac);border-color:var(--ac);color:#fff}.b.p:hover{filter:brightness(1.1)}
+.b.p{background:var(--ac);border-color:var(--ac);color:var(--acf)}.b.p:hover{filter:brightness(1.1)}
 .b.s{height:30px;padding:0 10px;font-size:.8rem}
 /* hero */
 header.h{padding:104px 0 56px}
@@ -91,6 +91,21 @@ footer .w{display:flex;justify-content:space-between;gap:14px 24px;flex-wrap:wra
 @media(max-width:820px){.hg,.sec{grid-template-columns:1fr}.cells,.steps{grid-template-columns:1fr 1fr}.links{grid-template-columns:repeat(3,1fr)}header.h{padding-top:92px}}
 @media(max-width:520px){.cells,.sec .cells,.steps{grid-template-columns:1fr}.links{grid-template-columns:repeat(2,1fr)}.q{width:100%}}
 @media(prefers-reduced-motion:reduce){*,*::after{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+.games{margin-top:8px;padding-top:8px;border-top:1px solid var(--ln)}.lb{font-size:.78rem;color:var(--mu);margin-right:2px}
+.in{max-height:calc(100dvh - 76px);overflow-y:auto;overscroll-behavior:contain}
+button,a{-webkit-tap-highlight-color:transparent}
+@media(hover:none),(max-width:520px){.b.s,.b{height:40px;padding:0 13px}.links a{padding:11px 8px;font-size:.92rem}.mb{width:38px;height:38px}.top{height:50px}.clk{padding:7px 10px}.stl{padding:10px}.games .b{flex:1 1 30%;justify-content:center}}
+@media(max-width:520px){header.h{padding:84px 0 36px}h1{max-width:none}.hg{gap:28px}.hg .row .b{flex:1 1 auto;justify-content:center}.facts{width:100%}.facts li{flex:1 1 auto;text-align:center;padding:7px 10px;font-size:.78rem}
+section{padding:32px 0}#chips{flex-wrap:nowrap;overflow-x:auto;width:calc(100% + 16px);margin-right:-16px;padding-right:16px;scrollbar-width:none}#chips::-webkit-scrollbar{display:none}.chip{flex:none;height:36px;padding:0 13px}
+.q{height:40px;font-size:16px;flex:1}.cells>div{padding:13px 14px}.steps{gap:14px}summary{padding:15px 0}footer nav{gap:12px 18px}}
+.srch{display:flex;align-items:center;gap:6px;margin:8px 0}.srch input{flex:1;min-width:0;height:36px;border-radius:8px;border:1px solid var(--ln2);background:var(--sf);padding:0 10px;font-size:.86rem}.srch input:focus{border-color:var(--ac);outline:0}
+#sc{font:.7rem var(--m);color:var(--mu);white-space:nowrap}.b.s.ic{width:34px;padding:0;justify-content:center;flex:none}
+mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;border-radius:3px;padding:0 1px}mark.hl.cur{background:var(--ac);color:var(--acf)}
+.acr{margin-top:8px;gap:8px}.sw{width:24px;height:24px;border-radius:50%;border:2px solid transparent;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);cursor:pointer;padding:0}.sw.on{border-color:var(--tx)}
+#acc{width:28px;height:28px;padding:0;border:1px solid var(--ln2);border-radius:50%;background:none;cursor:pointer;-webkit-appearance:none;appearance:none}#acc::-webkit-color-swatch-wrapper{padding:0}#acc::-webkit-color-swatch{border:0;border-radius:50%}#acc::-moz-color-swatch{border:0;border-radius:50%}
+#sw{gap:7px;flex-wrap:wrap}
+.opts{display:grid;gap:8px}.opts a{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:11px 14px;border:1px solid var(--ln);border-radius:10px;background:var(--sf);transition:border-color .2s}.opts a:hover{border-color:var(--ac)}.opts b{font-weight:600;font-size:.9rem}.opts span{color:var(--mu);font-size:.8rem;text-align:right}
+@media(hover:none),(max-width:520px){.sw{width:30px;height:30px}#acc{width:34px;height:34px}.srch input{height:40px;font-size:16px}.b.s.ic{width:40px}}
 </style>
 </head>
 <body>
@@ -107,18 +122,21 @@ footer .w{display:flex;justify-content:space-between;gap:14px 24px;flex-wrap:wra
   </div>
   <div class="panel" id="pn"><div><div class="in">
     <div class="menu">
+      <div class="srch"><input id="sq" type="search" placeholder="Search this page" aria-label="Search this page" autocomplete="off" enterkeyhint="search"><span id="sc" aria-live="polite"></span><button class="b s ic" id="sp" aria-label="Previous match">↑</button><button class="b s ic" id="sn" aria-label="Next match">↓</button></div>
       <div class="links">
         <a href="#modules">Modules</a><a href="#security">Security</a><a href="#start">Setup</a><a href="#faq">FAQ</a>
-        <a href="https://botnexus-26.github.io/docs">Docs</a><a href="https://botnexus-26.github.io/help-center">Help</a><a href="https://botnexus.instatus.com/">Status</a><a href="https://botnexus-premium.xnetsite.xyz">Premium</a>
+        <a href="https://botnexus-26.github.io/docs">Docs</a><a href="https://botnexus-26.github.io/help-center">Help</a><a href="https://botnexus.instatus.com/">Status</a><a href="https://botnexus.apps.bot-hosting.cloud/store">Store</a>
       </div>
       <a class="stl" href="https://botnexus.instatus.com/"><span class="dot" id="sdot2"></span><span id="stxt">Checking status…</span></a>
       <div class="row">
         <a class="b p s" href="INVITE_URL_PLACEHOLDER">Add to Discord</a>
         <a class="b s" href="https://botnexus.apps.bot-hosting.cloud/dashboard">Dashboard</a>
+        <a class="b s" href="https://botnexus.apps.bot-hosting.cloud/store">Store</a>
         <button class="b s" id="th" aria-label="Toggle light or dark theme">Theme</button>
-        <span class="sp"></span>
-        <button class="b s" data-g="flap" title="Tap or press Space to flap">▶ Flap</button>
-        <button class="b s" data-g="catch" title="Move to catch modules, dodge bugs">▶ Catch</button>
+      </div>
+      <div class="row acr"><span class="lb">Accent</span><span class="row" id="sw"></span></div>
+      <div class="row games"><span class="lb">Play</span>
+        <button class="b s" data-g="flap">Flap</button><button class="b s" data-g="catch">Catch</button><button class="b s" data-g="dodge">Dodge</button><button class="b s" data-g="snake">Snake</button><button class="b s" data-g="bugs">Bugs</button>
       </div>
     </div>
     <div class="gm">
@@ -164,9 +182,22 @@ footer .w{display:flex;justify-content:space-between;gap:14px 24px;flex-wrap:wra
   </ol>
 </div></section>
 
+<section id="store"><div class="w sec">
+  <div><h2>Store</h2><p style="color:var(--mu);margin:8px 0 14px;font-size:.9rem">Advertise, donate, or upgrade your dashboard. Payments are confirmed by Stripe.</p>
+    <div class="opts"><a href="https://botnexus.apps.bot-hosting.cloud/store"><b>Dashboard Premium</b><span>£5 one-time, permanent access</span></a><a href="https://botnexus.apps.bot-hosting.cloud/store"><b>Advertise</b><span>Promote your server or project</span></a><a href="https://botnexus.apps.bot-hosting.cloud/store"><b>Donate</b><span>Support BotNexus</span></a></div></div>
+  <div class="cells">
+    <div><h3>Role and badge</h3><p>Exclusive Premium role in the BotNexus Discord, assigned automatically. Verified badge with custom text and a gold chip on your community review.</p></div>
+    <div><h3>Themes</h3><p>26 accent themes, a custom colour picker and 12 one-click presets such as Cyberpunk, Vaporwave and Midnight Gold.</p></div>
+    <div><h3>Animated backgrounds</h3><p>Aurora, Matrix Rain, Starfield, Snowfall and 8 more, or your own wallpaper with an intensity slider.</p></div>
+    <div><h3>Effects</h3><p>Neon glow, glass, card tilt, cursor trails, click effects, page transitions and three sound packs.</p></div>
+    <div><h3>Tools</h3><p>Command Palette (Ctrl/Cmd + K), widget dock with timers, quick notes, theme share codes and cloud sync.</p></div>
+    <div><h3>Premium Arcade</h3><p>All 8 games unlocked, including 2048, Minesweeper and Neon Breakout, with a star on the global leaderboard.</p></div>
+  </div>
+</div></section>
+
 <section id="faq"><div class="w faq">
   <div class="sh"><div><h2>FAQ</h2></div></div>
-  <details><summary>Is BotNexus free?</summary><p>Yes. Every listed module is free to invite and use. BotNexus Premium is optional and adds extra features.</p></details>
+  <details><summary>Is BotNexus free?</summary><p>Yes. Every listed module is free to invite and use. Dashboard Premium is an optional £5 one-time purchase in the <a href="https://botnexus.apps.bot-hosting.cloud/store">Store</a> that adds themes, animated backgrounds, effects and tools to the dashboard.</p></details>
   <details><summary>What permissions does it need?</summary><p>The current invite requests Administrator (<code>permissions=8</code>). Individual features may use permissions such as managing roles or messages, or moderating members. Check Discord’s invite screen before approving.</p></details>
   <details><summary>How does server protection work?</summary><p>Automod, antinuke, antiraid and webhook protection are configured separately. Tune strictness with <code>/security sensitivity</code>. The optional Honeytrap module catches spam bots.</p></details>
   <details><summary>What data is saved?</summary><p>Server configuration, moderation records, API settings and suggestion auto-close settings are stored so they persist between restarts. See the <a href="https://botnexus-26.github.io/terms">Terms &amp; Policies</a>.</p></details>
@@ -176,11 +207,11 @@ footer .w{display:flex;justify-content:space-between;gap:14px 24px;flex-wrap:wra
 </main>
 
 <footer><div class="w"><span>© 2026 BotNexus</span>
-  <nav><a href="https://botnexus-26.github.io/docs">Docs</a><a href="https://botnexus-26.github.io/help-center">Help Center</a><a href="https://botnexus.instatus.com/">Status</a><a href="https://botnexus-26.github.io/terms">Terms</a><a href="https://botnexus-premium.xnetsite.xyz">Premium</a><a href="https://discord.gg/SRYAbrUVVS">Discord</a><a href="https://botnexus-26.github.io/report-error">Report a problem</a></nav></div></footer>
+  <nav><a href="https://botnexus-26.github.io/docs">Docs</a><a href="https://botnexus-26.github.io/help-center">Help Center</a><a href="https://botnexus.instatus.com/">Status</a><a href="https://botnexus-26.github.io/terms">Terms</a><a href="https://botnexus.apps.bot-hosting.cloud/store">Store</a><a href="https://discord.gg/SRYAbrUVVS">Discord</a><a href="https://botnexus-26.github.io/report-error">Report a problem</a></nav></div></footer>
 
 <script>
 const $=s=>document.querySelector(s),SU="https://botnexus.instatus.com";
-const store={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+var hlq="";const store={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
 
 /* ---------- content ---------- */
 const MODS=[["Bot Profile","Set a custom name and logo for your server’s bot posts.","e"],["Welcomer","Post branded welcome banners when a member joins.","e"],["Ticket System","Private tickets with a custom panel and transcripts.","e"],["Moderation","Mute, kick, ban and unmute with moderator-role controls.","e"],["Roblox Verification","Verify Roblox accounts and assign roles or nicknames.","e"],["Question of the Day","Post a daily question for your community.","c"],["AutoReact","React to trigger words across your server or chosen channels.","c"],["Sticky Messages","Keep important messages at the bottom of a channel.","c"],["Autoresponder","Reply automatically when a message matches keywords.","c"],["Suggestions","Collect suggestions; managers accept or decline them.","c"],["Invite Tracker","See who invited each member and current invite counts.","c"],["Leveling","Reward text and voice activity with XP and level-up banners.","c"],["Counting","Run a shared counting channel and catch mistakes.","c"],["Birthdays","Save DD/MM birthdays and announce them each year.","c"],["Economy","Daily, work and pay activities in a channel you choose.","c"],["ER:LC Sessions","Session and vote commands with custom banners.","r"],["ER:LC API","Show live player counts from the PRC API.","r"],["YouTube Alerts","Post a banner embed when a channel uploads.","a"],["TikTok Alerts","Best-effort new-post notifications for an account.","a"],["Statistic Channels","Keep member, bot and boost counts in voice channels.","u"],["Honeytrap","A hidden channel that removes anything posted, to catch spam bots.","s"]];
@@ -189,7 +220,7 @@ const CATS={all:"All",e:"Essentials",c:"Community",r:"ER:LC",a:"Alerts",u:"Tools
 let cat="all";
 function drawMods(){const q=$("#q").value.trim().toLowerCase();const l=MODS.filter(m=>(cat==="all"||m[2]===cat)&&(!q||(m[0]+m[1]).toLowerCase().includes(q)));
  $("#mg").innerHTML=l.map(m=>`<div><h3>${m[0]}${m[2]==="r"?"<em>ER:LC</em>":""}</h3><p>${m[1]}</p></div>`).join("")||`<div style="grid-column:1/-1"><p>No module matches that search.</p></div>`;
- $("#mc").textContent=l.length+" of "+MODS.length;}
+ $("#mc").textContent=l.length+" of "+MODS.length;if(hlq)hl(hlq,false)}
 $("#chips").innerHTML=Object.entries(CATS).map(([k,v])=>`<button class="chip" data-c="${k}" aria-pressed="${k==="all"}">${v}</button>`).join("");
 $("#chips").onclick=e=>{const b=e.target.closest("[data-c]");if(!b)return;cat=b.dataset.c;document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c===b));drawMods()};
 $("#q").oninput=drawMods;drawMods();
@@ -215,7 +246,7 @@ const isl=$("#isl"),mb=$("#mb");
 function open(v){isl.classList.toggle("open",v);mb.setAttribute("aria-expanded",v);if(!v&&isl.classList.contains("game"))endGame()}
 mb.onclick=()=>open(!isl.classList.contains("open"));
 const hover=matchMedia("(hover:hover)").matches;let auto=0;
-if(hover){isl.onpointerenter=()=>{auto=0;open(true)};isl.onpointerleave=()=>{if(!isl.classList.contains("game"))open(false)}}
+if(hover){isl.onpointerenter=()=>{auto=0;open(true)};isl.onpointerleave=()=>{if(!isl.classList.contains("game")&&!["sq","acc"].includes(document.activeElement.id))open(false)}}
 addEventListener("pointerdown",e=>{if(!isl.contains(e.target)&&isl.classList.contains("open"))open(false)});
 isl.addEventListener("click",e=>{if(e.target.closest(".links a"))open(false)});
 addEventListener("keydown",e=>{if(e.key==="Escape"&&isl.classList.contains("open"))open(false)});
@@ -245,38 +276,89 @@ async function status(){
 status();setInterval(status,60000);
 
 /* ---------- mini games (logo as the player) ---------- */
-const cv=$("#cv"),cx=cv.getContext("2d"),W=480,H=240,lv_=$("#lv"),spr=new Image();spr.src="bn-mark.png";
+const cv=$("#cv"),cx=cv.getContext("2d"),lv_=$("#lv"),spr=new Image();let W=480,H=240,ps=null;spr.src="bn-mark.png";
 let C={},cur,name,g,st="ready",raf,keys={};
 function ink(){const s=getComputedStyle(document.documentElement);C={tx:s.getPropertyValue("--tx").trim(),ac:s.getPropertyValue("--ac").trim(),ln:s.getPropertyValue("--ln2").trim(),bad:s.getPropertyValue("--bad").trim(),mu:s.getPropertyValue("--mu").trim()}}
 function logo(x,y,s,r){const v=lv_.readyState>=2&&lv_.videoWidth;cx.save();cx.translate(x,y);cx.rotate(r||0);if(v)cx.drawImage(lv_,-s/2,-s/2,s,s);else if(spr.complete)cx.drawImage(spr,-s/2,-s/2,s,s);cx.restore()}
+const rn=(a,b)=>a+Math.random()*(b-a),px=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)/r.width*W,(e.clientY-r.top)/r.height*H]};
+const sq=(x,y,s,c,r)=>{cx.save();cx.translate(x,y);cx.rotate(r||0);cx.fillStyle=c;cx.fillRect(-s,-s,s*2,s*2);cx.restore()};
+const lives=n=>{for(let i=0;i<n;i++)logo(16+i*20,16,16)};
 const GAMES={
- flap:{t:"Flap",init(){g={y:110,v:0,p:[],f:0,s:0}},tap(){g.v=-5.1},
-  step(){g.v+=.27;g.y+=g.v;if(++g.f%78===1)g.p.push({x:W,gy:40+Math.random()*(H-130)});
-   g.p.forEach(p=>{p.x-=2.5;if(!p.d&&p.x<20){p.d=1;g.s++}if(60+13>p.x&&60-13<p.x+38&&(g.y-13<p.gy||g.y+13>p.gy+84))st="over"});
-   g.p=g.p.filter(p=>p.x>-50);if(g.y<0||g.y>H)st="over"},
-  draw(){cx.fillStyle=C.ac;cx.globalAlpha=.22;g.p.forEach(p=>{cx.fillRect(p.x,0,38,p.gy);cx.fillRect(p.x,p.gy+84,38,H)});cx.globalAlpha=1;cx.strokeStyle=C.ac;g.p.forEach(p=>{cx.strokeRect(p.x+.5,-1,37,p.gy);cx.strokeRect(p.x+.5,p.gy+84,37,H)});logo(60,g.y,32,Math.max(-.5,Math.min(.8,g.v/9)))}},
- catch:{t:"Catch",init(){g={x:W/2,it:[],f:0,s:0,l:3}},tap(){},
+ flap:{t:"Flap",h:"Tap to flap",init(){g={y:H/2,v:-3,p:[],f:-20,s:0}},tap(){g.v=-4.1},
+  step(){g.v+=.2;g.y+=g.v;if(g.y<10){g.y=10;g.v=0}if(++g.f%95===1)g.p.push({x:W,gy:rn(30,H-140)});
+   g.p.forEach(p=>{p.x-=2.1;if(!p.d&&p.x<20){p.d=1;g.s++}if(70>p.x&&50<p.x+38&&(g.y-10<p.gy||g.y+10>p.gy+110))st="over"});
+   g.p=g.p.filter(p=>p.x>-50);if(g.y>H)st="over"},
+  draw(){g.p.forEach(p=>{cx.globalAlpha=.22;cx.fillStyle=C.ac;cx.fillRect(p.x,0,38,p.gy);cx.fillRect(p.x,p.gy+110,38,H);cx.globalAlpha=1;cx.strokeStyle=C.ac;cx.strokeRect(p.x+.5,-1,37,p.gy);cx.strokeRect(p.x+.5,p.gy+110,37,H)});logo(60,g.y,32,Math.max(-.5,Math.min(.8,g.v/9)))}},
+ catch:{t:"Catch",h:"Drag to move. Catch blue, dodge red",init(){g={x:W/2,it:[],f:0,s:0,l:5}},tap(x){if(x!=null)g.x=x},mv(x){g.x=x},
   step(){if(keys.ArrowLeft)g.x-=5;if(keys.ArrowRight)g.x+=5;g.x=Math.max(20,Math.min(W-20,g.x));
-   if(++g.f%26===0)g.it.push({x:20+Math.random()*(W-40),y:-10,b:Math.random()<.3,v:2+Math.min(g.s/18,2.5)});
-   g.it=g.it.filter(i=>{i.y+=i.v;if(i.y>H-40&&i.y<H-8&&Math.abs(i.x-g.x)<26){if(i.b){if(--g.l<1)st="over"}else g.s++;return false}return i.y<H+10})},
-  draw(){g.it.forEach(i=>{cx.fillStyle=i.b?C.bad:C.ac;cx.save();cx.translate(i.x,i.y);if(i.b)cx.rotate(.785);cx.fillRect(-7,-7,14,14);cx.restore()});logo(g.x,H-26,34);cx.fillStyle=C.mu;cx.font="12px monospace";cx.fillText("lives "+"■".repeat(Math.max(g.l,0)),10,18)}}};
+   if(++g.f%34===0)g.it.push({x:rn(20,W-20),y:-10,b:Math.random()<.22,v:1.6+Math.min(g.s/25,2)});
+   g.it=g.it.filter(i=>{i.y+=i.v;if(i.y>H-46&&i.y<H-6&&Math.abs(i.x-g.x)<34){if(i.b){if(--g.l<1)st="over"}else g.s++;return false}return i.y<H+10})},
+  draw(){g.it.forEach(i=>sq(i.x,i.y,i.b?7:8,i.b?C.bad:C.ac,i.b?.785:0));logo(g.x,H-26,36);lives(g.l)}},
+ dodge:{t:"Dodge",h:"Drag the logo around. Avoid red",init(){g={x:W/2,y:H*.7,o:[],f:0,s:0}},tap(x,y){if(x!=null){g.x=x;g.y=y}},mv(x,y){g.x=x;g.y=y},
+  step(){if(keys.ArrowLeft)g.x-=4;if(keys.ArrowRight)g.x+=4;if(keys.ArrowUp)g.y-=4;if(keys.ArrowDown)g.y+=4;g.x=Math.max(15,Math.min(W-15,g.x));g.y=Math.max(15,Math.min(H-15,g.y));
+   if(++g.f%36===0)g.o.push({x:rn(10,W-10),y:-10,v:rn(1.4,2.3)+Math.min(g.f/1800,1.5)});
+   g.o.forEach(o=>{o.y+=o.v;if(Math.hypot(o.x-g.x,o.y-g.y)<17)st="over"});g.o=g.o.filter(o=>o.y<H+10);g.s=g.f/30|0},
+  draw(){g.o.forEach(o=>sq(o.x,o.y,7,C.bad,.785));logo(g.x,g.y,30)}},
+ snake:{t:"Snake",h:"Swipe to steer. Walls wrap around",init(){const c=W/24|0,r=H/24|0;g={c,r,b:[[5,r>>1],[4,r>>1],[3,r>>1]],d:[1,0],n:[1,0],f:0,s:0,fd:[c-5,r>>1]}},
+  dir(x,y){if(x!==-g.d[0]||y!==-g.d[1])g.n=[x,y]},tap(){},
+  key(k){const m={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[k];if(m&&st==="play")this.dir(m[0],m[1])},
+  mv(x,y){if(!ps)return;const dx=x-ps.x,dy=y-ps.y;if(Math.max(Math.abs(dx),Math.abs(dy))>14){Math.abs(dx)>Math.abs(dy)?this.dir(dx>0?1:-1,0):this.dir(0,dy>0?1:-1);ps={x,y}}},
+  step(){if(++g.f%10)return;g.d=g.n;const h=g.b[0],n=[(h[0]+g.d[0]+g.c)%g.c,(h[1]+g.d[1]+g.r)%g.r];if(g.b.some(q=>q[0]===n[0]&&q[1]===n[1])){st="over";return}
+   g.b.unshift(n);if(n[0]===g.fd[0]&&n[1]===g.fd[1]){g.s++;do g.fd=[rn(0,g.c)|0,rn(0,g.r)|0];while(g.b.some(q=>q[0]===g.fd[0]&&q[1]===g.fd[1]))}else g.b.pop()},
+  draw(){const z=24,ox=(W-g.c*z)/2;sq(ox+g.fd[0]*z+12,g.fd[1]*z+12,6,C.bad,.785);cx.fillStyle=C.ac;cx.globalAlpha=.55;g.b.slice(1).forEach(q=>cx.fillRect(ox+q[0]*z+3,q[1]*z+3,z-6,z-6));cx.globalAlpha=1;logo(ox+g.b[0][0]*z+12,g.b[0][1]*z+12,28)}},
+ bugs:{t:"Bugs",h:"Tap the bugs before they vanish",init(){g={b:[],f:0,s:0,l:5}},
+  tap(x,y){const i=g.b.findIndex(b=>Math.hypot(b.x-x,b.y-y)<36);if(i>=0){g.b.splice(i,1);g.s++}},
+  step(){if(++g.f%Math.max(34,64-g.s)===0)g.b.push({x:rn(34,W-34),y:rn(34,H-34),t:120});g.b=g.b.filter(b=>--b.t>0||(--g.l,false));if(g.l<1)st="over"},
+  draw(){g.b.forEach(b=>{sq(b.x,b.y,11,C.bad,.785);cx.beginPath();cx.arc(b.x,b.y,22,0,6.283*b.t/120);cx.strokeStyle=C.mu;cx.lineWidth=2;cx.stroke();cx.lineWidth=1});lives(g.l)}}};
 function frame(){cx.clearRect(0,0,W,H);cx.strokeStyle=C.ln;cx.lineWidth=1;cx.beginPath();for(let x=0;x<W;x+=40){cx.moveTo(x+.5,0);cx.lineTo(x+.5,H)}for(let y=0;y<H;y+=40){cx.moveTo(0,y+.5);cx.lineTo(W,y+.5)}cx.stroke();
  if(st==="play")cur.step();cur.draw();
  const b=+store.get("bn_best_"+name)||0;if(st==="over"&&g.s>b)store.set("bn_best_"+name,g.s);
  $("#gs").textContent="score "+g.s+" · best "+Math.max(b,st==="over"?g.s:0);
- if(st!=="play"){cx.fillStyle="rgba(7,11,20,.55)";cx.fillRect(0,0,W,H);cx.fillStyle="#fff";cx.font="600 16px Onest,sans-serif";cx.textAlign="center";cx.fillText(st==="over"?"Game over. Tap to retry":"Tap or press Space to start",W/2,H/2);cx.textAlign="left"}
+ if(st==="over"&&!g.v_){g.v_=1;navigator.vibrate&&navigator.vibrate(30)}
+ if(st!=="play"){cx.fillStyle="rgba(7,11,20,.55)";cx.fillRect(0,0,W,H);cx.fillStyle="#fff";cx.font="600 "+(W/24|0)+"px Onest,sans-serif";cx.textAlign="center";cx.fillText(st==="over"?"Game over. Tap to retry":"Tap to start. "+cur.h,W/2,H/2);cx.textAlign="left"}
  raf=requestAnimationFrame(frame)}
 function press(){if(st!=="play"){cur.init();st="play"}else cur.tap()}
-function startGame(n){name=n;cur=GAMES[n];cur.init();st="ready";ink();$("#gt").textContent=cur.t;isl.classList.add("game");
+function startGame(n){name=n;W=480;H=innerWidth<560?360:240;cv.width=W;cv.height=H;cv.style.aspectRatio=W+"/"+H;cur=GAMES[n];cur.init();st="ready";ink();$("#gt").textContent=cur.t;isl.classList.add("game");
  if(!lv_.src){lv_.src="logo-loading.webm"}lv_.play().catch(()=>{});cancelAnimationFrame(raf);frame()}
 function endGame(){isl.classList.remove("game");cancelAnimationFrame(raf);lv_.pause();keys={}}
 document.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>startGame(b.dataset.g));
 $("#gx").onclick=endGame;
-cv.addEventListener("pointerdown",e=>{e.preventDefault();press()});
-cv.addEventListener("pointermove",e=>{if(name==="catch"&&st==="play"){const r=cv.getBoundingClientRect();g.x=(e.clientX-r.left)/r.width*W}});
-addEventListener("keydown",e=>{if(!isl.classList.contains("game"))return;if(e.code==="Space"||e.key==="ArrowUp"){e.preventDefault();press()}keys[e.key]=1});
+cv.addEventListener("pointerdown",e=>{e.preventDefault();const[x,y]=px(e);ps={x,y};if(st!=="play"){cur.init();st="play"}else cur.tap(x,y)});
+cv.addEventListener("pointermove",e=>{if(st==="play"&&cur.mv){const[x,y]=px(e);cur.mv(x,y)}});
+addEventListener("pointerup",()=>ps=null);
+addEventListener("keydown",e=>{if(!isl.classList.contains("game"))return;if(e.code==="Space"||e.key.startsWith("Arrow"))e.preventDefault();if(e.code==="Space"||(e.key==="ArrowUp"&&cur===GAMES.flap))press();cur.key&&cur.key(e.key);keys[e.key]=1});
 addEventListener("keyup",e=>delete keys[e.key]);
 ink();
+
+/* ---------- accent picker ---------- */
+const ACC=["#22d3ee","#35d39a","#a3e635","#f59e0b","#ef4444","#ec4899","#8b5cf6"];
+$("#sw").innerHTML=ACC.map(c=>`<button class="sw" style="background:${c}" data-a="${c}" aria-label="Accent ${c}"></button>`).join("")+`<input type="color" id="acc" value="#3b82ff" aria-label="Custom accent colour"><button class="b s" id="ar">Reset</button>`;
+function setAcc(c){const r=document.documentElement.style;if(!c){r.removeProperty("--ac");r.removeProperty("--acf");store.set("bn_acc","")}
+ else{const n=parseInt(c.slice(1),16),l=(.299*(n>>16)+.587*(n>>8&255)+.114*(n&255))/255;r.setProperty("--ac",c);r.setProperty("--acf",l>.62?"#0b1020":"#fff");store.set("bn_acc",c)}
+ document.querySelectorAll(".sw").forEach(s=>s.classList.toggle("on",s.dataset.a===c));ink()}
+$("#sw").addEventListener("click",e=>{const b=e.target.closest(".sw");if(b)setAcc(b.dataset.a);if(e.target.id==="ar")setAcc("")});
+$("#acc").addEventListener("input",e=>setAcc(e.target.value));
+{const a=store.get("bn_acc");if(/^#[0-9a-f]{6}$/i.test(a||""))setAcc(a)}
+
+/* ---------- page search + highlighter ---------- */
+const sqi=$("#sq"),scn=$("#sc");let marks=[],mi=-1,dt;
+function clearHl(){document.querySelectorAll("mark.hl").forEach(m=>{const p=m.parentNode;p.replaceChild(document.createTextNode(m.textContent),m);p.normalize()});marks=[];mi=-1}
+function hl(q,go){clearHl();hlq=q;scn.textContent="";if(q.length<2){hlq="";return}
+ const re=new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"gi");
+ document.querySelectorAll("main,footer").forEach(root=>{
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>/^(SCRIPT|STYLE|MARK|TEXTAREA)$/.test(n.parentNode.nodeName)||!n.nodeValue.trim()?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT}),ns=[];
+  while(w.nextNode())ns.push(w.currentNode);
+  ns.forEach(n=>{const t=n.nodeValue;re.lastIndex=0;if(!re.test(t))return;re.lastIndex=0;const f=document.createDocumentFragment();let i=0,m;
+   while((m=re.exec(t))){if(m.index>i)f.append(t.slice(i,m.index));const k=document.createElement("mark");k.className="hl";k.textContent=m[0];f.append(k);marks.push(k);i=m.index+m[0].length}
+   f.append(t.slice(i));n.replaceWith(f)})});
+ scn.textContent=marks.length?marks.length+" found":"No match";if(marks.length&&go)hlGo(0,true)}
+function hlGo(d,first){if(!marks.length)return;if(marks[mi])marks[mi].classList.remove("cur");mi=first?0:(mi+d+marks.length)%marks.length;const m=marks[mi];m.classList.add("cur");
+ for(let p=m.closest("details");p;p=p.parentElement&&p.parentElement.closest("details"))p.open=true;
+ m.scrollIntoView({block:"center",behavior:"smooth"});scn.textContent=(mi+1)+" / "+marks.length}
+sqi.addEventListener("input",()=>{clearTimeout(dt);dt=setTimeout(()=>hl(sqi.value.trim(),true),140)});
+sqi.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(dt);if(sqi.value.trim()!==hlq)hl(sqi.value.trim(),true);else hlGo(e.shiftKey?-1:1);if(!hover){sqi.blur();open(false)}}else if(e.key==="Escape"){sqi.value="";hl("")}});
+$("#sn").onclick=()=>hlGo(1);$("#sp").onclick=()=>hlGo(-1);
+addEventListener("keydown",e=>{const typing=/^(INPUT|TEXTAREA)$/.test(e.target.nodeName);if((e.key==="/"&&!typing)||((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k")){e.preventDefault();open(true);setTimeout(()=>sqi.focus(),60)}});
 </script>
 </body>
 </html>

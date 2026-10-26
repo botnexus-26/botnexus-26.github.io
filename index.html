@@ -165,7 +165,22 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
 .full .gm{max-width:780px;margin:0 auto}
 @media(min-width:860px){.full .menu{max-width:1060px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}.full .seg{display:none}.full .pane[hidden]{display:block}}
 .isl.game .menu{display:none!important}
-@media(max-width:360px){.open .brand span{display:none}}
+@media(max-width:430px){.isl.open:not(.full) .brand span{display:none}}
+/* ===== island themes + drag mode ===== */
+.isl{translate:calc(-50% + var(--dx,0px)) var(--dy,0px);transition-property:width,border-radius,top,box-shadow,translate}
+.isl.full{translate:-50% 0}
+.isl[data-it=glass]{background:rgba(18,22,38,.5);-webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%);box-shadow:0 0 0 .5px rgba(255,255,255,.28),0 16px 44px rgba(0,0,0,.3)}
+.isl[data-it=aurora]{background:linear-gradient(135deg,#071018,#1d1458 48%,#0b4a55)}
+.isl[data-it=neon]{box-shadow:0 0 0 1.5px var(--ac),0 0 30px color-mix(in srgb,var(--ac) 55%,transparent)}
+.isl[data-it=sunset]{background:linear-gradient(135deg,#1c0a12,#5a1a35 55%,#8a3a14)}
+.isl[data-it=ocean]{background:linear-gradient(160deg,#03121f,#06385c 60%,#0a5f78)}
+.isl[data-it]:not([data-it=classic]){--sf:rgba(255,255,255,.08);--sf2:rgba(255,255,255,.14)}
+.its{display:flex;gap:9px;flex-wrap:wrap}
+.it{width:34px;height:34px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0;background:var(--b);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);transition:transform .25s var(--sp)}.it:hover{transform:scale(1.1)}.it.on{border-color:#fff}
+.isl.drag{outline:1.5px dashed color-mix(in srgb,var(--ac) 85%,transparent);outline-offset:4px}
+.drag .top{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}.drag .top a{pointer-events:none}
+.isl.dragging,.isl.dragging .top{cursor:grabbing;transition:none!important}
+.mv.on svg{transform:none}
 </style>
 </head>
 <body>
@@ -178,6 +193,7 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
     <span class="sp"></span>
     <span class="dot" id="sdot" title="Checking status…"></span>
     <button class="clk" id="clk" title="Click to switch 12/24-hour" aria-label="Local time">--:--:--</button>
+    <button class="tb mv" id="mv" aria-pressed="false" aria-label="Move island" title="Drag mode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3"/></svg></button>
     <button class="tb" id="pin" aria-pressed="false" aria-label="Keep open" title="Keep open"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6l-1 5 3 3v1.5H7V12l3-3z"/><path d="M12 13.5V20"/></svg></button>
     <button class="tb fs" id="fs" aria-pressed="false" aria-label="Full screen" title="Full screen"><svg class="ex" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg><svg class="co" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10h-6V4M4 14h6v6M14 10l7-7M10 14l-7 7"/></svg></button>
     <button class="mb" id="mb" aria-expanded="false" aria-controls="pn" aria-label="Menu"><span></span><span></span></button>
@@ -205,6 +221,10 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
       </div>
       <div class="pane" data-p="more" hidden>
         <div class="fld"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="sq" type="search" placeholder="Search this page" aria-label="Search this page" autocomplete="off" enterkeyhint="search"><span id="sc" aria-live="polite"></span><button class="b s ic" id="sp" aria-label="Previous match">↑</button><button class="b s ic" id="sn" aria-label="Next match">↓</button></div>
+        <div class="grp">
+          <div class="rw"><span>Island style</span><span class="its" id="its"></span></div>
+          <div class="rw"><span>Position</span><span class="row"><button class="b s" id="mv2">Move</button><button class="b s" id="rp">Reset</button></span></div>
+        </div>
         <div class="grp">
           <div class="rw"><span>Appearance</span><button class="b s" id="th" aria-label="Toggle light or dark theme">Light / Dark</button></div>
           <div class="rw"><span>Accent</span><span id="sw"></span></div>
@@ -325,12 +345,12 @@ $("#th").onclick=()=>{const l=document.documentElement.classList.toggle("light")
 
 /* ---------- island ---------- */
 const isl=$("#isl"),mb=$("#mb");
-let pinned=store.get("bn_pin")==="1",full=false;
-function open(v){if(!v&&(pinned||full))return;isl.classList.toggle("open",v);mb.setAttribute("aria-expanded",v);if(!v&&isl.classList.contains("game"))endGame()}
+let pinned=store.get("bn_pin")==="1",full=false,drag=false;
+function open(v){if(!v&&(pinned||full||drag))return;isl.classList.toggle("open",v);mb.setAttribute("aria-expanded",v);if(!v&&isl.classList.contains("game"))endGame()}
 const pinB=$("#pin"),fsB=$("#fs");
 function setPin(v){pinned=v;store.set("bn_pin",v?"1":"0");pinB.classList.toggle("on",v);pinB.setAttribute("aria-pressed",v);pinB.title=v?"Unpin":"Keep open";if(v)open(true)}
-function setFull(v){full=v;isl.classList.toggle("full",v);fsB.setAttribute("aria-pressed",v);fsB.title=v?"Exit full screen":"Full screen";document.documentElement.style.overflow=v?"hidden":"";if(v)open(true)}
-function closeAll(){if(full)setFull(false);setPin(false);open(false)}
+function setFull(v){if(v&&drag)setDrag(false);full=v;isl.classList.toggle("full",v);fsB.setAttribute("aria-pressed",v);fsB.title=v?"Exit full screen":"Full screen";document.documentElement.style.overflow=v?"hidden":"";if(v)open(true)}
+function closeAll(){setDrag(false);if(full)setFull(false);setPin(false);open(false)}
 mb.onclick=()=>isl.classList.contains("open")?closeAll():open(true);
 pinB.onclick=()=>setPin(!pinned);fsB.onclick=()=>setFull(!full);
 pinB.classList.toggle("on",pinned);pinB.setAttribute("aria-pressed",pinned);
@@ -442,6 +462,31 @@ async function gcheck(){
 gi.addEventListener("input",()=>{clearTimeout(gdt);const v=gi.value.trim();if(!v){gr.textContent="";return}if(idOf(v))gdt=setTimeout(gcheck,400)});
 gi.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(gdt);gcheck()}else if(e.key==="Escape"){gi.value="";gr.textContent=""}});
 $("#gb").onclick=()=>{clearTimeout(gdt);gcheck()};
+
+/* ---------- island themes ---------- */
+const THEMES=[["classic","#000","Classic"],["glass","linear-gradient(135deg,#5b6b8c,#1b2235)","Glass"],["aurora","linear-gradient(135deg,#1d1458,#0b4a55)","Aurora"],["neon","radial-gradient(circle,#000 42%,var(--ac))","Neon"],["sunset","linear-gradient(135deg,#5a1a35,#8a3a14)","Sunset"],["ocean","linear-gradient(160deg,#06385c,#0a5f78)","Ocean"]];
+$("#its").innerHTML=THEMES.map(t=>`<button class="it" data-i="${t[0]}" style="--b:${t[1]}" title="${t[2]}" aria-label="${t[2]} island style"></button>`).join("");
+function setIt(k){if(!THEMES.some(t=>t[0]===k))k="classic";isl.dataset.it=k;store.set("bn_it",k);document.querySelectorAll(".it").forEach(b=>b.classList.toggle("on",b.dataset.i===k))}
+$("#its").onclick=e=>{const b=e.target.closest(".it");if(b)setIt(b.dataset.i)};
+setIt(store.get("bn_it")||"classic");
+
+/* ---------- drag mode (move the island anywhere; position is remembered) ---------- */
+const mvB=$("#mv");let pos={dx:0,dy:0},ds=null;
+try{const q=JSON.parse(store.get("bn_pos")||"null");if(q&&isFinite(q.dx)&&isFinite(q.dy))pos={dx:+q.dx,dy:+q.dy}}catch(e){}
+function applyPos(){isl.style.setProperty("--dx",pos.dx+"px");isl.style.setProperty("--dy",pos.dy+"px")}
+function clampPos(){if(full)return;const r=isl.getBoundingClientRect(),m=6;
+ if(r.left<m)pos.dx+=m-r.left;else if(r.right>innerWidth-m)pos.dx-=r.right-(innerWidth-m);
+ if(r.top<m)pos.dy+=m-r.top;else if(r.top>innerHeight-60)pos.dy-=r.top-(innerHeight-60);
+ applyPos()}
+function setDrag(v){drag=v;isl.classList.toggle("drag",v);mvB.classList.toggle("on",v);mvB.setAttribute("aria-pressed",v);$("#mv2").textContent=v?"Done":"Move";if(v){if(full)setFull(false);open(true)}}
+mvB.onclick=$("#mv2").onclick=()=>setDrag(!drag);
+$("#rp").onclick=()=>{pos={dx:0,dy:0};applyPos();store.set("bn_pos","")};
+isl.addEventListener("pointerdown",e=>{if(!drag||!e.target.closest(".top")||e.target.closest("button"))return;e.preventDefault();ds={x:e.clientX-pos.dx,y:e.clientY-pos.dy};isl.setPointerCapture(e.pointerId);isl.classList.add("dragging")});
+isl.addEventListener("pointermove",e=>{if(!ds)return;pos.dx=e.clientX-ds.x;pos.dy=e.clientY-ds.y;applyPos()});
+const endDrag=()=>{if(!ds)return;ds=null;isl.classList.remove("dragging");if(Math.abs(pos.dx)<28)pos.dx=0;clampPos();store.set("bn_pos",JSON.stringify(pos))};
+isl.addEventListener("pointerup",endDrag);isl.addEventListener("pointercancel",endDrag);
+isl.addEventListener("transitionend",e=>{if(e.propertyName==="width")clampPos()});
+addEventListener("resize",clampPos);applyPos();
 
 /* ---------- mini games (logo as the player) ---------- */
 const cv=$("#cv"),cx=cv.getContext("2d"),lv_=$("#lv"),spr=new Image();let W=480,H=240,ps=null;spr.src="bn-mark.png";

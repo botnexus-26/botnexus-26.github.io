@@ -115,6 +115,15 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
 .stats.stale b{opacity:.55}
 @media(max-width:820px){.stats{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.stats{margin-top:28px}.stats b{font-size:1.3rem}}
+/* server check */
+.gck{margin:8px 0}.gck .srch{margin:0}.gck .lb{display:block;margin:0 0 4px}
+#gres{display:grid;gap:6px;margin-top:6px}#gres:empty{display:none}
+.gi{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:var(--sf2);border:1px solid var(--ln);min-width:0}
+.gi img,.gi .ph{width:30px;height:30px;border-radius:50%;flex:none;object-fit:cover;background:var(--acs);display:grid;place-items:center;font-weight:600;font-size:.85rem;color:var(--ac)}
+.gi>div{flex:1;min-width:0}.gi b{display:block;font-weight:600;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gi small{display:block;color:var(--mu);font:400 .68rem var(--m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gn{font-size:.82rem;color:var(--mu);padding:6px 2px}.gn a{color:var(--ac);font-weight:500}
+@media(hover:none),(max-width:520px){#gid{height:40px;font-size:16px}}
 </style>
 </head>
 <body>
@@ -132,6 +141,9 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
   <div class="panel" id="pn"><div><div class="in">
     <div class="menu">
       <div class="srch"><input id="sq" type="search" placeholder="Search this page" aria-label="Search this page" autocomplete="off" enterkeyhint="search"><span id="sc" aria-live="polite"></span><button class="b s ic" id="sp" aria-label="Previous match">↑</button><button class="b s ic" id="sn" aria-label="Next match">↓</button></div>
+      <div class="gck"><span class="lb">Is BotNexus in your server?</span>
+        <div class="srch"><input id="gid" type="search" placeholder="Server ID or name" aria-label="Check a server by ID or name" autocomplete="off" inputmode="search" enterkeyhint="search"><button class="b s" id="gb">Check</button></div>
+        <div id="gres" aria-live="polite"></div></div>
       <div class="links">
         <a href="#modules">Modules</a><a href="#security">Security</a><a href="#start">Setup</a><a href="#faq">FAQ</a>
         <a href="https://botnexus-26.github.io/docs">Docs</a><a href="https://botnexus-26.github.io/help-center">Help</a><a href="https://botnexus.instatus.com/">Status</a><a href="https://botnexus.apps.bot-hosting.cloud/store">Store</a>
@@ -262,7 +274,7 @@ const isl=$("#isl"),mb=$("#mb");
 function open(v){isl.classList.toggle("open",v);mb.setAttribute("aria-expanded",v);if(!v&&isl.classList.contains("game"))endGame()}
 mb.onclick=()=>open(!isl.classList.contains("open"));
 const hover=matchMedia("(hover:hover)").matches;let auto=0;
-if(hover){isl.onpointerenter=()=>{auto=0;open(true)};isl.onpointerleave=()=>{if(!isl.classList.contains("game")&&!["sq","acc"].includes(document.activeElement.id))open(false)}}
+if(hover){isl.onpointerenter=()=>{auto=0;open(true)};isl.onpointerleave=()=>{if(!isl.classList.contains("game")&&!["sq","acc","gid"].includes(document.activeElement.id))open(false)}}
 addEventListener("pointerdown",e=>{if(!isl.contains(e.target)&&isl.classList.contains("open"))open(false)});
 isl.addEventListener("click",e=>{if(e.target.closest(".links a"))open(false)});
 addEventListener("keydown",e=>{if(e.key==="Escape"&&isl.classList.contains("open"))open(false)});
@@ -327,6 +339,30 @@ async function stats(){
 try{const c=JSON.parse(store.get("bn_stats")||"null");if(c&&c.d){SD=c.d;SAT=c.at;paintStats()}}catch(e){}
 stats();setInterval(stats,30000);setInterval(()=>{if(online)paintStats()},1000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)stats()});
+
+/* ---------- server check (by ID or name) ---------- */
+const INV="https://discord.com/oauth2/authorize?client_id=1522289525378908244&permissions=8&integration_type=0&scope=applications.commands+bot";
+const gi=$("#gid"),gr=$("#gres");let GL=null,GAT=0,gdt;
+async function guilds(){if(GL&&Date.now()-GAT<60000)return GL;const d=await pull("/api/guilds",x=>Array.isArray(x));if(d){GL=d;GAT=Date.now()}return GL}
+function gRow(g){const r=document.createElement("div");r.className="gi";let i;
+ if(g.icon){i=document.createElement("img");i.src=g.icon;i.alt="";i.loading="lazy";i.referrerPolicy="no-referrer"}
+ else{i=document.createElement("span");i.className="ph";i.textContent=(g.name||"?").trim().charAt(0).toUpperCase()||"?"}
+ const t=document.createElement("div"),n=document.createElement("b"),s=document.createElement("small"),d=document.createElement("span");
+ n.textContent=g.name||"Unnamed server";s.textContent=g.id+" · BotNexus is here";d.className="dot ok";t.append(n,s);r.append(i,t,d);return r}
+function gNote(m,link){const p=document.createElement("div");p.className="gn";p.textContent=m;if(link){const a=document.createElement("a");a.href=INV;a.textContent="Add it";p.append(a)}return p}
+async function gcheck(){
+ const q=gi.value.trim();gr.textContent="";if(!q)return;
+ gr.append(gNote("Checking…"));
+ const l=await guilds();if(gi.value.trim()!==q)return;gr.textContent="";
+ if(!l){gr.append(gNote("Can’t reach the bot right now. Try again in a moment."));return}
+ const byId=/^\d{15,22}$/.test(q),ql=q.toLowerCase();
+ const m=l.filter(g=>byId?String(g.id)===q:(g.name||"").toLowerCase().includes(ql)).slice(0,4);
+ if(m.length)m.forEach(g=>gr.append(gRow(g)));
+ else gr.append(gNote(byId?"BotNexus isn’t in that server yet. ":"No server matches that. ",true))}
+gi.addEventListener("input",()=>{clearTimeout(gdt);gdt=setTimeout(gcheck,300)});
+gi.addEventListener("focus",()=>{guilds()});
+gi.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(gdt);gcheck()}else if(e.key==="Escape"){gi.value="";gr.textContent=""}});
+$("#gb").onclick=()=>{clearTimeout(gdt);gcheck()};
 
 /* ---------- mini games (logo as the player) ---------- */
 const cv=$("#cv"),cx=cv.getContext("2d"),lv_=$("#lv"),spr=new Image();let W=480,H=240,ps=null;spr.src="bn-mark.png";

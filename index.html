@@ -227,6 +227,38 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
 .bz[data-p="0"] i,.bz[data-p="1"] i{transform:scale(2.2)}.bz[data-p="2"] i,.bz[data-p="3"] i{transform:scale(1)}
 .bz span{position:absolute;bottom:0;font-size:.8rem;color:var(--mu)}
 #pwc{font:500 .8rem var(--m);word-break:break-all;user-select:all}#spk{flex:none}
+/* ===== v9: iOS-style launcher, cleaner layout ===== */
+.tb.mv{display:none!important}.drag .tb.mv{display:grid!important}
+.isl.open:not(.full){width:min(100vw - 24px,420px)}
+.launch{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 6px;padding:4px 0 8px}
+.lt{display:grid;justify-items:center;gap:6px;background:none;border:0;color:var(--mu);font:500 .7rem var(--f);cursor:pointer;padding:0;min-width:0}
+.lt i{width:56px;height:56px;border-radius:22%;display:grid;place-items:center;font-style:normal;font-size:1.6rem;background:linear-gradient(160deg,color-mix(in srgb,var(--c) 82%,#fff),var(--c));transition:transform .3s var(--sp)}
+.lt:hover i{transform:scale(1.07)}.lt:active i{transform:scale(.93)}.lt:hover{color:#fff}
+.lt span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+[data-v=detail] .launch,[data-v=detail] #sqw{display:none}[data-v=list] .detail{display:none}
+.dh{display:flex;align-items:center;gap:10px;margin:0 0 12px}.dh b{font-size:1rem;font-weight:600}
+.links i{border-radius:22%}.grp{border-radius:20px}.ls>div,.stl,#gres{border-radius:18px}.fld{border-radius:16px}
+.full .launch{grid-template-columns:repeat(auto-fill,minmax(92px,1fr))}.full .lt i{width:64px;height:64px;font-size:1.8rem}
+@media(max-width:400px){.lt i{width:50px;height:50px;font-size:1.4rem}.launch{gap:14px 2px}}
+/* ===== v10: flat icons, quieter type, sizing ===== */
+.links i,.lt i{background:var(--c);box-shadow:none;width:58px;height:58px;border-radius:22%;color:#fff}
+.lt svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.links a,.lt{font-size:.74rem;color:var(--mu)}.links a:hover i,.lt:hover i{transform:scale(1.04)}
+.lb,.ls span{font:500 .78rem var(--f);text-transform:none;letter-spacing:0;color:var(--mu)}.lb em{letter-spacing:0}
+.ls span{font-size:.74rem}.ls b{letter-spacing:-.01em}
+.stats .k{font:500 .8rem var(--f);text-transform:none;letter-spacing:0}.stats small{font:400 .78rem var(--f)}
+.clk,.tmc{font:500 .8rem var(--f);font-variant-numeric:tabular-nums}#tm{font:600 1.6rem var(--f);font-variant-numeric:tabular-nums}
+.gi small{font:400 .72rem var(--f)}
+.rw{font-size:.9rem}.stl{font-size:.86rem}.seg button{font-size:.84rem;height:32px}
+.in{padding-left:18px;padding-right:18px}
+@media(hover:none){.open .tb,.open .mb{width:36px;height:36px}}
+@media(max-width:400px){.open .tb,.open .mb{width:34px;height:34px}.links i,.lt i{width:52px;height:52px}.in{padding-left:14px;padding-right:14px}}
+.full .links i,.full .lt i{width:64px;height:64px}
+/* ===== v11: one-colour icons (theme accent on neutral squares) ===== */
+.links i,.lt i{background:var(--sf2);color:color-mix(in srgb,var(--ac) 60%,#fff)}
+.lt svg,.links svg{stroke:currentColor}
+.links a:hover i,.lt:hover i{background:rgba(255,255,255,.18)}
+.tb:not(.on):not(.nudge){color:color-mix(in srgb,var(--ac) 60%,#fff)}
 </style>
 </head>
 <body>
@@ -247,7 +279,7 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
   </div>
   <div class="panel" id="pn"><div><div class="in">
     <div class="menu">
-      <div class="seg" role="tablist"><button class="on" data-t="home" role="tab">Home</button><button data-t="tools" role="tab">Tools</button><button data-t="labs" role="tab">Labs</button><button data-t="more" role="tab">More</button></div>
+      <div class="seg" role="tablist"><button class="on" data-t="home" role="tab">Home</button><button data-t="apps" role="tab">Apps</button></div>
       <div class="pane" data-p="home">
         <a class="stl" href="https://botnexus.instatus.com/"><span class="dot" id="sdot2"></span><span id="stxt">Checking status…</span></a>
         <div class="ls"><div><b id="i_g">–</b><span>Servers</span></div><div><b id="i_u">–</b><span>Users</span></div><div><b id="i_t">–</b><span>Uptime</span></div></div>
@@ -259,13 +291,17 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
           <a href="https://botnexus-26.github.io/docs" style="--c:#5ac8fa"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5A1.5 1.5 0 016.5 4H19v14H6.5A1.5 1.5 0 005 19.5z"/><path d="M5 19.5A1.5 1.5 0 006.5 21H19v-3"/></svg></i>Docs</a>
           <a href="https://botnexus-26.github.io/help-center" style="--c:#ff375f"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.6"/><path d="M6 6l3.4 3.4M18 6l-3.4 3.4M6 18l3.4-3.4M18 18l-3.4-3.4"/></svg></i>Help</a>
           <a href="https://botnexus.instatus.com/" style="--c:#64d2a0"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2.5-6 4 12 2.5-6H21"/></svg></i>Status</a>
-          <a href="https://botnexus.apps.bot-hosting.cloud/store" style="--c:#ffd60a;--g:#1c1c1e"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V7a3 3 0 016 0v1"/></svg></i>Store</a>
+          <a href="https://botnexus.apps.bot-hosting.cloud/store" style="--c:#e0a100"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V7a3 3 0 016 0v1"/></svg></i>Store</a>
         </div>
         <div class="acts"><a class="b p" href="https://discord.com/oauth2/authorize?client_id=1522289525378908244&permissions=8&integration_type=0&scope=applications.commands+bot">Add to Discord</a><a class="b" href="https://botnexus.apps.bot-hosting.cloud/dashboard">Dashboard</a></div>
-        <button class="b s fsrow" id="fs2">⤢ Enlarge to full screen</button>
+        <button class="b s fsrow" id="fs2">Enlarge to full screen</button>
         <div class="gck"><span class="lb">Server check<em id="gapi">checking…</em></span>
           <div class="fld"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="gid" type="search" placeholder="Server ID or link" aria-label="Check whether BotNexus is in a server by ID" autocomplete="off" inputmode="numeric" enterkeyhint="search"><button class="b s" id="gb">Check</button></div>
           <div id="gres" aria-live="polite"></div></div>
+      </div>
+      <div class="pane" data-p="apps" data-v="list" hidden>
+        <div id="sqw"></div><div class="launch" id="launch"></div>
+        <div class="detail" id="detail"><div class="dh"><button class="b s" id="dback">‹ Apps</button><b id="dtitle"></b></div></div>
       </div>
       <div class="pane" data-p="tools" hidden>
         <div class="grp"><div class="rw"><span class="lb">Timer</span><b id="tm">00:00</b></div>
@@ -582,7 +618,8 @@ const vis=(+store.get("bn_v")||0)+1;store.set("bn_v",vis);isl.classList.add("nud
 const un=()=>{isl.classList.remove("nudge");if(hint.dataset.n){hint.classList.remove("on");hint.dataset.n=""}};
 isl.addEventListener("pointerdown",un);isl.addEventListener("pointerenter",un);
 if(vis<=3)setTimeout(()=>{if(isl.classList.contains("nudge")&&!isl.classList.contains("open")){hint.textContent="Tap or hover to open";hint.dataset.n="1";hint.classList.add("top","on");setTimeout(un,6000)}},1400);
-isl.addEventListener("click",e=>{if(!isl.classList.contains("open")){e.preventDefault();open(true)}});
+let wasOpen=0;isl.addEventListener("click",()=>{wasOpen=isl.classList.contains("open")},true);
+isl.addEventListener("click",e=>{if(!wasOpen){e.preventDefault();open(true)}});
 /* dock to a corner */
 function dock(h,v){open(true);setTimeout(()=>{const r=isl.getBoundingClientRect(),m=12;pos.dx=h*(innerWidth/2-r.width/2-m);pos.dy=v?innerHeight-r.height-m-parseFloat(getComputedStyle(isl).top):0;applyPos();persist()},650)}
 document.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{const[h,v]=b.dataset.d.split(",").map(Number);dock(h,v)});
@@ -598,13 +635,43 @@ addEventListener("keydown",e=>{if(e.ctrlKey||e.metaKey||e.altKey||/^(INPUT|TEXTA
  t:()=>{const i=(THEMES.findIndex(x=>x[0]===curIt)+1)%THEMES.length;setIt(THEMES[i][0]);toast("Style: "+THEMES[i][2])},"?":()=>toast("I open · P pin · F full · M move · R reset · T style · D dim",5000)}[k];
  if(a){e.preventDefault();a()}});
 
+/* ---------- v9: Apps launcher (iOS-style squares) ---------- */
+(()=>{
+ const pa=document.querySelector(".pane[data-p=apps]"),det=$("#detail"),L=$("#launch");
+ $("#sqw").append($("#sq").closest(".fld"));
+ const M=[
+  ["tm","Timer","#ff9500",'<circle cx="12" cy="13.5" r="7"/><path d="M12 10v3.8l2.4 1.4M9.5 3.5h5"/>'],
+  ["qb","Play","#a550d6",'<rect x="3" y="8" width="18" height="9.5" rx="4.7"/><path d="M8 10.8v4M6 12.8h4M15.6 12h.01M17.8 14h.01"/>'],
+  ["nt","Notes","#e0a100",'<path d="M6 3.5h8.5L18 7v13.5H6z"/><path d="M9 11.5h6M9 15h6"/>'],
+  ["tdl","To-do","#34b560",'<circle cx="12" cy="12" r="8.5"/><path d="M8.4 12.2l2.5 2.5 4.8-5"/>'],
+  ["cp","Share","#0a84ff",'<path d="M12 14.5V4M8.2 7.6L12 3.8l3.8 3.8M5.5 11.5v8h13v-8"/>'],
+  ["wx","Weather","#2f9fdc",'<path d="M7.5 18.5h9.3a3.7 3.7 0 00.2-7.4 5.4 5.4 0 00-10.4 1.4 3.1 3.1 0 00.9 6z"/>'],
+  ["wc","Clocks","#169c92",'<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.2 1.8"/>'],
+  ["br","Breathe","#2aa6bf",'<circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/>'],
+  ["pw","Utilities","#6b6b70",'<path d="M4.5 8h15M4.5 16h15"/><circle cx="9" cy="8" r="2.3" fill="currentColor"/><circle cx="15" cy="16" r="2.3" fill="currentColor"/>'],
+  ["dbt","Device","#5856d6",'<rect x="7" y="3" width="10" height="18" rx="2.6"/><path d="M10.7 18h2.6"/>'],
+  ["its","Island","#3a7bd5",'<rect x="3" y="9" width="18" height="6" rx="3"/>'],
+  ["th","Look","#ee3a5e",'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 010 17z" fill="currentColor"/>'],
+  ["[data-g]","Arcade","#e8473e",'<path d="M12 4l2.3 4.8 5.2.7-3.8 3.7.9 5.2-4.6-2.5-4.6 2.5.9-5.2-3.8-3.7 5.2-.7z"/>']
+ ];
+
+ const gs=[...document.querySelectorAll(".pane[data-p=tools] .grp,.pane[data-p=labs] .grp,.pane[data-p=more] .grp")];
+ M.forEach(m=>{const g=gs.find(x=>x.querySelector(m[0][0]==="["?m[0]:"#"+m[0]));if(!g)return;g.hidden=true;det.append(g);
+  const b=document.createElement("button"),i=document.createElement("i"),sp=document.createElement("span");
+  b.className="lt";b.style.setProperty("--c",m[2]);i.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+m[3]+'</svg>';sp.textContent=m[1];b.append(i,sp);
+  b.onclick=()=>{det.querySelectorAll(".grp").forEach(x=>x.hidden=x!==g);$("#dtitle").textContent=m[1];pa.dataset.v="detail"};L.append(b)});
+ gs.forEach(g=>{if(!g.parentElement.classList.contains("detail")){g.hidden=true;det.append(g)}});
+ $("#dback").onclick=()=>pa.dataset.v="list";
+ document.querySelectorAll(".pane[data-p=tools],.pane[data-p=labs],.pane[data-p=more]").forEach(p=>p.remove());
+})();
+
 /* ---------- v8: enlarge hints + labs ---------- */
 const fs2=$("#fs2");fs2.onclick=()=>setFull(true);
 if(!store.get("bn_fsd"))fsB.classList.add("nudge");
-let tip=1;isl.addEventListener("transitionend",e=>{if(e.propertyName==="width"&&tip&&isl.classList.contains("open")&&!full&&!store.get("bn_fsd")){tip=0;toast("Tip: tap ⤢ or press F to enlarge to full screen",4200)}});
+let tip=1;isl.addEventListener("transitionend",e=>{if(e.propertyName==="width"&&tip&&isl.classList.contains("open")&&!full&&!store.get("bn_fsd")){tip=0;toast("Tip: tap the expand button or press F for full screen",4200)}});
 addEventListener("scroll",()=>{const h=document.documentElement;isl.style.setProperty("--pg",(scrollY/Math.max(1,h.scrollHeight-innerHeight)).toFixed(3))},{passive:true});
 $("#wx").onclick=()=>{const o=$("#wxo");o.hidden=false;o.textContent="Locating…";if(!navigator.geolocation){o.textContent="Location unavailable";return}
- navigator.geolocation.getCurrentPosition(async g=>{try{const r=await(await fetch("https://api.open-meteo.com/v1/forecast?latitude="+g.coords.latitude.toFixed(2)+"&longitude="+g.coords.longitude.toFixed(2)+"&current=temperature_2m,weather_code,wind_speed_10m",{referrerPolicy:"no-referrer",credentials:"omit"})).json(),c=r.current,w=c.weather_code,ic=w===0?"☀️":w<4?"⛅":w<50?"🌫️":w<70?"🌧️":w<80?"❄️":w<100?"⛈️":"🌡️";o.textContent=ic+" "+Math.round(c.temperature_2m)+"°C · wind "+Math.round(c.wind_speed_10m)+" km/h"}catch(e){o.textContent="Couldn’t load weather"}},()=>{o.textContent="Location permission denied"},{timeout:8000})};
+ navigator.geolocation.getCurrentPosition(async g=>{try{const r=await(await fetch("https://api.open-meteo.com/v1/forecast?latitude="+g.coords.latitude.toFixed(2)+"&longitude="+g.coords.longitude.toFixed(2)+"&current=temperature_2m,weather_code,wind_speed_10m",{referrerPolicy:"no-referrer",credentials:"omit"})).json(),c=r.current,w=c.weather_code,ic=w===0?"Clear":w<4?"Partly cloudy":w<50?"Foggy":w<70?"Rain":w<80?"Snow":w<100?"Storm":"Unsettled";o.textContent=ic+" · "+Math.round(c.temperature_2m)+"°C · wind "+Math.round(c.wind_speed_10m)+" km/h"}catch(e){o.textContent="Couldn’t load weather"}},()=>{o.textContent="Location permission denied"},{timeout:8000})};
 const WZ=[["UTC","UTC"],["London","Europe/London"],["New York","America/New_York"],["Tokyo","Asia/Tokyo"]];
 function wcr(){$("#wc").innerHTML=WZ.map(z=>'<div class="rw"><span>'+z[0]+'</span><b>'+new Date().toLocaleTimeString([],{timeZone:z[1],hour:"2-digit",minute:"2-digit"})+'</b></div>').join("")}
 wcr();setInterval(()=>{if(!document.hidden)wcr()},15000);
@@ -614,7 +681,7 @@ $("#pw").onclick=async()=>{const C="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstu
 $("#ep").onclick=async()=>{if(!window.EyeDropper){toast("Colour picker isn’t supported in this browser");return}try{const r=await new EyeDropper().open();await navigator.clipboard.writeText(r.sRGBHex);toast("Copied "+r.sRGBHex)}catch(e){}};
 function dev(){$("#dsc").textContent=innerWidth+"×"+innerHeight;$("#dnw").textContent=navigator.onLine?"Online":"Offline"}
 dev();addEventListener("resize",dev);addEventListener("online",dev);addEventListener("offline",dev);
-if(navigator.getBattery)navigator.getBattery().then(b=>{const u=()=>$("#dbt").textContent=Math.round(b.level*100)+"%"+(b.charging?" ⚡":"");u();b.onlevelchange=b.onchargingchange=u}).catch(()=>{});else $("#dbt").textContent="n/a";
+if(navigator.getBattery)navigator.getBattery().then(b=>{const u=()=>$("#dbt").textContent=Math.round(b.level*100)+"%"+(b.charging?" · charging":"");u();b.onlevelchange=b.onchargingchange=u}).catch(()=>{});else $("#dbt").textContent="n/a";
 const LH=[];function spk(){if(LH.length<2)return;const m=Math.max(...LH,1);$("#spk polyline").setAttribute("points",LH.map((v,i)=>(i/(LH.length-1)*100).toFixed(1)+","+(22-v/m*20).toFixed(1)).join(" "))}
 $("#bf").onclick=()=>{document.fullscreenElement?document.exitFullscreen():(document.documentElement.requestFullscreen?document.documentElement.requestFullscreen().catch(()=>toast("Full screen was blocked")):toast("Not supported on this browser"))};
 document.addEventListener("fullscreenchange",()=>$("#bf").textContent=document.fullscreenElement?"Exit":"Enter");
@@ -645,22 +712,22 @@ $("#cs").onclick=async()=>{const t=SD?"BotNexus is in "+nf(SD.guilds)+" servers 
  let tgt=0,acc=0,t0=0,on=false;const tg=$("#tg");
  const f=ms=>{const s=Math.max(0,Math.round(ms/1000));return String(s/60|0).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
  const val=()=>acc+(on?Date.now()-t0:0),shown=()=>tgt?tgt*60000-val():val();
- function show(){const v=shown();if(tgt&&v<=0&&on){on=false;acc=tgt*60000;tg.textContent="Start";navigator.vibrate&&navigator.vibrate([220,100,220]);toast("Timer finished ⏱",4000)}
+ function show(){const v=shown();if(tgt&&v<=0&&on){on=false;acc=tgt*60000;tg.textContent="Start";navigator.vibrate&&navigator.vibrate([220,100,220]);toast("Timer finished",4000)}
   $("#tm").textContent=$("#tmc").textContent=f(shown());isl.classList.toggle("tm",on||acc>0)}
  document.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{tgt=+b.dataset.m;acc=0;on=false;tg.textContent="Start";show()});
  tg.onclick=()=>{if(on){acc+=Date.now()-t0;on=false;tg.textContent="Resume"}else{if(tgt&&shown()<=0)acc=0;t0=Date.now();on=true;tg.textContent="Pause"}show()};
  $("#tr").onclick=()=>{acc=0;on=false;tg.textContent="Start";show()};setInterval(show,250);show();
  const qb=$("#qb"),qs=$("#qs");let qt,k="";
  function run(){clearTimeout(qt);qb.className="b";qs.textContent="";
-  if(k==="dice"||k==="coin"){qb.textContent=k==="dice"?"🎲 "+(1+Math.random()*6|0):(Math.random()<.5?"🪙 Heads":"🪙 Tails");qs.textContent="tap to roll again";qb.onclick=run;return}
+  if(k==="dice"||k==="coin"){qb.textContent=k==="dice"?"You rolled "+(1+Math.random()*6|0):(Math.random()<.5?"Heads":"Tails");qs.textContent="tap to roll again";qb.onclick=run;return}
   if(k==="react"){let ready=0,t=0;qb.textContent="Wait for it…";qb.onclick=()=>{if(!ready){clearTimeout(qt);qb.textContent="Too soon. Tap to retry";qb.onclick=run;return}
     const ms=Math.round(performance.now()-t),best=Math.min(+store.get("bn_rt")||9e9,ms);store.set("bn_rt",best);qb.className="b";qb.textContent=ms+" ms. Again?";qs.textContent="best "+best+" ms";qb.onclick=run};
    qt=setTimeout(()=>{ready=1;t=performance.now();qb.className="b p";qb.textContent="TAP!"},1500+Math.random()*2500)}
   else{let n=0,st=0;qb.textContent="Tap to start (5 s)";qb.onclick=()=>{if(!st){st=1;qt=setTimeout(()=>{st=2;const c=n/5,best=Math.max(+store.get("bn_cps")||0,c);store.set("bn_cps",best);qb.textContent=c.toFixed(1)+" taps/s. Again?";qs.textContent="best "+best.toFixed(1)+" taps/s";qb.onclick=run},5000)}if(st===1){n++;qb.textContent="Taps: "+n}}}}
  document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{k=b.dataset.q;$("#qg").hidden=false;run()});
  const flash=(el,t,m)=>{el.textContent=m;setTimeout(()=>el.textContent=t,1600)};
- $("#cp").onclick=async()=>{try{await navigator.clipboard.writeText(INV);flash($("#cp"),"Copy","Copied ✓")}catch(e){flash($("#cp"),"Copy","Failed")}};
- $("#sh").onclick=()=>{const d={title:document.title,url:location.href};if(navigator.share)navigator.share(d).catch(()=>{});else navigator.clipboard.writeText(d.url).then(()=>flash($("#sh"),"Share","Link copied ✓")).catch(()=>{})};
+ $("#cp").onclick=async()=>{try{await navigator.clipboard.writeText(INV);flash($("#cp"),"Copy","Copied")}catch(e){flash($("#cp"),"Copy","Failed")}};
+ $("#sh").onclick=()=>{const d={title:document.title,url:location.href};if(navigator.share)navigator.share(d).catch(()=>{});else navigator.clipboard.writeText(d.url).then(()=>flash($("#sh"),"Share","Link copied")).catch(()=>{})};
 })();
 
 /* ---------- mini games (logo as the player) ---------- */
@@ -746,7 +813,7 @@ function hlGo(d,first){if(!marks.length)return;if(marks[mi])marks[mi].classList.
 sqi.addEventListener("input",()=>{clearTimeout(dt);dt=setTimeout(()=>hl(sqi.value.trim(),true),140)});
 sqi.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(dt);if(sqi.value.trim()!==hlq)hl(sqi.value.trim(),true);else hlGo(e.shiftKey?-1:1);if(!hover){sqi.blur();open(false)}}else if(e.key==="Escape"){sqi.value="";hl("")}});
 $("#sn").onclick=()=>hlGo(1);$("#sp").onclick=()=>hlGo(-1);
-addEventListener("keydown",e=>{const typing=/^(INPUT|TEXTAREA)$/.test(e.target.nodeName);if((e.key==="/"&&!typing)||((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k")){e.preventDefault();tab("more");open(true);setTimeout(()=>sqi.focus(),60)}});
+addEventListener("keydown",e=>{const typing=/^(INPUT|TEXTAREA)$/.test(e.target.nodeName);if((e.key==="/"&&!typing)||((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k")){e.preventDefault();tab("apps");document.querySelector(".pane[data-p=apps]").dataset.v="list";open(true);setTimeout(()=>sqi.focus(),60)}});
 </script>
 </body>
 </html>

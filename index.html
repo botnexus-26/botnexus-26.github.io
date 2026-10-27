@@ -163,7 +163,7 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
 .full .links{gap:22px 8px}.full .links i{width:64px;height:64px;border-radius:18px}.full .links svg{width:30px;height:30px}.full .links a{font-size:.8rem}
 .full .ls b{font-size:clamp(.8rem,4.4vw,1.35rem)}.full .fld{min-height:48px}.full .fld input{font-size:1rem}.full .acts .b{height:50px;font-size:1rem}
 .full .gm{max-width:780px;margin:0 auto}
-@media(min-width:860px){.full .menu{max-width:1060px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}.full .seg{display:none}.full .pane[hidden]{display:block}}
+@media(min-width:860px){.full .menu{max-width:1100px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px;align-items:start}.full .seg{display:none}.full .pane[hidden]{display:block}}
 .isl.game .menu{display:none!important}
 @media(max-width:430px){.isl.open:not(.full) .brand span{display:none}}
 /* ===== island themes + drag mode ===== */
@@ -181,6 +181,17 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
 .drag .top{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}.drag .top a{pointer-events:none}
 .isl.dragging,.isl.dragging .top{cursor:grabbing;transition:none!important}
 .mv.on svg{transform:none}
+/* ===== v5: minimal UI, snap guide, tools ===== */
+.isl{--sf:rgba(255,255,255,.07);--sf2:rgba(255,255,255,.12)}
+.isl[data-it]:not([data-it=classic]){--sf:rgba(255,255,255,.08);--sf2:rgba(255,255,255,.14)}
+.links i{box-shadow:none;border-radius:16px}.seg button.on{background:rgba(255,255,255,.18)}
+.sg{position:fixed;z-index:49;top:max(11px,env(safe-area-inset-top));left:50%;translate:-50% 0;width:252px;max-width:calc(100vw - 24px);height:37px;border-radius:22px;border:1.5px dashed rgba(128,140,170,.7);opacity:0;pointer-events:none;transition:opacity .2s,background .2s,border-color .2s}
+.isl.dragging+.sg{opacity:1}.sg.hot{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 22%,transparent)}
+.tb.rs{display:none!important}.drag .tb.rs{display:grid!important}
+@media(max-width:430px){.drag:not(.full) .clk{display:none}}
+.tmc{display:none;font:600 .74rem var(--m);color:var(--ac);font-variant-numeric:tabular-nums}.tm .tmc{display:inline}.isl.tm:not(.open) .brand span{display:none}
+#tm{font:600 1.6rem var(--m);font-variant-numeric:tabular-nums}
+.qg{padding:2px 0 12px}.qg .b{width:100%;height:56px;justify-content:center;font-size:1rem}.qg small{display:block;text-align:center;color:var(--mu);margin-top:6px;font-size:.78rem}
 </style>
 </head>
 <body>
@@ -191,8 +202,9 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
   <div class="top">
     <a class="brand" href="#top" aria-label="BotNexus home"><img src="bn-mark.png" alt=""><span>BotNexus</span></a>
     <span class="sp"></span>
-    <span class="dot" id="sdot" title="Checking status…"></span>
+    <span class="tmc" id="tmc"></span><span class="dot" id="sdot" title="Checking status…"></span>
     <button class="clk" id="clk" title="Click to switch 12/24-hour" aria-label="Local time">--:--:--</button>
+    <button class="tb rs" id="rs" aria-label="Reset position" title="Reset position"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg></button>
     <button class="tb mv" id="mv" aria-pressed="false" aria-label="Move island" title="Drag mode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3"/></svg></button>
     <button class="tb" id="pin" aria-pressed="false" aria-label="Keep open" title="Keep open"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6l-1 5 3 3v1.5H7V12l3-3z"/><path d="M12 13.5V20"/></svg></button>
     <button class="tb fs" id="fs" aria-pressed="false" aria-label="Full screen" title="Full screen"><svg class="ex" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg><svg class="co" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10h-6V4M4 14h6v6M14 10l7-7M10 14l-7 7"/></svg></button>
@@ -200,7 +212,7 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
   </div>
   <div class="panel" id="pn"><div><div class="in">
     <div class="menu">
-      <div class="seg" role="tablist"><button class="on" data-t="home" role="tab">Home</button><button data-t="more" role="tab">More</button></div>
+      <div class="seg" role="tablist"><button class="on" data-t="home" role="tab">Home</button><button data-t="tools" role="tab">Tools</button><button data-t="more" role="tab">More</button></div>
       <div class="pane" data-p="home">
         <a class="stl" href="https://botnexus.instatus.com/"><span class="dot" id="sdot2"></span><span id="stxt">Checking status…</span></a>
         <div class="ls"><div><b id="i_g">–</b><span>Servers</span></div><div><b id="i_u">–</b><span>Users</span></div><div><b id="i_t">–</b><span>Uptime</span></div></div>
@@ -218,6 +230,14 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
         <div class="gck"><span class="lb">Server check<em id="gapi">checking…</em></span>
           <div class="fld"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="gid" type="search" placeholder="Server ID or server link" aria-label="Check whether BotNexus is in a server by ID" autocomplete="off" inputmode="numeric" enterkeyhint="search"><button class="b s" id="gb">Check</button></div>
           <div id="gres" aria-live="polite"></div></div>
+      </div>
+      <div class="pane" data-p="tools" hidden>
+        <div class="grp"><div class="rw"><span class="lb">Timer</span><b id="tm">00:00</b></div>
+          <div class="rw"><span class="row"><button class="b s" data-m="5">5m</button><button class="b s" data-m="15">15m</button><button class="b s" data-m="25">25m</button><button class="b s" data-m="0">Stopwatch</button></span></div>
+          <div class="rw"><span class="row"><button class="b s p" id="tg">Start</button><button class="b s" id="tr">Reset</button></span></div></div>
+        <div class="grp"><div class="rw"><span class="lb">Quick games</span><span class="row"><button class="b s" data-q="react">Reaction</button><button class="b s" data-q="tap">Tap speed</button></span></div>
+          <div class="qg" id="qg" hidden><button class="b" id="qb"></button><small id="qs"></small></div></div>
+        <div class="grp"><div class="rw"><span>Invite link</span><button class="b s" id="cp">Copy</button></div><div class="rw"><span>Share this site</span><button class="b s" id="sh">Share</button></div></div>
       </div>
       <div class="pane" data-p="more" hidden>
         <div class="fld"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="sq" type="search" placeholder="Search this page" aria-label="Search this page" autocomplete="off" enterkeyhint="search"><span id="sc" aria-live="polite"></span><button class="b s ic" id="sp" aria-label="Previous match">↑</button><button class="b s ic" id="sn" aria-label="Next match">↓</button></div>
@@ -240,6 +260,8 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
     </div>
   </div></div></div>
 </div>
+
+<div class="sg" id="sg"></div>
 
 <main id="top">
 <header class="h"><div class="w hg">
@@ -348,8 +370,8 @@ const isl=$("#isl"),mb=$("#mb");
 let pinned=store.get("bn_pin")==="1",full=false,drag=false;
 function open(v){if(!v&&(pinned||full||drag))return;isl.classList.toggle("open",v);mb.setAttribute("aria-expanded",v);if(!v&&isl.classList.contains("game"))endGame()}
 const pinB=$("#pin"),fsB=$("#fs");
-function setPin(v){pinned=v;store.set("bn_pin",v?"1":"0");pinB.classList.toggle("on",v);pinB.setAttribute("aria-pressed",v);pinB.title=v?"Unpin":"Keep open";if(v)open(true)}
-function setFull(v){if(v&&drag)setDrag(false);full=v;isl.classList.toggle("full",v);fsB.setAttribute("aria-pressed",v);fsB.title=v?"Exit full screen":"Full screen";document.documentElement.style.overflow=v?"hidden":"";if(v)open(true)}
+function setPin(v){pinned=v;store.set("bn_pin",v?"1":"0");pinB.classList.toggle("on",v);pinB.setAttribute("aria-pressed",v);pinB.title=v?"Unpin":"Keep open";if(v)open(true);persist()}
+function setFull(v){if(v&&drag)setDrag(false);full=v;isl.classList.toggle("full",v);fsB.setAttribute("aria-pressed",v);fsB.title=v?"Exit full screen":"Full screen";document.documentElement.style.overflow=v?"hidden":"";if(v)open(true);persist()}
 function closeAll(){setDrag(false);if(full)setFull(false);setPin(false);open(false)}
 mb.onclick=()=>isl.classList.contains("open")?closeAll():open(true);
 pinB.onclick=()=>setPin(!pinned);fsB.onclick=()=>setFull(!full);
@@ -472,7 +494,14 @@ setIt(store.get("bn_it")||"classic");
 
 /* ---------- drag mode (move the island anywhere; position is remembered) ---------- */
 const mvB=$("#mv");let pos={dx:0,dy:0},ds=null;
-try{const q=JSON.parse(store.get("bn_pos")||"null");if(q&&isFinite(q.dx)&&isFinite(q.dy))pos={dx:+q.dx,dy:+q.dy}}catch(e){}
+/* every visit starts in the default state, unless the island was left pinned or enlarged */
+const keep=pinned||store.get("bn_full")==="1";
+try{if(keep){const q=JSON.parse(store.get("bn_pos")||"null");if(q&&isFinite(q.dx)&&isFinite(q.dy))pos={dx:+q.dx,dy:+q.dy}}}catch(e){}
+function persist(){if(pinned||full){store.set("bn_pos",JSON.stringify(pos));store.set("bn_full",full?"1":"0")}else{store.set("bn_pos","");store.set("bn_full","0")}}
+function resetPos(){pos={dx:0,dy:0};applyPos();persist()}
+const SZ=44;let hot=false;
+function snap(){const near=Math.abs(pos.dx)<SZ&&Math.abs(pos.dy)<SZ;if(near){pos.dx=0;pos.dy=0}else if(Math.abs(pos.dx)<SZ/2)pos.dx=0;
+ if(near!==hot){hot=near;$("#sg").classList.toggle("hot",near);if(near&&navigator.vibrate)navigator.vibrate(8)}}
 function applyPos(){isl.style.setProperty("--dx",pos.dx+"px");isl.style.setProperty("--dy",pos.dy+"px")}
 function clampPos(){if(full)return;const r=isl.getBoundingClientRect(),m=6;
  if(r.left<m)pos.dx+=m-r.left;else if(r.right>innerWidth-m)pos.dx-=r.right-(innerWidth-m);
@@ -480,13 +509,38 @@ function clampPos(){if(full)return;const r=isl.getBoundingClientRect(),m=6;
  applyPos()}
 function setDrag(v){drag=v;isl.classList.toggle("drag",v);mvB.classList.toggle("on",v);mvB.setAttribute("aria-pressed",v);$("#mv2").textContent=v?"Done":"Move";if(v){if(full)setFull(false);open(true)}}
 mvB.onclick=$("#mv2").onclick=()=>setDrag(!drag);
-$("#rp").onclick=()=>{pos={dx:0,dy:0};applyPos();store.set("bn_pos","")};
+$("#rp").onclick=$("#rs").onclick=resetPos;
+isl.addEventListener("dblclick",e=>{if(drag&&e.target.closest(".top")&&!e.target.closest("button"))resetPos()});
 isl.addEventListener("pointerdown",e=>{if(!drag||!e.target.closest(".top")||e.target.closest("button"))return;e.preventDefault();ds={x:e.clientX-pos.dx,y:e.clientY-pos.dy};isl.setPointerCapture(e.pointerId);isl.classList.add("dragging")});
-isl.addEventListener("pointermove",e=>{if(!ds)return;pos.dx=e.clientX-ds.x;pos.dy=e.clientY-ds.y;applyPos()});
-const endDrag=()=>{if(!ds)return;ds=null;isl.classList.remove("dragging");if(Math.abs(pos.dx)<28)pos.dx=0;clampPos();store.set("bn_pos",JSON.stringify(pos))};
+isl.addEventListener("pointermove",e=>{if(!ds)return;pos.dx=e.clientX-ds.x;pos.dy=e.clientY-ds.y;snap();applyPos()});
+const endDrag=()=>{if(!ds)return;ds=null;isl.classList.remove("dragging");snap();hot=false;$("#sg").classList.remove("hot");clampPos();persist()};
 isl.addEventListener("pointerup",endDrag);isl.addEventListener("pointercancel",endDrag);
 isl.addEventListener("transitionend",e=>{if(e.propertyName==="width")clampPos()});
 addEventListener("resize",clampPos);applyPos();
+if(keep){if(store.get("bn_full")==="1")setFull(true)}else persist();
+addEventListener("pageshow",e=>{if(e.persisted&&!pinned&&!full){resetPos();open(false)}});
+
+/* ---------- tools: timer (live in the pill), quick games, share ---------- */
+(()=>{
+ let tgt=0,acc=0,t0=0,on=false;const tg=$("#tg");
+ const f=ms=>{const s=Math.max(0,Math.round(ms/1000));return String(s/60|0).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+ const val=()=>acc+(on?Date.now()-t0:0),shown=()=>tgt?tgt*60000-val():val();
+ function show(){const v=shown();if(tgt&&v<=0&&on){on=false;acc=tgt*60000;tg.textContent="Start";navigator.vibrate&&navigator.vibrate([220,100,220])}
+  $("#tm").textContent=$("#tmc").textContent=f(shown());isl.classList.toggle("tm",on||acc>0)}
+ document.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{tgt=+b.dataset.m;acc=0;on=false;tg.textContent="Start";show()});
+ tg.onclick=()=>{if(on){acc+=Date.now()-t0;on=false;tg.textContent="Resume"}else{if(tgt&&shown()<=0)acc=0;t0=Date.now();on=true;tg.textContent="Pause"}show()};
+ $("#tr").onclick=()=>{acc=0;on=false;tg.textContent="Start";show()};setInterval(show,250);show();
+ const qb=$("#qb"),qs=$("#qs");let qt,k="";
+ function run(){clearTimeout(qt);qb.className="b";qs.textContent="";
+  if(k==="react"){let ready=0,t=0;qb.textContent="Wait for it…";qb.onclick=()=>{if(!ready){clearTimeout(qt);qb.textContent="Too soon. Tap to retry";qb.onclick=run;return}
+    const ms=Math.round(performance.now()-t),best=Math.min(+store.get("bn_rt")||9e9,ms);store.set("bn_rt",best);qb.className="b";qb.textContent=ms+" ms. Again?";qs.textContent="best "+best+" ms";qb.onclick=run};
+   qt=setTimeout(()=>{ready=1;t=performance.now();qb.className="b p";qb.textContent="TAP!"},1500+Math.random()*2500)}
+  else{let n=0,st=0;qb.textContent="Tap to start (5 s)";qb.onclick=()=>{if(!st){st=1;qt=setTimeout(()=>{st=2;const c=n/5,best=Math.max(+store.get("bn_cps")||0,c);store.set("bn_cps",best);qb.textContent=c.toFixed(1)+" taps/s. Again?";qs.textContent="best "+best.toFixed(1)+" taps/s";qb.onclick=run},5000)}if(st===1){n++;qb.textContent="Taps: "+n}}}}
+ document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{k=b.dataset.q;$("#qg").hidden=false;run()});
+ const flash=(el,t,m)=>{el.textContent=m;setTimeout(()=>el.textContent=t,1600)};
+ $("#cp").onclick=async()=>{try{await navigator.clipboard.writeText(INV);flash($("#cp"),"Copy","Copied ✓")}catch(e){flash($("#cp"),"Copy","Failed")}};
+ $("#sh").onclick=()=>{const d={title:document.title,url:location.href};if(navigator.share)navigator.share(d).catch(()=>{});else navigator.clipboard.writeText(d.url).then(()=>flash($("#sh"),"Share","Link copied ✓")).catch(()=>{})};
+})();
 
 /* ---------- mini games (logo as the player) ---------- */
 const cv=$("#cv"),cx=cv.getContext("2d"),lv_=$("#lv"),spr=new Image();let W=480,H=240,ps=null;spr.src="bn-mark.png";

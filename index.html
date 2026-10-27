@@ -215,6 +215,18 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
 .tdl{list-style:none;margin:0;padding:0 0 8px}.tdl li{display:flex;align-items:center;gap:10px;padding:8px 2px;font-size:.88rem;min-width:0}.tdl li span{min-width:0;overflow-wrap:anywhere}
 .tdl li.d span{text-decoration:line-through;opacity:.5}.tdl input{accent-color:var(--ac);width:18px;height:18px;flex:none}
 .tdl button{margin-left:auto;background:none;border:0;color:var(--mu);cursor:pointer;font-size:1.2rem;line-height:1;padding:0 4px}
+/* ===== v8: enlarge affordance, labs ===== */
+.fs .fl{display:none}
+.fs.nudge{width:auto;padding:0 12px 0 10px;gap:6px;grid-auto-flow:column;border-radius:999px;background:var(--ac);color:var(--acf);animation:fp 2s ease-in-out infinite}.fs.nudge .fl{display:inline;font:600 .74rem var(--f)}
+@keyframes fp{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+@media(max-width:400px){.fs.nudge{width:30px;padding:0}.fs.nudge .fl{display:none}}
+.fsrow{width:100%;height:36px;justify-content:center;margin:-4px 0 14px;background:none!important;color:var(--mu)!important;border:1px dashed var(--ln2)!important}.full .fsrow{display:none}
+.isl::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:calc(var(--pg,0)*100%);background:var(--ac);opacity:.9;transition:width .15s;pointer-events:none}
+.bz[hidden],.rw[hidden]{display:none}.bz{display:grid;place-items:center;height:120px;position:relative}
+.bz i{width:44px;height:44px;border-radius:50%;background:var(--ac);opacity:.85;transition:transform 4s ease-in-out}
+.bz[data-p="0"] i,.bz[data-p="1"] i{transform:scale(2.2)}.bz[data-p="2"] i,.bz[data-p="3"] i{transform:scale(1)}
+.bz span{position:absolute;bottom:0;font-size:.8rem;color:var(--mu)}
+#pwc{font:500 .8rem var(--m);word-break:break-all;user-select:all}#spk{flex:none}
 </style>
 </head>
 <body>
@@ -230,12 +242,12 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
     <button class="tb rs" id="rs" aria-label="Reset position" title="Reset position"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg></button>
     <button class="tb mv" id="mv" aria-pressed="false" aria-label="Move island" title="Drag mode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3"/></svg></button>
     <button class="tb" id="pin" aria-pressed="false" aria-label="Keep open" title="Keep open"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6l-1 5 3 3v1.5H7V12l3-3z"/><path d="M12 13.5V20"/></svg></button>
-    <button class="tb fs" id="fs" aria-pressed="false" aria-label="Full screen" title="Full screen"><svg class="ex" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg><svg class="co" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10h-6V4M4 14h6v6M14 10l7-7M10 14l-7 7"/></svg></button>
+    <button class="tb fs" id="fs" aria-pressed="false" aria-label="Full screen" title="Full screen"><svg class="ex" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg><svg class="co" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10h-6V4M4 14h6v6M14 10l7-7M10 14l-7 7"/></svg><span class="fl">Enlarge</span></button>
     <button class="mb" id="mb" aria-expanded="false" aria-controls="pn" aria-label="Menu"><span></span><span></span></button>
   </div>
   <div class="panel" id="pn"><div><div class="in">
     <div class="menu">
-      <div class="seg" role="tablist"><button class="on" data-t="home" role="tab">Home</button><button data-t="tools" role="tab">Tools</button><button data-t="more" role="tab">More</button></div>
+      <div class="seg" role="tablist"><button class="on" data-t="home" role="tab">Home</button><button data-t="tools" role="tab">Tools</button><button data-t="labs" role="tab">Labs</button><button data-t="more" role="tab">More</button></div>
       <div class="pane" data-p="home">
         <a class="stl" href="https://botnexus.instatus.com/"><span class="dot" id="sdot2"></span><span id="stxt">Checking status…</span></a>
         <div class="ls"><div><b id="i_g">–</b><span>Servers</span></div><div><b id="i_u">–</b><span>Users</span></div><div><b id="i_t">–</b><span>Uptime</span></div></div>
@@ -250,6 +262,7 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
           <a href="https://botnexus.apps.bot-hosting.cloud/store" style="--c:#ffd60a;--g:#1c1c1e"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V7a3 3 0 016 0v1"/></svg></i>Store</a>
         </div>
         <div class="acts"><a class="b p" href="https://discord.com/oauth2/authorize?client_id=1522289525378908244&permissions=8&integration_type=0&scope=applications.commands+bot">Add to Discord</a><a class="b" href="https://botnexus.apps.bot-hosting.cloud/dashboard">Dashboard</a></div>
+        <button class="b s fsrow" id="fs2">⤢ Enlarge to full screen</button>
         <div class="gck"><span class="lb">Server check<em id="gapi">checking…</em></span>
           <div class="fld"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="gid" type="search" placeholder="Server ID or link" aria-label="Check whether BotNexus is in a server by ID" autocomplete="off" inputmode="numeric" enterkeyhint="search"><button class="b s" id="gb">Check</button></div>
           <div id="gres" aria-live="polite"></div></div>
@@ -264,6 +277,13 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
         <div class="grp"><span class="lb" style="display:block;padding-top:12px">To-do</span><div class="fld" style="margin:6px 0"><input id="tdi" placeholder="Add a task" aria-label="Add a task" enterkeyhint="done" maxlength="80"><button class="b s" id="tda">Add</button></div><ul class="tdl" id="tdl"></ul></div>
         <div class="grp"><div class="rw"><span>Invite link</span><button class="b s" id="cp">Copy</button></div><div class="rw"><span>Copy live stats</span><button class="b s" id="cs">Copy</button></div><div class="rw"><span>Share this site</span><button class="b s" id="sh">Share</button></div></div>
       </div>
+      <div class="pane" data-p="labs" hidden>
+        <div class="grp"><div class="rw"><span class="lb">Weather</span><button class="b s" id="wx">Get weather</button></div><div class="rw" id="wxo" hidden></div></div>
+        <div class="grp"><span class="lb" style="display:block;padding-top:12px">World clocks</span><div id="wc"></div></div>
+        <div class="grp"><div class="rw"><span class="lb">Breathe</span><button class="b s" id="br">Start</button></div><div class="bz" id="bz" hidden><i></i><span id="bt2">Breathe in</span></div></div>
+        <div class="grp"><div class="rw"><span>Password</span><button class="b s" id="pw">Generate</button></div><div class="rw" id="pwo" hidden><code id="pwc"></code></div><div class="rw"><span>Colour picker</span><button class="b s" id="ep">Pick</button></div></div>
+        <div class="grp"><span class="lb" style="display:block;padding-top:12px">Your device</span><div class="rw"><span>Battery</span><b id="dbt">–</b></div><div class="rw"><span>Network</span><b id="dnw">–</b></div><div class="rw"><span>Screen</span><b id="dsc">–</b></div><div class="rw"><span>API ping</span><svg id="spk" viewBox="0 0 100 24" width="100" height="24" aria-label="API ping history"><polyline fill="none" stroke="var(--ac)" stroke-width="1.6" stroke-linejoin="round" points=""/></svg></div></div>
+      </div>
       <div class="pane" data-p="more" hidden>
         <div class="fld"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="sq" type="search" placeholder="Search this page" aria-label="Search this page" autocomplete="off" enterkeyhint="search"><span id="sc" aria-live="polite"></span><button class="b s ic" id="sp" aria-label="Previous match">↑</button><button class="b s ic" id="sn" aria-label="Next match">↓</button></div>
         <div class="grp">
@@ -274,6 +294,8 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
           <div class="rw"><span>Sounds</span><button class="b s" id="snb">Off</button></div>
           <div class="rw"><span>Reduce motion</span><button class="b s" id="rmb">Off</button></div>
           <div class="rw"><span>Back to top</span><button class="b s" id="bt">↑ Top</button></div>
+          <div class="rw"><span>Browser full screen</span><button class="b s" id="bf">Enter</button></div>
+          <div class="rw"><span>Text size</span><span class="row"><button class="b s" id="tsm" aria-label="Smaller text">A−</button><b id="tsv">100%</b><button class="b s" id="tsp" aria-label="Larger text">A+</button></span></div>
         </div>
         <div class="grp">
           <div class="rw"><span>Appearance</span><button class="b s" id="th" aria-label="Toggle light or dark theme">Light / Dark</button></div>
@@ -401,7 +423,7 @@ let pinned=store.get("bn_pin")==="1",full=false,drag=false,moved=false,snd=false
 function open(v){if(!v&&(pinned||full||drag||moved))return;if(isl.classList.contains("open")!==v)blip(v?720:500);isl.classList.toggle("open",v);mb.setAttribute("aria-expanded",v);if(!v&&isl.classList.contains("game"))endGame()}
 const pinB=$("#pin"),fsB=$("#fs");
 function setPin(v){pinned=v;store.set("bn_pin",v?"1":"0");pinB.classList.toggle("on",v);pinB.setAttribute("aria-pressed",v);pinB.title=v?"Unpin":"Keep open";if(v)open(true);persist()}
-function setFull(v){if(v&&drag)setDrag(false);full=v;isl.classList.toggle("full",v);fsB.setAttribute("aria-pressed",v);fsB.title=v?"Exit full screen":"Full screen";document.documentElement.style.overflow=v?"hidden":"";if(v)open(true);persist()}
+function setFull(v){if(v&&drag)setDrag(false);if(v){store.set("bn_fsd","1");fsB.classList.remove("nudge")}full=v;isl.classList.toggle("full",v);fsB.setAttribute("aria-pressed",v);fsB.title=v?"Exit full screen":"Full screen";document.documentElement.style.overflow=v?"hidden":"";if(v)open(true);persist()}
 function closeAll(){setDrag(false);if(full)setFull(false);setPin(false);if(moved)resetPos();open(false)}
 mb.onclick=()=>isl.classList.contains("open")?closeAll():open(true);
 pinB.onclick=()=>setPin(!pinned);fsB.onclick=()=>setFull(!full);
@@ -471,7 +493,7 @@ function paintStats(){
 async function stats(){
  if(hit>=BASES.length&&++pc%5===0)hit=0; /* periodically retry the direct API */
  const lt0=performance.now();let x=await pull("/api/stats",v=>v&&typeof v==="object"&&Number.isFinite(+v.guilds),true),d=null;
- if(x)LAT=Math.round(performance.now()-lt0);
+ if(x){LAT=Math.round(performance.now()-lt0);LH.push(LAT);if(LH.length>24)LH.shift();spk()}
  if(x)d={guilds:num(x.guilds),users:num(x.users),uptimeSeconds:num(x.uptimeSeconds),ready:x.ready!==false};
  else{const g=await pull("/api/guilds",Array.isArray);if(g)d={guilds:g.length,users:SD&&SD.users,uptimeSeconds:SD&&SD.uptimeSeconds,ready:true}}
  if(d){if(was===false)toast("BotNexus is back online");was=true;SD=d;SAT=Date.now();online=true;store.set("bn_stats",JSON.stringify({d,at:SAT}))}
@@ -575,6 +597,29 @@ addEventListener("keydown",e=>{if(e.ctrlKey||e.metaKey||e.altKey||/^(INPUT|TEXTA
  const k=e.key.toLowerCase(),a={i:()=>isl.classList.contains("open")?closeAll():open(true),p:()=>{setPin(!pinned);toast(pinned?"Pinned open":"Unpinned")},f:()=>setFull(!full),m:()=>{setDrag(!drag);toast(drag?"Drag mode on. Drag the top bar":"Drag mode off")},r:()=>{resetPos();toast("Position reset")},d:()=>{setDim(!dim);toast(dim?"Page dimmed":"Dim off")},
  t:()=>{const i=(THEMES.findIndex(x=>x[0]===curIt)+1)%THEMES.length;setIt(THEMES[i][0]);toast("Style: "+THEMES[i][2])},"?":()=>toast("I open · P pin · F full · M move · R reset · T style · D dim",5000)}[k];
  if(a){e.preventDefault();a()}});
+
+/* ---------- v8: enlarge hints + labs ---------- */
+const fs2=$("#fs2");fs2.onclick=()=>setFull(true);
+if(!store.get("bn_fsd"))fsB.classList.add("nudge");
+let tip=1;isl.addEventListener("transitionend",e=>{if(e.propertyName==="width"&&tip&&isl.classList.contains("open")&&!full&&!store.get("bn_fsd")){tip=0;toast("Tip: tap ⤢ or press F to enlarge to full screen",4200)}});
+addEventListener("scroll",()=>{const h=document.documentElement;isl.style.setProperty("--pg",(scrollY/Math.max(1,h.scrollHeight-innerHeight)).toFixed(3))},{passive:true});
+$("#wx").onclick=()=>{const o=$("#wxo");o.hidden=false;o.textContent="Locating…";if(!navigator.geolocation){o.textContent="Location unavailable";return}
+ navigator.geolocation.getCurrentPosition(async g=>{try{const r=await(await fetch("https://api.open-meteo.com/v1/forecast?latitude="+g.coords.latitude.toFixed(2)+"&longitude="+g.coords.longitude.toFixed(2)+"&current=temperature_2m,weather_code,wind_speed_10m",{referrerPolicy:"no-referrer",credentials:"omit"})).json(),c=r.current,w=c.weather_code,ic=w===0?"☀️":w<4?"⛅":w<50?"🌫️":w<70?"🌧️":w<80?"❄️":w<100?"⛈️":"🌡️";o.textContent=ic+" "+Math.round(c.temperature_2m)+"°C · wind "+Math.round(c.wind_speed_10m)+" km/h"}catch(e){o.textContent="Couldn’t load weather"}},()=>{o.textContent="Location permission denied"},{timeout:8000})};
+const WZ=[["UTC","UTC"],["London","Europe/London"],["New York","America/New_York"],["Tokyo","Asia/Tokyo"]];
+function wcr(){$("#wc").innerHTML=WZ.map(z=>'<div class="rw"><span>'+z[0]+'</span><b>'+new Date().toLocaleTimeString([],{timeZone:z[1],hour:"2-digit",minute:"2-digit"})+'</b></div>').join("")}
+wcr();setInterval(()=>{if(!document.hidden)wcr()},15000);
+let bk=0,bint;
+$("#br").onclick=()=>{bk=!bk;$("#br").textContent=bk?"Stop":"Start";$("#bz").hidden=!bk;clearInterval(bint);if(bk){let i=0;const P=["Breathe in","Hold","Breathe out","Hold"],st=()=>{$("#bt2").textContent=P[i%4];$("#bz").dataset.p=i%4;i++};st();bint=setInterval(st,4000)}};
+$("#pw").onclick=async()=>{const C="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%&*?",p=[...crypto.getRandomValues(new Uint32Array(16))].map(n=>C[n%C.length]).join("");$("#pwo").hidden=false;$("#pwc").textContent=p;try{await navigator.clipboard.writeText(p);toast("Password copied")}catch(e){}};
+$("#ep").onclick=async()=>{if(!window.EyeDropper){toast("Colour picker isn’t supported in this browser");return}try{const r=await new EyeDropper().open();await navigator.clipboard.writeText(r.sRGBHex);toast("Copied "+r.sRGBHex)}catch(e){}};
+function dev(){$("#dsc").textContent=innerWidth+"×"+innerHeight;$("#dnw").textContent=navigator.onLine?"Online":"Offline"}
+dev();addEventListener("resize",dev);addEventListener("online",dev);addEventListener("offline",dev);
+if(navigator.getBattery)navigator.getBattery().then(b=>{const u=()=>$("#dbt").textContent=Math.round(b.level*100)+"%"+(b.charging?" ⚡":"");u();b.onlevelchange=b.onchargingchange=u}).catch(()=>{});else $("#dbt").textContent="n/a";
+const LH=[];function spk(){if(LH.length<2)return;const m=Math.max(...LH,1);$("#spk polyline").setAttribute("points",LH.map((v,i)=>(i/(LH.length-1)*100).toFixed(1)+","+(22-v/m*20).toFixed(1)).join(" "))}
+$("#bf").onclick=()=>{document.fullscreenElement?document.exitFullscreen():(document.documentElement.requestFullscreen?document.documentElement.requestFullscreen().catch(()=>toast("Full screen was blocked")):toast("Not supported on this browser"))};
+document.addEventListener("fullscreenchange",()=>$("#bf").textContent=document.fullscreenElement?"Exit":"Enter");
+let tsz=+store.get("bn_ts")||100;function setTs(v){tsz=Math.min(130,Math.max(85,v));store.set("bn_ts",tsz);document.documentElement.style.fontSize=tsz+"%";$("#tsv").textContent=tsz+"%"}
+$("#tsm").onclick=()=>setTs(tsz-5);$("#tsp").onclick=()=>setTs(tsz+5);if(tsz!==100)setTs(tsz);
 
 /* ---------- v7 extras: ticker, sounds, motion, to-do, stats copy ---------- */
 const bs=document.querySelector(".brand span");let ti=0;

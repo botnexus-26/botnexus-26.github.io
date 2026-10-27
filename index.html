@@ -203,6 +203,18 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
 .moved .tb.rs{display:grid!important}
 #nt{display:block;width:100%;background:none;border:0;outline:0;resize:vertical;color:#fff;font:inherit;font-size:.9rem;padding:4px 0 12px}#nt::placeholder{color:var(--mu)}
 .gi{cursor:pointer}
+/* ===== v7: responsive fixes + extras ===== */
+.brand,.brand img{flex:none}.top{min-width:0}.clk{white-space:nowrap}
+.ls b{font-size:clamp(.82rem,4.4vw,1.12rem)}
+.acts .b{white-space:nowrap;padding:0 8px}
+.its{flex:1 1 100%;justify-content:space-between}#sw{flex:1 1 100%}.it{width:32px;height:32px}
+@media(max-width:400px){.top{gap:6px}.tb,.mb,.open .mb{width:30px;height:30px}.open .top{padding:0 6px 0 12px}.links i{width:48px;height:48px}.acts .b{font-size:.84rem}.rw{font-size:.84rem}.seg button{font-size:.76rem}}
+@media(max-width:340px){.clk{font-size:.66rem}.links{gap:12px 2px}.in{padding-left:12px;padding-right:12px}}
+@media(max-height:520px){.in{max-height:calc(100dvh - 64px)}}
+.isl.rm,.isl.rm *{transition:none!important;animation:none!important}
+.tdl{list-style:none;margin:0;padding:0 0 8px}.tdl li{display:flex;align-items:center;gap:10px;padding:8px 2px;font-size:.88rem;min-width:0}.tdl li span{min-width:0;overflow-wrap:anywhere}
+.tdl li.d span{text-decoration:line-through;opacity:.5}.tdl input{accent-color:var(--ac);width:18px;height:18px;flex:none}
+.tdl button{margin-left:auto;background:none;border:0;color:var(--mu);cursor:pointer;font-size:1.2rem;line-height:1;padding:0 4px}
 </style>
 </head>
 <body>
@@ -239,17 +251,18 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
         </div>
         <div class="acts"><a class="b p" href="https://discord.com/oauth2/authorize?client_id=1522289525378908244&permissions=8&integration_type=0&scope=applications.commands+bot">Add to Discord</a><a class="b" href="https://botnexus.apps.bot-hosting.cloud/dashboard">Dashboard</a></div>
         <div class="gck"><span class="lb">Server check<em id="gapi">checking…</em></span>
-          <div class="fld"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="gid" type="search" placeholder="Server ID or server link" aria-label="Check whether BotNexus is in a server by ID" autocomplete="off" inputmode="numeric" enterkeyhint="search"><button class="b s" id="gb">Check</button></div>
+          <div class="fld"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="gid" type="search" placeholder="Server ID or link" aria-label="Check whether BotNexus is in a server by ID" autocomplete="off" inputmode="numeric" enterkeyhint="search"><button class="b s" id="gb">Check</button></div>
           <div id="gres" aria-live="polite"></div></div>
       </div>
       <div class="pane" data-p="tools" hidden>
         <div class="grp"><div class="rw"><span class="lb">Timer</span><b id="tm">00:00</b></div>
           <div class="rw"><span class="row"><button class="b s" data-m="5">5m</button><button class="b s" data-m="15">15m</button><button class="b s" data-m="25">25m</button><button class="b s" data-m="0">Stopwatch</button></span></div>
           <div class="rw"><span class="row"><button class="b s p" id="tg">Start</button><button class="b s" id="tr">Reset</button></span></div></div>
-        <div class="grp"><div class="rw"><span class="lb">Quick games</span><span class="row"><button class="b s" data-q="react">Reaction</button><button class="b s" data-q="tap">Tap speed</button></span></div>
+        <div class="grp"><div class="rw"><span class="lb">Quick games</span><span class="row"><button class="b s" data-q="react">Reaction</button><button class="b s" data-q="tap">Tap speed</button><button class="b s" data-q="dice">Dice</button><button class="b s" data-q="coin">Coin</button></span></div>
           <div class="qg" id="qg" hidden><button class="b" id="qb"></button><small id="qs"></small></div></div>
         <div class="grp"><span class="lb" style="display:block;padding-top:12px">Quick note</span><textarea id="nt" rows="3" placeholder="Jot something down. Saved on this device."></textarea></div>
-        <div class="grp"><div class="rw"><span>Invite link</span><button class="b s" id="cp">Copy</button></div><div class="rw"><span>Share this site</span><button class="b s" id="sh">Share</button></div></div>
+        <div class="grp"><span class="lb" style="display:block;padding-top:12px">To-do</span><div class="fld" style="margin:6px 0"><input id="tdi" placeholder="Add a task" aria-label="Add a task" enterkeyhint="done" maxlength="80"><button class="b s" id="tda">Add</button></div><ul class="tdl" id="tdl"></ul></div>
+        <div class="grp"><div class="rw"><span>Invite link</span><button class="b s" id="cp">Copy</button></div><div class="rw"><span>Copy live stats</span><button class="b s" id="cs">Copy</button></div><div class="rw"><span>Share this site</span><button class="b s" id="sh">Share</button></div></div>
       </div>
       <div class="pane" data-p="more" hidden>
         <div class="fld"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="sq" type="search" placeholder="Search this page" aria-label="Search this page" autocomplete="off" enterkeyhint="search"><span id="sc" aria-live="polite"></span><button class="b s ic" id="sp" aria-label="Previous match">↑</button><button class="b s ic" id="sn" aria-label="Next match">↓</button></div>
@@ -258,6 +271,9 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
           <div class="rw"><span>Position</span><span class="row"><button class="b s" id="mv2">Move</button><button class="b s" id="rp">Reset</button></span></div>
           <div class="rw"><span>Dock</span><span class="row"><button class="b s" data-d="-1,0" aria-label="Top left">↖</button><button class="b s" data-d="1,0" aria-label="Top right">↗</button><button class="b s" data-d="-1,1" aria-label="Bottom left">↙</button><button class="b s" data-d="1,1" aria-label="Bottom right">↘</button></span></div>
           <div class="rw"><span>Dim page when open</span><button class="b s" id="dmb">Off</button></div>
+          <div class="rw"><span>Sounds</span><button class="b s" id="snb">Off</button></div>
+          <div class="rw"><span>Reduce motion</span><button class="b s" id="rmb">Off</button></div>
+          <div class="rw"><span>Back to top</span><button class="b s" id="bt">↑ Top</button></div>
         </div>
         <div class="grp">
           <div class="rw"><span>Appearance</span><button class="b s" id="th" aria-label="Toggle light or dark theme">Light / Dark</button></div>
@@ -381,8 +397,8 @@ $("#th").onclick=()=>{const l=document.documentElement.classList.toggle("light")
 
 /* ---------- island ---------- */
 const isl=$("#isl"),mb=$("#mb");
-let pinned=store.get("bn_pin")==="1",full=false,drag=false,moved=false;
-function open(v){if(!v&&(pinned||full||drag||moved))return;isl.classList.toggle("open",v);mb.setAttribute("aria-expanded",v);if(!v&&isl.classList.contains("game"))endGame()}
+let pinned=store.get("bn_pin")==="1",full=false,drag=false,moved=false,snd=false,AC;
+function open(v){if(!v&&(pinned||full||drag||moved))return;if(isl.classList.contains("open")!==v)blip(v?720:500);isl.classList.toggle("open",v);mb.setAttribute("aria-expanded",v);if(!v&&isl.classList.contains("game"))endGame()}
 const pinB=$("#pin"),fsB=$("#fs");
 function setPin(v){pinned=v;store.set("bn_pin",v?"1":"0");pinB.classList.toggle("on",v);pinB.setAttribute("aria-pressed",v);pinB.title=v?"Unpin":"Keep open";if(v)open(true);persist()}
 function setFull(v){if(v&&drag)setDrag(false);full=v;isl.classList.toggle("full",v);fsB.setAttribute("aria-pressed",v);fsB.title=v?"Exit full screen":"Full screen";document.documentElement.style.overflow=v?"hidden":"";if(v)open(true);persist()}
@@ -393,7 +409,7 @@ pinB.classList.toggle("on",pinned);pinB.setAttribute("aria-pressed",pinned);
 function tab(t){document.querySelectorAll(".seg button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));document.querySelectorAll(".pane").forEach(p=>p.hidden=p.dataset.p!==t)}
 document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>tab(b.dataset.t));
 const hover=matchMedia("(hover:hover)").matches;let auto=0;
-if(hover){isl.onpointerenter=()=>{auto=0;open(true)};isl.onpointerleave=()=>{if(!isl.classList.contains("game")&&!["sq","acc","gid","nt"].includes(document.activeElement.id))open(false)}}
+if(hover){isl.onpointerenter=()=>{auto=0;open(true)};isl.onpointerleave=()=>{if(!isl.classList.contains("game")&&!["sq","acc","gid","nt","tdi"].includes(document.activeElement.id))open(false)}}
 addEventListener("pointerdown",e=>{if(!isl.contains(e.target)&&isl.classList.contains("open"))open(false)});
 isl.addEventListener("click",e=>{if(e.target.closest(".links a")){if(full)setFull(false);open(false)}});
 addEventListener("keydown",e=>{if(e.key==="Escape"&&isl.classList.contains("open")){if(full)setFull(false);else closeAll()}});
@@ -430,7 +446,7 @@ status();setInterval(status,60000);
 const BASES=["https://botnexus.apps.bot-hosting.cloud","http://195.123.189.186:2728"];
 const USE_RELAYS_FOR_STATS=true;
 const RELAYS=[u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u),u=>"https://corsproxy.io/?url="+encodeURIComponent(u)];
-let was=null,hit=0,pc=0,SD=null,SAT=0,online=false;
+let was=null,LAT=0,hit=0,pc=0,SD=null,SAT=0,online=false;
 const API_FAIL=[];let warned=false;
 async function jt(u,ms){const c=new AbortController(),t=setTimeout(()=>c.abort(),ms);try{const r=await fetch(u,{cache:"no-store",credentials:"omit",referrerPolicy:"no-referrer",signal:c.signal});if(!r.ok&&r.status!==404)throw 0;const d=await r.json();if(!r.ok&&!(d&&d.found===false))throw 0;return d}finally{clearTimeout(t)}}
 async function pull(path,ok,relay){
@@ -440,7 +456,7 @@ async function pull(path,ok,relay){
  for(const i of order){try{const d=await jt(urls[i],7000);if(ok(d)){hit=i;return d}}catch(e){API_FAIL.push(urls[i])}}
  return null}
 const nf=n=>n==null?"–":Number(n).toLocaleString(),num=v=>Number.isFinite(+v)&&v!==null&&v!==""?+v:null;
-function durS(s){s=Math.max(0,Math.floor(s));const d=s/86400|0,h=s%86400/3600|0,m=s%3600/60|0;return d?d+"d "+h+"h":h?h+"h "+m+"m":m+"m "+s%60+"s"}
+function durS(s){s=Math.max(0,Math.floor(s));const d=s/86400|0,h=s%86400/3600|0,m=s%3600/60|0;return d?d+"d "+h+"h":h?h+"h "+m+"m":m+"m"+(innerWidth<400?"":" "+s%60+"s")}
 function dur(s){s=Math.max(0,Math.floor(s));const d=s/86400|0,h=s%86400/3600|0,m=s%3600/60|0;return(d?d+"d ":"")+(d||h?h+"h ":"")+m+"m "+s%60+"s"}
 function paintStats(){
  const d=SD,box=$("#stats");if(!d){box.classList.add("stale");return}
@@ -450,11 +466,12 @@ function paintStats(){
  $("#s_s").textContent=online?(d.ready===false?"Starting":"Online"):"Offline";
  $("#s_n").textContent=online?"updated "+new Date(SAT).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):(SAT?"last seen "+new Date(SAT).toLocaleString([],{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"no data");
  $("#i_g").textContent=nf(d.guilds);$("#i_u").textContent=nf(d.users);$("#i_t").textContent=d.uptimeSeconds==null?"–":durS(d.uptimeSeconds+(online?(Date.now()-SAT)/1000:0));
- const ga=$("#gapi");ga.textContent=online?"API online":"API offline";ga.className=online?"":"off";
+ const ga=$("#gapi");ga.textContent=online?"API online"+(LAT?" · "+LAT+" ms":""):"API offline";ga.className=online?"":"off";
  box.classList.toggle("stale",!online)}
 async function stats(){
  if(hit>=BASES.length&&++pc%5===0)hit=0; /* periodically retry the direct API */
- let x=await pull("/api/stats",v=>v&&typeof v==="object"&&Number.isFinite(+v.guilds),true),d=null;
+ const lt0=performance.now();let x=await pull("/api/stats",v=>v&&typeof v==="object"&&Number.isFinite(+v.guilds),true),d=null;
+ if(x)LAT=Math.round(performance.now()-lt0);
  if(x)d={guilds:num(x.guilds),users:num(x.users),uptimeSeconds:num(x.uptimeSeconds),ready:x.ready!==false};
  else{const g=await pull("/api/guilds",Array.isArray);if(g)d={guilds:g.length,users:SD&&SD.users,uptimeSeconds:SD&&SD.uptimeSeconds,ready:true}}
  if(d){if(was===false)toast("BotNexus is back online");was=true;SD=d;SAT=Date.now();online=true;store.set("bn_stats",JSON.stringify({d,at:SAT}))}
@@ -516,7 +533,7 @@ function persist(){if(pinned||full){store.set("bn_pos",JSON.stringify(pos));stor
 function resetPos(){pos={dx:0,dy:0};applyPos();persist();setTimeout(()=>{if(!isl.matches(":hover"))open(false)},900)}
 const SZ=44;let hot=false;
 function snap(){const near=Math.abs(pos.dx)<SZ&&Math.abs(pos.dy)<SZ;if(near){pos.dx=0;pos.dy=0}else if(Math.abs(pos.dx)<SZ/2)pos.dx=0;
- if(near!==hot){hot=near;$("#sg").classList.toggle("hot",near);if(near&&navigator.vibrate)navigator.vibrate(8)}}
+ if(near!==hot){hot=near;$("#sg").classList.toggle("hot",near);if(near){blip(880);navigator.vibrate&&navigator.vibrate(8)}}}
 function applyPos(){isl.style.setProperty("--dx",pos.dx+"px");isl.style.setProperty("--dy",pos.dy+"px");moved=pos.dx!==0||pos.dy!==0;isl.classList.toggle("moved",moved);mb.title=moved?"Reset position & close":"Menu";if(moved)open(true)}
 function clampPos(){if(full)return;const r=isl.getBoundingClientRect(),m=6;
  if(r.left<m)pos.dx+=m-r.left;else if(r.right>innerWidth-m)pos.dx-=r.right-(innerWidth-m);
@@ -559,6 +576,25 @@ addEventListener("keydown",e=>{if(e.ctrlKey||e.metaKey||e.altKey||/^(INPUT|TEXTA
  t:()=>{const i=(THEMES.findIndex(x=>x[0]===curIt)+1)%THEMES.length;setIt(THEMES[i][0]);toast("Style: "+THEMES[i][2])},"?":()=>toast("I open · P pin · F full · M move · R reset · T style · D dim",5000)}[k];
  if(a){e.preventDefault();a()}});
 
+/* ---------- v7 extras: ticker, sounds, motion, to-do, stats copy ---------- */
+const bs=document.querySelector(".brand span");let ti=0;
+setInterval(()=>{if(isl.classList.contains("open")||isl.classList.contains("tm")||document.hidden){bs.textContent="BotNexus";return}if(!SD)return;
+ const L=["BotNexus",nf(SD.guilds)+" servers",nf(SD.users)+" users"];ti=(ti+1)%3;bs.textContent=L[ti];bs.animate([{opacity:0,transform:"translateY(5px)"},{opacity:1,transform:"none"}],{duration:380})},4000);
+function blip(f){if(!snd)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.value=.04;o.connect(g);g.connect(AC.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+.12);o.stop(AC.currentTime+.13)}catch(e){}}
+snd=store.get("bn_snd")==="1";$("#snb").textContent=snd?"On":"Off";
+$("#snb").onclick=()=>{snd=!snd;store.set("bn_snd",snd?"1":"0");$("#snb").textContent=snd?"On":"Off";blip(660)};
+let rmo=false;function setRm(v){rmo=v;store.set("bn_rm",v?"1":"0");isl.classList.toggle("rm",v);$("#rmb").textContent=v?"On":"Off"}
+$("#rmb").onclick=()=>setRm(!rmo);setRm(store.get("bn_rm")==="1"||(!store.get("bn_rm")&&matchMedia("(prefers-reduced-motion:reduce)").matches));
+$("#bt").onclick=()=>{scrollTo({top:0,behavior:rmo?"auto":"smooth"});if(full)setFull(false)};
+let td=[];try{td=JSON.parse(store.get("bn_td")||"[]")}catch(e){}
+function tdr(){const u=$("#tdl");u.textContent="";td.forEach((t,i)=>{const l=document.createElement("li"),c=document.createElement("input"),sp=document.createElement("span"),x=document.createElement("button");
+ c.type="checkbox";c.checked=!!t.d;c.setAttribute("aria-label","Done");sp.textContent=t.t;x.textContent="×";x.setAttribute("aria-label","Delete task");l.className=t.d?"d":"";
+ c.onchange=()=>{t.d=c.checked;tds()};x.onclick=()=>{td.splice(i,1);tds()};l.append(c,sp,x);u.append(l)})}
+function tds(){store.set("bn_td",JSON.stringify(td));tdr()}
+function tda(){const v=$("#tdi").value.trim().slice(0,80);if(v&&td.length<30){td.push({t:v,d:0});$("#tdi").value="";tds()}}
+$("#tda").onclick=tda;$("#tdi").addEventListener("keydown",e=>{if(e.key==="Enter")tda()});tdr();
+$("#cs").onclick=async()=>{const t=SD?"BotNexus is in "+nf(SD.guilds)+" servers with "+nf(SD.users)+" users.":"BotNexus";try{await navigator.clipboard.writeText(t);toast("Stats copied")}catch(e){toast("Copy failed")}};
+
 /* ---------- tools: timer (live in the pill), quick games, share ---------- */
 (()=>{
  let tgt=0,acc=0,t0=0,on=false;const tg=$("#tg");
@@ -571,6 +607,7 @@ addEventListener("keydown",e=>{if(e.ctrlKey||e.metaKey||e.altKey||/^(INPUT|TEXTA
  $("#tr").onclick=()=>{acc=0;on=false;tg.textContent="Start";show()};setInterval(show,250);show();
  const qb=$("#qb"),qs=$("#qs");let qt,k="";
  function run(){clearTimeout(qt);qb.className="b";qs.textContent="";
+  if(k==="dice"||k==="coin"){qb.textContent=k==="dice"?"🎲 "+(1+Math.random()*6|0):(Math.random()<.5?"🪙 Heads":"🪙 Tails");qs.textContent="tap to roll again";qb.onclick=run;return}
   if(k==="react"){let ready=0,t=0;qb.textContent="Wait for it…";qb.onclick=()=>{if(!ready){clearTimeout(qt);qb.textContent="Too soon. Tap to retry";qb.onclick=run;return}
     const ms=Math.round(performance.now()-t),best=Math.min(+store.get("bn_rt")||9e9,ms);store.set("bn_rt",best);qb.className="b";qb.textContent=ms+" ms. Again?";qs.textContent="best "+best+" ms";qb.onclick=run};
    qt=setTimeout(()=>{ready=1;t=performance.now();qb.className="b p";qb.textContent="TAP!"},1500+Math.random()*2500)}

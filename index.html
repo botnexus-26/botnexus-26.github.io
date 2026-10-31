@@ -42,6 +42,7 @@ header.h{padding:104px 0 56px}
 .hg{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
 h1{font:600 clamp(1.7rem,3.4vw,2.35rem)/1.2 var(--f);letter-spacing:-.025em;margin:0 0 14px;max-width:20ch}
 .lede{color:var(--mu);max-width:52ch;margin:0 0 20px}.lede code{font-size:.82em}
+.note{margin:14px 0 0;padding:10px 14px;border:1px solid var(--ln);border-radius:8px;background:var(--glass);color:var(--mu);font-size:.82rem;line-height:1.5}.note a{color:var(--ac)}
 .facts{display:flex;flex-wrap:wrap;margin:22px 0 0;padding:0;list-style:none;border:1px solid var(--ln);border-radius:8px;width:max-content;max-width:100%;background:var(--glass)}
 .facts li{padding:7px 14px;font-size:.82rem;color:var(--mu)}.facts li+li{border-left:1px solid var(--ln)}
 .card{border:1px solid var(--ln2);border-radius:12px;background:var(--glass);backdrop-filter:blur(8px);overflow:hidden}
@@ -291,9 +292,10 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
           <a href="https://botnexus-26.github.io/docs" style="--c:#5ac8fa"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5A1.5 1.5 0 016.5 4H19v14H6.5A1.5 1.5 0 005 19.5z"/><path d="M5 19.5A1.5 1.5 0 006.5 21H19v-3"/></svg></i>Docs</a>
           <a href="https://botnexus-26.github.io/help-center" style="--c:#ff375f"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.6"/><path d="M6 6l3.4 3.4M18 6l-3.4 3.4M6 18l3.4-3.4M18 18l-3.4-3.4"/></svg></i>Help</a>
           <a href="https://botnexus.instatus.com/" style="--c:#64d2a0"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2.5-6 4 12 2.5-6H21"/></svg></i>Status</a>
+          <a href="#plus" style="--c:#bf5af2"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg></i>BotNexus+</a>
           <a href="https://botnexus-8lxu.onrender.com/store" style="--c:#e0a100"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7z"/><path d="M9 8V7a3 3 0 016 0v1"/></svg></i>Store</a>
         </div>
-        <div class="acts"><a class="b p" href="https://discord.com/oauth2/authorize?client_id=1522289525378908244&permissions=8&integration_type=0&scope=applications.commands+bot">Add to Discord</a><a class="b" href="https://botnexus.apps.bot-hosting.cloud/dashboard">Dashboard</a></div>
+        <div class="acts"><a class="b p" href="https://discord.com/oauth2/authorize?client_id=1522289525378908244&permissions=8&integration_type=0&scope=applications.commands+bot">Add to Discord</a><a class="b" href="https://botnexus-8lxu.onrender.com/dashboard">Dashboard</a></div>
         <button class="b s fsrow" id="fs2">Enlarge to full screen</button>
         <div class="gck"><span class="lb">Server check<em id="gapi">checking…</em></span>
           <div class="fld"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="gid" type="search" placeholder="Server ID or link" aria-label="Check whether BotNexus is in a server by ID" autocomplete="off" inputmode="numeric" enterkeyhint="search"><button class="b s" id="gb">Check</button></div>
@@ -356,8 +358,8 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
   <div>
     <h1>A Discord bot for moderation, security and ER:LC servers.</h1>
     <p class="lede">21 modules you switch on one by one: welcomer, tickets, leveling, Roblox verification, session tools and a tunable security suite. Set it up with <code>/botconfig</code> in Discord or from the web dashboard.</p>
-    <div class="row"><a class="b p" href="INVITE_URL_PLACEHOLDER">Add to Discord</a><a class="b" href="https://botnexus-8lxu.onrender.com/dashboard">Open dashboard</a><a class="b" href="https://botnexus-26.github.io/docs">Docs</a></div>
-    <ul class="facts"><li>Free core features</li><li>Modules are optional</li><li>Configured in Discord</li></ul>
+    <div class="row"><a class="b p" href="https://discord.com/oauth2/authorize?client_id=1522289525378908244&permissions=8&integration_type=0&scope=applications.commands+bot">Add to Discord</a><a class="b" href="https://botnexus-8lxu.onrender.com/dashboard">Open dashboard</a><a class="b" href="https://botnexus-8lxu.onrender.com/plus">BotNexus+</a><a class="b" href="https://botnexus-26.github.io/docs">Docs</a></div>
+    <ul class="facts"><li>Free core features</li><li>Modules are optional</li><li>Configured in Discord</li><li>BotNexus+ available</li></ul>
   </div>
   <div class="card" aria-live="polite">
     <div class="ch">Live status <small id="upd">checking…</small></div>
@@ -371,7 +373,8 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
   <div><span class="k">Users</span><b id="s_u">–</b><small>across all servers</small></div>
   <div><span class="k">Uptime</span><b id="s_t">–</b><small>since last restart</small></div>
   <div><span class="k"><span class="dot" id="s_d"></span>Bot</span><b id="s_s">Checking…</b><small id="s_n">connecting…</small></div>
-</div></div>
+</div>
+<p class="note" role="note"><b>Uptime:</b> we can't guarantee 80% uptime. BotNexus and BotNexus+ may go offline from time to time, so please don't rely on them as your only protection. Check the <a href="https://botnexus.instatus.com/">status page</a> for the latest.</p></div>
 
 <section id="modules"><div class="w">
   <div class="sh"><div><h2>Modules</h2><p>Turn on only what your server needs, then pick channels and roles.</p></div>
@@ -394,9 +397,46 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
   </ol>
 </div></section>
 
+<section id="plus"><div class="w sec">
+  <div><h2>BotNexus+</h2><p style="color:var(--mu);margin:8px 0 14px;font-size:.9rem">A separate, optional, premium bot for communities that want more advanced staff and server tools. BotNexus itself stays free.</p>
+    <div class="opts"><a href="https://botnexus-8lxu.onrender.com/plus"><b>Get BotNexus+</b><span>£2 per month, per server</span></a><a href="https://botnexus-8lxu.onrender.com/dashboard"><b>Dashboard</b><span>Log in with Discord to manage it</span></a><a href="https://discord.gg/SRYAbrUVVS"><b>Pay in Discord</b><span>Open a ticket in the support server</span></a></div>
+    <p style="color:var(--mu);margin:14px 0 0;font-size:.8rem">We can't guarantee 80% uptime for BotNexus+ or BotNexus. Both may go offline from time to time.</p></div>
+  <div class="cells">
+    <div><h3>Moderation</h3><p>Moderation tools plus audit history and logging, so staff actions are easy to look back on.</p></div>
+    <div><h3>Staff management</h3><p>Add, update and retire staff members, with a log of what your team has done.</p></div>
+    <div><h3>Promotions and infractions</h3><p>Promote staff, record infractions and keep a clear history for each person.</p></div>
+    <div><h3>Leave of absence</h3><p>Track when staff are away so your team always knows who is available.</p></div>
+    <div><h3>Applications and documents</h3><p>Run staff applications and keep the documents your community needs in one place.</p></div>
+    <div><h3>Tickets and suggestions</h3><p>Support tickets and a suggestions system for your members.</p></div>
+    <div><h3>Question of the Day</h3><p>Post a daily question to keep your community chatting.</p></div>
+    <div><h3>Backups</h3><p>Keep a backup of your setup so it is easier to recover if something goes wrong.</p></div>
+    <div><h3>Server profile</h3><p>Give the bot its own nickname and look in your server.</p></div>
+    <div><h3>One setup panel</h3><p>Run <code>/setup</code> to set up channels, roles, welcomer, tickets, applications, security and more. Most of it can also be changed from the dashboard.</p></div>
+    <div><h3>Modern messages</h3><p>Discord's newest message layouts, with banners and a clean look.</p></div>
+    <div><h3>Always up to date</h3><p>Run <code>/help</code> in your server to see every command that is available right now.</p></div>
+  </div>
+</div></section>
+
+<section id="plus-how"><div class="w">
+  <div class="sh"><div><h2>How BotNexus+ works</h2></div></div>
+  <ol class="steps">
+    <li><b>Choose your server</b>Log in to the dashboard with Discord and open the BotNexus+ page. Each subscription covers one server, so every server needs its own.</li>
+    <li><b>Pay</b>Pay £2 per month securely through Stripe, or open a ticket in the <a href="https://discord.gg/SRYAbrUVVS">Discord server</a> and a member of staff will help you pay there.</li>
+    <li><b>Add the bot and run /setup</b>Add BotNexus+ to your server. It switches on as soon as the server is paid for. Then run <code>/setup</code>.</li>
+  </ol>
+  <div class="cells" style="margin-top:16px">
+    <div><h3>Price</h3><p>£2 per month for each server. Discord ticket purchases are for a set period and do not renew on their own.</p></div>
+    <div><h3>Check your status</h3><p>Run <code>/subscription</code> in your server to see whether it is active and when it renews or expires.</p></div>
+    <div><h3>Move it</h3><p>You can move a subscription to another server you own from the dashboard. There is a waiting period between moves.</p></div>
+    <div><h3>Cancel any time</h3><p>Cancel from the dashboard. Cancelling ends the subscription and removes BotNexus+ from that server.</p></div>
+    <div><h3>If a payment fails</h3><p>Stripe retries the card and BotNexus+ keeps working meanwhile. If it still fails, the server is switched off until it is paid for again.</p></div>
+    <div><h3>Not paid yet?</h3><p>In a server without a subscription BotNexus+ stays switched off and tells people how to subscribe. Nothing is deleted.</p></div>
+  </div>
+</div></section>
+
 <section id="store"><div class="w sec">
-  <div><h2>Store</h2><p style="color:var(--mu);margin:8px 0 14px;font-size:.9rem">Advertise, donate, or upgrade your dashboard. Payments are confirmed by Stripe.</p>
-    <div class="opts"><a href="https://botnexus-8lxu.onrender.com/store"><b>Dashboard Premium</b><span>£5 one-time, permanent access</span></a><a href="https://botnexus-8lxu.onrender.com/store"><b>Advertise</b><span>Promote your server or project</span></a><a href="https://botnexus.apps.bot-hosting.cloud/store"><b>Donate</b><span>Support BotNexus</span></a></div></div>
+  <div><h2>Store</h2><p style="color:var(--mu);margin:8px 0 14px;font-size:.9rem">Upgrade your dashboard, build custom messages, advertise your server, send a gift or leave a tip. Everything here is a one-time payment with no subscription, and payments are confirmed by Stripe. BotNexus+ is separate: see above.</p>
+    <div class="opts"><a href="https://botnexus-8lxu.onrender.com/store"><b>Dashboard Premium</b><span>£5 one-time, permanent access</span></a><a href="https://botnexus-8lxu.onrender.com/store"><b>Embed Studio</b><span>£3 one-time, free with Premium</span></a><a href="https://botnexus-8lxu.onrender.com/store"><b>Advertise</b><span>From £3 for 7 days</span></a><a href="https://botnexus-8lxu.onrender.com/store"><b>Gifts</b><span>From £1</span></a><a href="https://botnexus-8lxu.onrender.com/store"><b>Tip jar</b><span>Support BotNexus from £0.30</span></a></div></div>
   <div class="cells">
     <div><h3>Role and badge</h3><p>Exclusive Premium role in the BotNexus Discord, assigned automatically. Verified badge with custom text and a gold chip on your community review.</p></div>
     <div><h3>Themes</h3><p>26 accent themes, a custom colour picker and 12 one-click presets such as Cyberpunk, Vaporwave and Midnight Gold.</p></div>
@@ -404,22 +444,32 @@ mark.hl{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;bo
     <div><h3>Effects</h3><p>Neon glow, glass, card tilt, cursor trails, click effects, page transitions and three sound packs.</p></div>
     <div><h3>Tools</h3><p>Command Palette (Ctrl/Cmd + K), widget dock with timers, quick notes, theme share codes and cloud sync.</p></div>
     <div><h3>Premium Arcade</h3><p>All 8 games unlocked, including 2048, Minesweeper and Neon Breakout, with a star on the global leaderboard.</p></div>
+    <div><h3>Embed Studio</h3><p>A visual builder for Discord Components V2 messages, in the style of Discohook. £3 one-time and yours permanently, or free with Dashboard Premium.</p></div>
+    <div><h3>What you can build</h3><p>Containers with accent colours, text, headings, dividers, sections with thumbnails, image galleries, buttons and select menus, with a live Discord-style preview, undo and redo, templates and JSON import and export.</p></div>
+    <div><h3>Sending</h3><p>Send through the BotNexus bot into any server you manage, with an optional custom name and logo, through a webhook, or copy the JSON for your own bot. Buttons can give, remove or toggle roles and send private replies with no setup.</p></div>
+    <div><h3>Advertise your server</h3><p>Put your server in front of everyone who uses the dashboard: 7 days for £3 or 30 days for £10. Add a Double ad for £2 more to also post it in the BotNexus Discord. Ads are moderated and removed automatically when they end.</p></div>
+    <div><h3>Gifts</h3><p>Gift Dashboard Premium permanently for £5, Premium for 30 days for £2, or a 30-day VIP Pass for £1 that unlocks the Arcade. Delivered automatically once Stripe confirms payment.</p></div>
+    <div><h3>Tip jar</h3><p>Enjoy BotNexus? Leave a one-time tip from £0.30, with quick amounts or any custom amount.</p></div>
   </div>
 </div></section>
 
 <section id="faq"><div class="w faq">
   <div class="sh"><div><h2>FAQ</h2></div></div>
-  <details><summary>Is BotNexus free?</summary><p>Yes. Every listed module is free to invite and use. Dashboard Premium is an optional £5 one-time purchase in the <a href="https://botnexus-8lxu.onrender.com/store">Store</a> that adds themes, animated backgrounds, effects and tools to the dashboard.</p></details>
+  <details><summary>Is BotNexus free?</summary><p>Yes. Every listed module is free to invite and use. Dashboard Premium is an optional £5 one-time purchase in the <a href="https://botnexus-8lxu.onrender.com/store">Store</a> that adds themes, animated backgrounds, effects and tools to the dashboard. <a href="https://botnexus-8lxu.onrender.com/plus">BotNexus+</a> is a separate, optional paid bot.</p></details>
+  <details><summary>What is BotNexus+ and how much is it?</summary><p>BotNexus+ is a separate premium bot with extra staff and server tools such as promotions, infractions, applications, backups and audit history. It costs £2 per month for each server. Get it on the <a href="https://botnexus-8lxu.onrender.com/plus">BotNexus+ page</a>.</p></details>
+  <details><summary>How do I pay for BotNexus+?</summary><p>Pay online through Stripe on the <a href="https://botnexus-8lxu.onrender.com/plus">BotNexus+ page</a>, or open a ticket in the <a href="https://discord.gg/SRYAbrUVVS">Discord server</a> and a member of staff will help. Each server needs its own subscription. Run <code>/subscription</code> in your server to check its status.</p></details>
+  <details><summary>What happens if I cancel or stop paying for BotNexus+?</summary><p>Cancelling from the dashboard ends the subscription and removes BotNexus+ from that server. If a payment fails Stripe retries it first. A server without an active subscription has BotNexus+ switched off, and it switches back on when the server is paid for again.</p></details>
+  <details><summary>Can you guarantee uptime?</summary><p>No. We can't guarantee 80% uptime. BotNexus and BotNexus+ may go offline from time to time. Check the live status card and the <a href="https://botnexus.instatus.com/">status page</a>, and don't rely on the bot as your only protection.</p></details>
   <details><summary>What permissions does it need?</summary><p>The current invite requests Administrator (<code>permissions=8</code>). Individual features may use permissions such as managing roles or messages, or moderating members. Check Discord’s invite screen before approving.</p></details>
   <details><summary>How does server protection work?</summary><p>Automod, antinuke, antiraid and webhook protection are configured separately. Tune strictness with <code>/security sensitivity</code>. The optional Honeytrap module catches spam bots.</p></details>
   <details><summary>What data is saved?</summary><p>Server configuration, moderation records, API settings and suggestion auto-close settings are stored so they persist between restarts. See the <a href="https://botnexus-26.github.io/terms">Terms &amp; Policies</a>.</p></details>
-  <details><summary>Can I make custom embeds?</summary><p>Yes. The dashboard has an embed builder for Components V2 with configurable colours, banners and dividers.</p></details>
+  <details><summary>Can I make custom embeds?</summary><p>Yes, with Embed Studio on the dashboard: a visual Components V2 builder with colours, banners, dividers, buttons, select menus and a live preview. It is a £3 one-time purchase, or free with Dashboard Premium. Nothing is stored, so download your project file to keep a design.</p></details>
   <details><summary>Something is broken. Where do I look?</summary><p>Check the live status card above, then ask in the <a href="https://discord.gg/SRYAbrUVVS">support server</a> or <a href="https://botnexus-26.github.io/report-error">report a problem</a>.</p></details>
 </div></section>
 </main>
 
-<footer><div class="w"><span>© 2026 BotNexus</span>
-  <nav><a href="https://botnexus-26.github.io/docs">Docs</a><a href="https://botnexus-26.github.io/help-center">Help Center</a><a href="https://botnexus.instatus.com/">Status</a><a href="https://botnexus-26.github.io/terms">Terms</a><a href="https://botnexus-8lxu.onrender.com/dashboard/store">Store</a><a href="https://discord.gg/SRYAbrUVVS">Discord</a><a href="https://botnexus-26.github.io/report-error">Report a problem</a></nav></div></footer>
+<footer><div class="w"><span>© 2026 BotNexus. We can't guarantee 80% uptime.</span>
+  <nav><a href="https://botnexus-26.github.io/docs">Docs</a><a href="https://botnexus-26.github.io/help-center">Help Center</a><a href="https://botnexus.instatus.com/">Status</a><a href="https://botnexus-26.github.io/terms">Terms</a><a href="https://botnexus-8lxu.onrender.com/dashboard">Dashboard</a><a href="https://botnexus-8lxu.onrender.com/plus">BotNexus+</a><a href="https://botnexus-8lxu.onrender.com/store">Store</a><a href="https://discord.gg/SRYAbrUVVS">Discord</a><a href="https://botnexus-26.github.io/report-error">Report a problem</a></nav></div></footer>
 
 <script>
 const $=s=>document.querySelector(s),SU="https://botnexus.instatus.com";
@@ -501,7 +551,7 @@ status();setInterval(status,60000);
 /* Put your HTTPS API address first in BASES. Whichever entry answers is remembered.
    Public CORS relays are used ONLY for the read-only stats numbers, never for server lookups.
    Set USE_RELAYS_FOR_STATS to false once your API has HTTPS + CORS. */
-const BASES=["https://botnexus.apps.bot-hosting.cloud","http://195.123.189.186:2728"];
+const BASES=["https://botnexus-8lxu.onrender.com","https://botnexus.apps.bot-hosting.cloud","http://195.123.189.186:2728"];
 const USE_RELAYS_FOR_STATS=true;
 const RELAYS=[u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u),u=>"https://corsproxy.io/?url="+encodeURIComponent(u)];
 let was=null,LAT=0,hit=0,pc=0,SD=null,SAT=0,online=false;
